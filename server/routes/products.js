@@ -24,7 +24,7 @@ router.post(`/products/seed`, async (req, res, next) => {
     }
 })
 
-// read all records
+// Read all records
 router.get(`/products`, (req, res, next) => {
     productsModel.find()
         .then((data) => {
