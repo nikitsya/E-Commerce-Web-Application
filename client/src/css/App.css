@@ -76,7 +76,7 @@ input [type="button"] {
     color:pink;
 }
 
-/* table of cars */
+/* table */
 .table-container table {
     width:100%;
     border-collapse:collapse;
@@ -118,13 +118,13 @@ input [type="button"] {
     border: 1px solid #ccc;
 }
 
-.add-new-car {
+.add-new-product {
     margin-top:1em;
 }
-/*end of table of cars */
+/* end of table */
 
 
-/* Forms */    /* Based on react-bootstrap */
+/* Forms */
 form label {
     font-weight:700;
     color:#444;
