@@ -1,6 +1,18 @@
 const router = require(`express`).Router()
 const productsModel = require(`../models/products`)
 
+const migrateLegacyProductField = async () => {
+    await productsModel.collection.updateMany(
+        {product: {$exists: true}, name: {$exists: false}},
+        {$rename: {product: `name`}}
+    )
+}
+
+// One-time migration for old documents that still use `product`
+migrateLegacyProductField().catch((err) => {
+    console.error(`Migration product->name failed:`, err.message)
+})
+
 // Seed initial products once if the collection is empty
 router.post(`/products/seed`, async (req, res, next) => {
     try {
@@ -10,12 +22,12 @@ router.post(`/products/seed`, async (req, res, next) => {
         }
 
         const data = await productsModel.insertMany([
-            {product: `Energy Efficient Kettle`, price: 49.99},
-            {product: `Solar Powered Outdoor Light`, price: 79.50},
-            {product: `Eco Washing Machine A+++`, price: 699.00},
-            {product: `Smart Thermostat`, price: 199.99},
-            {product: `Low Energy Air Fryer`, price: 129.95},
-            {product: `Compost Bin (Kitchen)`, price: 34.99}
+            {name: `Energy Efficient Kettle`, price: 49.99},
+            {name: `Solar Powered Outdoor Light`, price: 79.50},
+            {name: `Eco Washing Machine A+++`, price: 699.00},
+            {name: `Smart Thermostat`, price: 199.99},
+            {name: `Low Energy Air Fryer`, price: 129.95},
+            {name: `Compost Bin (Kitchen)`, price: 34.99}
         ])
 
         res.json(data)

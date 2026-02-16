@@ -10,7 +10,7 @@ export const ProductTable = props => {
             <thead>
             <tr>
                 <th>id</th>
-                <th>Product</th>
+                <th>Product Name</th>
                 <th>Price</th>
                 <th> </th>
             </tr>

@@ -6,7 +6,7 @@ export const ProductTableRow = props => {
     return (
         <tr>
             <td>{props.product._id}</td>
-            <td>{props.product.product}</td>
+            <td>{props.product.name}</td>
             <td>{props.product.price}</td>
             <td>
                 <Link className="green-button" to={"/EditProduct/" + props.product._id}>Edit</Link>
