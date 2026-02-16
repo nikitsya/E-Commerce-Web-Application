@@ -1,0 +1,26 @@
+body {
+    font-family: sans-serif;
+}
+
+/* Fill the entire browser window */
+.fullscreen {
+    display: flex;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* Center the content in the browser window */
+.fullscreen #container {
+    margin: auto;
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    font-size: 2rem;
+}
