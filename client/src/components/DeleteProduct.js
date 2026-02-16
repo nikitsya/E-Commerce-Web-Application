@@ -9,7 +9,7 @@ export const DeleteProduct = props => {
 
     useEffect(() => {
         axios.delete(`${SERVER_HOST}/products/${props.match.params.id}`)
-            .then(res => {
+            .then(() => {
                 setRedirectToDisplayAllProducts(true)
             })
             .catch(err => console.log(`${err.response.data}\n${err}`))
