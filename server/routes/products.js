@@ -1,11 +1,60 @@
-const mongoose = require(`mongoose`)
+const router = require(`express`).Router()
+const productsModel = require(`../models/products`)
 
-let productsSchema = new mongoose.Schema({
-        _id: {type: Number},
-        product: {type: String},
-        price: {type: Number}
-    }, {
-        collection: `products`
-    })
+// insert multiple documents into a collection
+productsModel.create([
+    { product: "Energy Efficient Kettle", price: 49.99 },
+    { product: "Solar Powered Outdoor Light", price: 79.50 },
+    { product: "Eco Washing Machine A+++", price: 699.00 },
+    { product: "Smart Thermostat", price: 199.99 },
+    { product: "Low Energy Air Fryer", price: 129.95 },
+    { product: "Compost Bin (Kitchen)", price: 34.99 }
+])
+    .then(data => {res.json(data)})
 
-module.exports = mongoose.model(`products`, productsSchema)
+// read all records
+router.get(`/products`, (req, res, next) => {
+    productsModel.find()
+        .then((data) => {
+            res.json(data)
+        })
+        .catch((err) => next(err))
+})
+
+// Read one record
+router.get(`/products/:id`, (req, res, next) => {
+    productsModel.findById(req.params.id)
+        .then(data => {
+            res.json(data)
+        })
+        .catch((err) => next(err))
+})
+
+// Add new record
+router.post(`/products`, (req, res, next) => {
+    productsModel.create(req.body)
+        .then(data => {
+            res.json(data)
+        })
+        .catch((err) => next(err))
+})
+
+// Update one record
+router.put(`/products/:id`, (req, res, next) => {
+    productsModel.findByIdAndUpdate(req.params.id, {$set: req.body})
+        .then(data => {
+            res.json(data)
+        })
+        .catch((err) => next(err))
+})
+
+// Delete one record
+router.delete(`/products/:id`, (req, res, next) => {
+    productsModel.findByIdAndDelete(req.params.id)
+        .then(data => {
+            res.json(data)
+        })
+        .catch((err) => next(err))
+})
+
+module.exports = router
