@@ -1,9 +1,8 @@
 const mongoose = require(`mongoose`)
 
 let productsSchema = new mongoose.Schema({
-        _id: {type: Number},
-        product: {type: String},
-        price: {type: Number}
+        product: {type: String, required: true, trim: true},
+        price: {type: Number, required: true, min: 0}
     }, {
         collection: `products`
     })

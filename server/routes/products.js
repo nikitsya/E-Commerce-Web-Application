@@ -1,16 +1,28 @@
 const router = require(`express`).Router()
 const productsModel = require(`../models/products`)
 
-// insert multiple documents into a collection
-productsModel.create([
-    { product: "Energy Efficient Kettle", price: 49.99 },
-    { product: "Solar Powered Outdoor Light", price: 79.50 },
-    { product: "Eco Washing Machine A+++", price: 699.00 },
-    { product: "Smart Thermostat", price: 199.99 },
-    { product: "Low Energy Air Fryer", price: 129.95 },
-    { product: "Compost Bin (Kitchen)", price: 34.99 }
-])
-    .then(data => {res.json(data)})
+// Seed initial products once if the collection is empty
+router.post(`/products/seed`, async (req, res, next) => {
+    try {
+        const count = await productsModel.countDocuments()
+        if (count > 0) {
+            return res.json({message: `Products already exist`, count})
+        }
+
+        const data = await productsModel.insertMany([
+            {product: `Energy Efficient Kettle`, price: 49.99},
+            {product: `Solar Powered Outdoor Light`, price: 79.50},
+            {product: `Eco Washing Machine A+++`, price: 699.00},
+            {product: `Smart Thermostat`, price: 199.99},
+            {product: `Low Energy Air Fryer`, price: 129.95},
+            {product: `Compost Bin (Kitchen)`, price: 34.99}
+        ])
+
+        res.json(data)
+    } catch (err) {
+        next(err)
+    }
+})
 
 // read all records
 router.get(`/products`, (req, res, next) => {

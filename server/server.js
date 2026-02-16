@@ -1,5 +1,7 @@
-// Load values from .env
-require(`dotenv`).config({path:`./config/.env`})
+const path = require(`path`)
+
+// Load values from .env using an absolute path so it works from any CWD
+require(`dotenv`).config({path: path.join(__dirname, `config`, `.env`)})
 
 require('./config/db')
 
