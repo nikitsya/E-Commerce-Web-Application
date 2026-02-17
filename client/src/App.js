@@ -7,12 +7,14 @@ import {DeleteProduct} from "./components/DeleteProduct"
 import {ResetDatabase} from "./components/ResetDatabase";
 import {Register} from "./components/Register";
 import "./css/App.css"
+import {Navigation} from "./components/Navigation";
 
 // Main app component with all routes
 export const App = () => {
     return (
         // BrowserRouter tracks URL changes in the browser
         <BrowserRouter>
+            <Navigation />
             <Switch>
                 <Route exact path="/Register" component={Register} />
                 <Route exact path="/ResetDatabase" component={ResetDatabase} />
