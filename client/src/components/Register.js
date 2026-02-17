@@ -4,7 +4,7 @@ import axios from "axios"
 import {Button} from "./Button"
 import {SERVER_HOST} from "../config/global_constants"
 
-export const Register = props => {
+export const Register = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -31,7 +31,7 @@ export const Register = props => {
         e.preventDefault()
 
         axios.post(`${SERVER_HOST}/users/register/${name}/${email}/${password}`)
-        .then(res => {
+        .then(() => {
             setIsRegistered(true)
         })
         .catch(err => console.log(`${err.response.data}\n${err}`))
