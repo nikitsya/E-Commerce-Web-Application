@@ -301,23 +301,34 @@ form input[readonly] {
     align-items: center;
     gap: 8px;
 }
-
 .top-nav-link {
     text-decoration: none;
     color: #2f3d2c;
     font-weight: 600;
     padding: 8px 12px;
-    border-radius: 8px;
+    border-radius: 999px;
 }
 
 .top-nav-link:hover {
     background-color: #eaf1df;
 }
 
-.top-nav-link-danger {
-    color: #8d3f22;
+.top-nav-action {
+    background-color: #6f8a55;
+    color: #fff;
 }
 
-.top-nav-link-danger:hover {
-    background-color: #f5e2d8;
+.top-nav-action:hover {
+    background-color: #5d7647;
+    color: #fff;
+}
+
+.top-nav-danger {
+    background-color: #9d5e3a;
+    color: #fff;
+}
+
+.top-nav-danger:hover {
+    background-color: #7e4a2c;
+    color: #fff;
 }
