@@ -8,13 +8,13 @@ export const ProductTableRow = props => {
 
     return (
         <tr>
-            <td>{props.product.name}</td>
-            <td>{props.product.price}</td>
-            <td>{firstImage ? <img className="product-thumb" src={firstImage} alt={props.product.name} /> : "-"}</td>
-            <td>{props.product.description || "-"}</td>
-            <td>{props.product.capacityMl ?? "-"}</td>
-            <td>{props.product.material || "-"}</td>
-            <td>{props.product.color || "-"}</td>
+            <td data-label="Product Name">{props.product.name}</td>
+            <td data-label="Price">{props.product.price}</td>
+            <td data-label="Images">{firstImage ? <img className="product-thumb" src={firstImage} alt={props.product.name} /> : "-"}</td>
+            <td data-label="Description">{props.product.description || "-"}</td>
+            <td data-label="Capacity (ml)">{props.product.capacityMl ?? "-"}</td>
+            <td data-label="Material">{props.product.material || "-"}</td>
+            <td data-label="Color">{props.product.color || "-"}</td>
             <td>
                 <Link className="green-button" to={"/EditProduct/" + props.product._id}>Edit</Link>
                 <Link className="red-button" to={"/DeleteProduct/" + props.product._id}>Delete</Link>
