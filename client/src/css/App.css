@@ -303,19 +303,28 @@ form input[readonly] {
 
 .top-nav-right {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
 }
+
+.top-nav-auth-row {
+    display: flex;
+    gap: 8px;
+}
+
+
 .top-nav-link {
     text-decoration: none;
     color: #2f3d2c;
     font-weight: 600;
     padding: 8px 10px;
     border-radius: 8px;
+    background-color: #edf2e3;
 }
 
 .top-nav-link:hover {
-    background-color: #eaf1df;
+    background-color: #dfe8cf;
 }
 
 .top-nav-action {
@@ -329,9 +338,14 @@ form input[readonly] {
 }
 
 .top-nav-danger {
+    display: block;
+    width: 100%;          
+    text-align: center;
+    padding: 8px 10px;
+    box-sizing: border-box;
     color: #8d3f22;
     border: 1px solid #d9b5a3;
-    background-color: #fff7f3;
+    background-color: #fff7f3;  
 }
 
 .top-nav-danger:hover {

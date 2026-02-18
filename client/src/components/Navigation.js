@@ -10,8 +10,10 @@ export const Navigation = () => {
                 <Link to="/DisplayAllProducts" className="top-nav-link">All Products</Link>
             </div>
             <div className="top-nav-right">
-                <Link to="/Login" className="top-nav-link">Login</Link>
-                <Link to="/Register" className="top-nav-link top-nav-action">Register</Link>
+                <div className="top-nav-auth-row">
+                    <Link to="/Login" className="top-nav-link">Login</Link>
+                    <Link to="/Register" className="top-nav-link top-nav-action">Register</Link>
+                </div>
                 <Link to="/ResetDatabase" className="top-nav-link top-nav-danger">Reset Database</Link>
             </div>
         </nav>
