@@ -177,7 +177,7 @@ form input[readonly] {
 }
 
 .table-container tbody tr:nth-child(odd) {
-    background-color: #f7f9f1;
+    background-color: #ecfac6;
 }
 
 .table-container tbody tr:nth-child(even) {
@@ -505,13 +505,14 @@ form input[readonly] {
     .top-nav {
         position: relative; /* Anchor dropdown sections */
         flex-wrap: wrap;
-        background-color: #6F8F34;
+     
     }
 
     .hamburger-btn {
         display: inline-flex; /* Show hamburger only on mobile */
         align-items: center;
         justify-content: center;
+        
     }
 
     .top-nav-left,
@@ -525,6 +526,7 @@ form input[readonly] {
     .top-nav-center.menu-open,
     .top-nav-right.menu-open {
         display: flex; /* Show sections when menu is open */
+       
     }
 
     .top-nav-left.menu-open,
@@ -532,6 +534,7 @@ form input[readonly] {
         flex-direction: column;
         gap: 8px;
         margin-top: 10px;
+        
     }
 
     .top-nav-center.menu-open {
