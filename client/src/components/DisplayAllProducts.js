@@ -5,7 +5,7 @@ import {ProductTable} from "./ProductTable"
 import {SERVER_HOST} from "../config/global_constants"
 
 
-export const DisplayAllProducts = () => {
+export const DisplayAllProducts = ({ searchName = "" }) => {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
@@ -15,14 +15,20 @@ export const DisplayAllProducts = () => {
             .catch(err => console.log(`${err.response.data}\n${err}`))
     }, [])
 
+    const normalizedSearch = searchName.trim().toLowerCase()
+
+    const filteredProducts = products.filter((product) =>
+        (product.name || "").toLowerCase().includes(normalizedSearch)
+    );
+
     return (
         <div className="form-container">
-
-            <div className="table-container">
-                <ProductTable products={products} />
-                <div className="add-new-product">
-                    <Link className="blue-button" to={"/AddProduct"}>Add New Product</Link>
-                </div>
+             <div className="table-container">
+                {filteredProducts.length === 0 ? (
+                    <p>No products found</p>
+                ) : (
+                    <ProductTable products={filteredProducts} />
+                )}
             </div>
         </div>
     )

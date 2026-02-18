@@ -352,3 +352,18 @@ form input[readonly] {
     background-color: #7e4a2c;
     color: #fff;
 }
+.top-nav-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 12px;
+}
+
+.top-nav-search {
+    width: 100%;
+    max-width: 320px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #c6cfb9;
+    border-radius: 8px;
+}
