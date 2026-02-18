@@ -295,18 +295,23 @@ form input[readonly] {
     gap: 10px;
 }
 
-.top-nav-left,
-.top-nav-right {
+.top-nav-left {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.top-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .top-nav-link {
     text-decoration: none;
     color: #2f3d2c;
     font-weight: 600;
-    padding: 8px 12px;
-    border-radius: 999px;
+    padding: 8px 10px;
+    border-radius: 8px;
 }
 
 .top-nav-link:hover {
@@ -324,8 +329,9 @@ form input[readonly] {
 }
 
 .top-nav-danger {
-    background-color: #9d5e3a;
-    color: #fff;
+    color: #8d3f22;
+    border: 1px solid #d9b5a3;
+    background-color: #fff7f3;
 }
 
 .top-nav-danger:hover {
