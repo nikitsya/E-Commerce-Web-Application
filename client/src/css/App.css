@@ -318,7 +318,12 @@ form input[readonly] {
     text-decoration: none;
     color: #2f3d2c;
     font-weight: 600;
-    padding: 8px 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 12px;
+    margin: 0;
     border-radius: 8px;
     background-color: #edf2e3;
 }
@@ -353,9 +358,16 @@ form input[readonly] {
     color: #fff;
 }
 .top-nav-center {
-    flex: 1;
+  
     display: flex;
-    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.top-nav-center .green-button {
+    height: 36px;
+    min-width: 90px;
+    margin: 0;           
     padding: 0 12px;
 }
 
