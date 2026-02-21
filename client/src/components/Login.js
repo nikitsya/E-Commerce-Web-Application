@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {Redirect, Link} from "react-router-dom"
 import axios from "axios"
 import {Button} from "./Button"
-import {SERVER_HOST} from "../config/global_constants"
+import { SERVER_HOST, ACCESS_LEVEL_GUEST } from "../config/global_constants"
 
 
 
@@ -21,8 +21,17 @@ export const Login = props => {
 
     const handleSubmit = e => {
         axios.post(`${SERVER_HOST}/users/login/${email}/${password}`)
-        .then(() => setIsLoggedIn(true))
-        .catch(err => console.log(`${err.response.data}\n${err}`))
+        .then(res => {
+            sessionStorage.name = res.data.name
+            sessionStorage.accessLevel = res.data.accessLevel
+            setIsLoggedIn(true)
+        })
+        .catch(err => {
+            // default if not logged in
+            sessionStorage.name = "GUEST"
+            sessionStorage.accessLevel = ACCESS_LEVEL_GUEST
+            console.log(`${err.response.data}\n${err}`)
+        })
     }
 
     return (

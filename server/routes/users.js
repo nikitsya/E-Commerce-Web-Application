@@ -10,7 +10,7 @@ router.post(`/users/reset_user_collection`, (req, res, next) => {
         const adminPassword = `123-qwe_QWE`
 
         bcrypt.hash(adminPassword, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (error, hash) => {
-            usersModel.create({name: "Administrator", email: "admin@admin.com", password: hash})
+            usersModel.create({name: "Administrator", email: "admin@admin.com", password: hash, accessLevel:parseInt(process.env.ACCESS_LEVEL_ADMIN)})
             .then(createData => res.json(createData))
             .catch(() => next(createError(500, `Failed to create Admin user for testing purposes`)))
         })
@@ -35,18 +35,28 @@ router.post(`/users/register/:name/:email/:password`, (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.post(`/users/login/:email/:password`, (req, res, next) => {
-    usersModel.findOne({email: req.params.email})
-    .then(data => {
-        bcrypt.compare(req.params.password, data.password, (err, result) => {
-            if(result) {
-                res.json({name: data.name})
-            } else {
-                next(createError(403, `User is not logged in`))
-            }
-        })
+router.post(`/users/login/:email/:password`, (req, res) => {
+    usersModel.findOne({email: req.params.email}, (error, data) => 
+    {
+        if(data)
+        {
+            bcrypt.compare(req.params.password, data.password, (err, result) =>
+            {
+                if(result) 
+                {
+                    res.json({name: data.name, accessLevel:data.accessLevel})
+                } else 
+                {
+                res.json({errorMessage: `User is not logged in`})
+                }
+            })
+        }
+        else
+        {
+            console.log("not found in db")
+            res.json({errorMessage:`User is not logged in`})
+        }
     })
-    .catch(() => next(createError(403, `User is not logged in`)))
 })
 
 router.post(`/users/logout`, (req, res) => {
