@@ -40,9 +40,15 @@ export const Navigation = ({ searchName, setSearchName }) => {
 
             <div className={"top-nav-right " + (isMenuOpen ? "menu-open" : "")}>
                 <div className="top-nav-auth-row">
+                        {sessionStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
+                    <Link to="/Logout" className="top-nav-link" onClick={closeMenu}>Logout</Link>
+                ) : (
+                    <>
                     <Link to="/Login" className="top-nav-link" onClick={closeMenu}>Login</Link>
                     <Link to="/Register" className="top-nav-link top-nav-action" onClick={closeMenu}>Register</Link>
-                </div>
+                </>
+                )}
+            </div>
                 <Link to="/ResetDatabase" className="top-nav-link top-nav-danger" onClick={closeMenu}>Reset Database</Link>
             </div>
         </nav>
