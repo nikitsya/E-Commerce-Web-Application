@@ -1,5 +1,7 @@
 import React from "react"
 import {Link} from "react-router-dom"
+import { ACCESS_LEVEL_ADMIN } from "../config/global_constants"
+
 
 
 export const ProductTableRow = props => {
@@ -22,9 +24,12 @@ export const ProductTableRow = props => {
             <td data-label="Material">{props.product.material || "-"}</td>
             <td data-label="Color">{props.product.color || "-"}</td>
             <td data-label="Actions" onClick={stopRowClick}>
-            
-                <Link className="green-button" to={"/EditProduct/" + props.product._id}>Edit</Link>
-                <Link className="red-button" to={"/DeleteProduct/" + props.product._id}>Delete</Link>
+
+            {/* Edit and Delete only for ADMIN */}
+            {sessionStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? 
+                <Link className="green-button" to={"/EditProduct/" + props.product._id}>Edit</Link> : null}  
+            {sessionStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?    
+                <Link className="red-button" to={"/DeleteProduct/" + props.product._id}>Delete</Link> : null}  
             </td>
         </tr>
     )
