@@ -26,7 +26,7 @@ router.post(`/users/register/:name/:email/:password`, (req, res, next) => {
             next(createError(403, `User already exists`))
         } else {
             bcrypt.hash(req.params.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (error, hash) => {
-                usersModel.create({name: req.params.name, email: req.params.email, password: hash})
+                usersModel.create({name: req.params.name, email: req.params.email, password: hash, accessLevel: parseInt(process.env.ACCESS_LEVEL_CUSTOMER)})
                 .then(data => 
                 {
                     req.session.user = {email: data.email, accessLevel:data.accessLevel}

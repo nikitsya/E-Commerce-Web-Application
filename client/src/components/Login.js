@@ -23,6 +23,10 @@ export const Login = props => {
         axios.defaults.withCredentials = true // needed for sessions to work
         axios.post(`${SERVER_HOST}/users/login/${email}/${password}`)
         .then(res => {
+            if (res.data.errorMessage) {
+                throw new Error(res.data.errorMessage)
+            }
+
             sessionStorage.name = res.data.name
             sessionStorage.accessLevel = res.data.accessLevel
             setIsLoggedIn(true)
