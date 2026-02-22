@@ -11,7 +11,7 @@ import {Navigation} from "./components/Navigation"
 import {Login} from "./components/Login"
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 import {LoggedInRoute} from "./components/LoggedInRoute"
-import {Logout} from "./components/Logout"
+
 
 
 
@@ -36,7 +36,7 @@ export const App = () => {
                 <Route exact path="/" render={() => <DisplayAllProducts searchName={searchName} />} />
                 <Route exact path="/DisplayAllProducts" render={() => <DisplayAllProducts searchName={searchName} />} />
 
-                <LoggedInRoute exact path="/Logout" component={Logout} />
+                
                 <LoggedInRoute exact path="/AddProduct" component={AddProduct} />
                 <LoggedInRoute exact path="/EditProduct/:id" component={EditProduct} />
                 <LoggedInRoute exact path="/DeleteProduct/:id" component={DeleteProduct} />

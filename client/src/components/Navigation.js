@@ -1,7 +1,7 @@
 import React, {useState} from "react"; // useState controls mobile menu open/close
 import {Link, withRouter} from "react-router-dom";
 import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN } from "../config/global_constants"
-
+import { Logout } from "./Logout"
 
 
 
@@ -48,7 +48,7 @@ const NavigationComponent = ({ searchName, setSearchName }) => {
             <div className={"top-nav-right " + (isMenuOpen ? "menu-open" : "")}>
                 <div className="top-nav-auth-row">
                          {isLoggedIn ? (
-                    <Link to="/Logout" className="top-nav-link" onClick={closeMenu}>Logout</Link>
+                    <Logout />
                 ) : (
                     <>
                     <Link to="/Login" className="top-nav-link" onClick={closeMenu}>Login</Link>
