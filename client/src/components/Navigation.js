@@ -1,14 +1,18 @@
 import React, {useState} from "react"; // useState controls mobile menu open/close
-import {Link} from "react-router-dom";
-import {ACCESS_LEVEL_GUEST} from "../config/global_constants"
+import {Link, withRouter} from "react-router-dom";
+import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN } from "../config/global_constants"
 
 
 
 
-export const Navigation = ({ searchName, setSearchName }) => {
+
+const NavigationComponent = ({ searchName, setSearchName }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu state
 
     const closeMenu = () => setIsMenuOpen(false); // Close menu after link click
+
+    const isLoggedIn = Number(sessionStorage.accessLevel) > ACCESS_LEVEL_GUEST
+    const isAdmin = Number(sessionStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
 
     return (
         <nav className="top-nav">
@@ -23,7 +27,8 @@ export const Navigation = ({ searchName, setSearchName }) => {
             </button>
             <div className={"top-nav-left " + (isMenuOpen ? "menu-open" : "")}>
                 <Link to="/" className="top-nav-link" onClick={closeMenu}>Home</Link>
-                <Link to="/AddProduct" className="top-nav-link" onClick={closeMenu}>Add</Link>
+                {isAdmin ? 
+                <Link to="/AddProduct" className="top-nav-link" onClick={closeMenu}>Add</Link> : null}
                 <Link to="/DisplayAllProducts" className="top-nav-link" onClick={closeMenu}>All Products</Link>
             </div>
 
@@ -42,7 +47,7 @@ export const Navigation = ({ searchName, setSearchName }) => {
 
             <div className={"top-nav-right " + (isMenuOpen ? "menu-open" : "")}>
                 <div className="top-nav-auth-row">
-                        {sessionStorage.accessLevel > ACCESS_LEVEL_GUEST ? (
+                         {isLoggedIn ? (
                     <Link to="/Logout" className="top-nav-link" onClick={closeMenu}>Logout</Link>
                 ) : (
                     <>
@@ -56,3 +61,4 @@ export const Navigation = ({ searchName, setSearchName }) => {
         </nav>
     );
 };
+export const Navigation = withRouter(NavigationComponent)
