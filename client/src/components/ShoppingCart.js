@@ -23,6 +23,11 @@ export const ShoppingCart = ({ cartItems, onUpdateQuantity, onRemoveItem, onClea
     return (
         <div className="form-container">
             <h2>Shopping Cart</h2>
+
+            <div className="cart-list"></div>
+
+            <div className="cart-summary"></div>
+
         </div>
     )
 }
