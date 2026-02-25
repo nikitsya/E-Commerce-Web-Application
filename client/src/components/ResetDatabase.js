@@ -19,13 +19,13 @@ export const ResetDatabase = props => {
     return (
         <form className="form-container" noValidate = {true} id = "loginOrRegistrationForm">
 
-            {isReset ? <Redirect to="/DisplayAllCars"/> : null}
+            {isReset ? <Redirect to="/DisplayAllProducts"/> : null}
 
             <p>"Reset User Database" is only for testing purposes.<br/>All code on the client-side and server-side relating to resetting the database should be removed from any development release</p>
             <Button value="Reset User Database" className="red-button" onClick={resetUsersModel}/> <br/><br/>
             <p>Reset the database and set up an administrator with:<br/> * email <strong>admin@admin.com</strong><br/> * password <strong>123-qwe_QWE</strong></p>
 
-            <Link className="red-button" to={"/DisplayAllCars"}>Cancel</Link>
+            <Link className="red-button" to={"/DisplayAllProducts"}>Cancel</Link>
         </form>
     )
 }
