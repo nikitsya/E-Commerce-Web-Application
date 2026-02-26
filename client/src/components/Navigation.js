@@ -4,9 +4,7 @@ import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN } from "../config/global_constant
 import { Logout } from "./Logout"
 
 
-
-
-const NavigationComponent = ({ searchName, setSearchName }) => {
+const NavigationComponent = ({ searchName, setSearchName, cartItemsCount = 0 }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu state
 
     const closeMenu = () => setIsMenuOpen(false); // Close menu after link click
@@ -30,6 +28,7 @@ const NavigationComponent = ({ searchName, setSearchName }) => {
                 {isAdmin ? 
                 <Link to="/AddProduct" className="top-nav-link" onClick={closeMenu}>Add</Link> : null}
                 <Link to="/DisplayAllProducts" className="top-nav-link" onClick={closeMenu}>All Products</Link>
+                <Link to="/Cart" className="top-nav-link" onClick={closeMenu}>Cart ({cartItemsCount})</Link>
             </div>
 
             <div className={"top-nav-center " + (isMenuOpen ? "menu-open" : "")}>
