@@ -4,7 +4,7 @@ import {ProductTable} from "./ProductTable"
 import {SERVER_HOST} from "../config/global_constants"
 
 
-export const DisplayAllProducts = ({searchName = "", onAddToCart}) => {
+export const DisplayAllProducts = ({searchName = "", cartItems = [], onAddToCart}) => {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export const DisplayAllProducts = ({searchName = "", onAddToCart}) => {
                 {filteredProducts.length === 0 ? (
                     <p>No products found</p>
                 ) : (
-                    <ProductTable products={filteredProducts} onAddToCart={onAddToCart}/>
+                    <ProductTable products={filteredProducts} cartItems={cartItems} onAddToCart={onAddToCart}/>
                 )}
             </div>
         </div>
