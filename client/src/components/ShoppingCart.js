@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const formatPrice = (value) => Number(value).toFixed(2)
 
-export const ShoppingCart = ({ cartItems, onUpdateQuantity, onRemoveItem, onClearCart }) => {
+export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClearCart}) => {
     const items = Array.isArray(cartItems) ? cartItems : []
 
     const total = items.reduce((sum, item) => {
@@ -36,7 +36,7 @@ export const ShoppingCart = ({ cartItems, onUpdateQuantity, onRemoveItem, onClea
                         <div className="cart-item" key={item._id}>
                             <div className="cart-item-image-wrap">
                                 {item.image
-                                    ? <img className="product-thumb cart-item-image" src={item.image} alt={item.name} />
+                                    ? <img className="product-thumb cart-item-image" src={item.image} alt={item.name}/>
                                     : <div className="cart-item-no-image">No image</div>
                                 }
                             </div>
@@ -50,13 +50,15 @@ export const ShoppingCart = ({ cartItems, onUpdateQuantity, onRemoveItem, onClea
                                         type="button"
                                         className="blue-button"
                                         onClick={() => onUpdateQuantity(item._id, quantity - 1)}
-                                    >-</button>
+                                    >-
+                                    </button>
                                     <span className="cart-quantity-value">{quantity}</span>
                                     <button
                                         type="button"
                                         className="blue-button"
                                         onClick={() => onUpdateQuantity(item._id, quantity + 1)}
-                                    >+</button>
+                                    >+
+                                    </button>
                                 </div>
 
                                 <p><strong>Subtotal:</strong> ${formatPrice(subtotal)}</p>
