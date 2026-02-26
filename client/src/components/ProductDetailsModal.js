@@ -1,10 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const ProductDetailsModal = ({ product, onClose }) => {
+export const ProductDetailsModal = ({ product, onClose, onAddToCart }) => {
   if (!product) return null;
 
   const images = Array.isArray(product.images) ? product.images : [];
+  const handleAddToCart = () => {
+    if (typeof onAddToCart === "function") {
+      onAddToCart(product);
+    }
+  }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -27,6 +32,7 @@ export const ProductDetailsModal = ({ product, onClose }) => {
         </div>
 
         <div className="modal-actions">
+          <button type="button" className="blue-button" onClick={handleAddToCart}>Add to Cart</button>
           <Link className="green-button" to={"/EditProduct/" + product._id}>Edit</Link>
           <Link className="red-button" to={"/DeleteProduct/" + product._id}>Delete</Link>
         </div>
