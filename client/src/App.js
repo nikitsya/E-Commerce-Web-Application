@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {BrowserRouter, Route, Switch} from "react-router-dom"
+import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom"
 import {DisplayAllProducts} from "./components/DisplayAllProducts"
 import {AddProduct} from "./components/AddProduct"
 import {EditProduct} from "./components/EditProduct"
@@ -9,7 +9,7 @@ import {Register} from "./components/Register"
 import "./css/App.css"
 import {Navigation} from "./components/Navigation"
 import {Login} from "./components/Login"
-import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
+import {ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_GUEST} from "./config/global_constants"
 import {LoggedInRoute} from "./components/LoggedInRoute"
 import {ShoppingCart} from "./components/ShoppingCart"
 import {useShoppingCart} from "./hooks/useShoppingCart"
@@ -33,6 +33,8 @@ export const App = () => {
         localStorage.token = null
     }
 
+    const isAdmin = Number(sessionStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
+
     return (
         // BrowserRouter tracks URL changes in the browser
         <BrowserRouter>
@@ -49,31 +51,33 @@ export const App = () => {
                 <Route
                     exact
                     path="/"
-                    render={() => <DisplayAllProducts searchName={searchName} onAddToCart={addToCart}/>}
+                    render={() => <DisplayAllProducts searchName={searchName} onAddToCart={isAdmin ? undefined : addToCart}/>}
                 />
                 <Route
                     exact
                     path="/DisplayAllProducts"
-                    render={() => <DisplayAllProducts searchName={searchName} onAddToCart={addToCart}/>}
+                    render={() => <DisplayAllProducts searchName={searchName} onAddToCart={isAdmin ? undefined : addToCart}/>}
                 />
                 <Route
                     exact
                     path="/Cart"
-                    render={() => (
+                    render={() => (isAdmin ? (
+                        <Redirect to="/DisplayAllProducts"/>
+                    ) : (
                         <ShoppingCart
                             cartItems={cartItems}
                             onUpdateQuantity={updateCartItemQuantity}
                             onRemoveItem={removeCartItem}
                             onClearCart={clearCart}
                         />
-                    )}
+                    ))}
                 />
 
                 <LoggedInRoute exact path="/AddProduct" component={AddProduct}/>
                 <LoggedInRoute exact path="/EditProduct/:id" component={EditProduct}/>
                 <LoggedInRoute exact path="/DeleteProduct/:id" component={DeleteProduct}/>
 
-                <Route render={() => <DisplayAllProducts searchName={searchName} onAddToCart={addToCart}/>}/>
+                <Route render={() => <DisplayAllProducts searchName={searchName} onAddToCart={isAdmin ? undefined : addToCart}/>}/>
             </Switch>
         </BrowserRouter>
     )
