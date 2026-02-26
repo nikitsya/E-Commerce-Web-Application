@@ -34,13 +34,16 @@ export const ShoppingCart = ({ cartItems, onUpdateQuantity, onRemoveItem, onClea
 
                     return (
                         <div className="cart-item" key={item._id}>
-                            <h3>{item.name}</h3>
-
                             <div className="cart-item-image-wrap">
                                 {item.image
                                     ? <img className="product-thumb cart-item-image" src={item.image} alt={item.name} />
                                     : <div className="cart-item-no-image">No image</div>
                                 }
+                            </div>
+
+                            <div className="cart-item-info">
+                                <h3>{item.name}</h3>
+                                <p><strong>Price:</strong> ${formatPrice(price)}</p>
                             </div>
                         </div>
                     )
