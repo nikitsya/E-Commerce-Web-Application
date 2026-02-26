@@ -32,7 +32,17 @@ export const ProductTableRow = props => {
             <td data-label="Material">{props.product.material || "-"}</td>
             <td data-label="Color">{props.product.color || "-"}</td>
             <td data-label="Actions" onClick={stopRowClick}>
-            {canAddToCart ? <button type="button" className="blue-button" onClick={handleAddToCartClick}>Add to Cart</button> : null}
+            {canAddToCart ? (
+                <button
+                    type="button"
+                    className="icon-button add-to-cart-icon-button"
+                    onClick={handleAddToCartClick}
+                    aria-label="Add to Cart"
+                    title="Add to Cart"
+                >
+                    <img className="add-to-cart-icon" src="/images/buttons/add-to-cart.png" alt="Add to Cart"/>
+                </button>
+            ) : null}
 
             {/* Edit and Delete only for ADMIN */}
             {isAdmin ? 
