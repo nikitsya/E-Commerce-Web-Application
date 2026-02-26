@@ -1,5 +1,5 @@
 import React from "react"
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
 
 const formatPrice = (value) => Number(value).toFixed(2)
 
@@ -50,14 +50,16 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
                                         type="button"
                                         className="blue-button"
                                         onClick={() => onUpdateQuantity(item._id, quantity - 1)}
-                                    >-
+                                    >
+                                        -
                                     </button>
                                     <span className="cart-quantity-value">{quantity}</span>
                                     <button
                                         type="button"
                                         className="blue-button"
                                         onClick={() => onUpdateQuantity(item._id, quantity + 1)}
-                                    >+
+                                    >
+                                        +
                                     </button>
                                 </div>
 
@@ -83,7 +85,6 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
                     <Link className="green-button" to="/DisplayAllProducts">Continue Shopping</Link>
                 </div>
             </div>
-
         </div>
     )
 }
