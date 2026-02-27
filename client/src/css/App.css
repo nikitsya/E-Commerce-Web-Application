@@ -285,6 +285,8 @@ form input[readonly] {
 .table-container thead th:nth-child(2),
 .table-container tbody td:nth-child(2) {
     padding-left: 18px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .table-sort-btn {
@@ -330,8 +332,53 @@ form input[readonly] {
 .product-thumb {
     width: 176px;
     height: 176px;
+    max-width: 100%;
     object-fit: cover;
     border-radius: 6px;
+}
+
+/* Narrow desktop/tablet: keep image and text separated */
+@media (min-width: 771px) and (max-width: 930px) {
+    .table-container thead th:nth-child(1),
+    .table-container tbody td:nth-child(1) {
+        width: 24%;
+    }
+
+    .table-container thead th:nth-child(2),
+    .table-container tbody td:nth-child(2) {
+        width: 22%;
+        padding-left: 12px;
+    }
+
+    .table-container thead th:nth-child(3),
+    .table-container tbody td:nth-child(3) {
+        width: 11%;
+    }
+
+    .table-container thead th:nth-child(4),
+    .table-container tbody td:nth-child(4) {
+        width: 12%;
+    }
+
+    .table-container thead th:nth-child(5),
+    .table-container tbody td:nth-child(5) {
+        width: 11%;
+    }
+
+    .table-container thead th:nth-child(6),
+    .table-container tbody td:nth-child(6) {
+        width: 11%;
+    }
+
+    .table-container thead th:nth-child(7),
+    .table-container tbody td:nth-child(7) {
+        width: 9%;
+    }
+
+    .table-container tbody .product-thumb {
+        width: 152px;
+        height: 152px;
+    }
 }
 
 .add-new-product {
@@ -654,29 +701,8 @@ form input[readonly] {
     }
 }
 
-/* Tablet */
-@media (min-width: 600px) and (max-width: 768px) {
-    .container {
-        padding: 14px;
-    }
-
-    .form-container,
-    .table-container {
-        max-width: 100%;
-    }
-
-    .table-container table {
-        min-width: 680px;
-    }
-
-    .table-container thead th,
-    .table-container tbody td {
-        font-size: 13px;
-    }
-}
-
 /* Desktop */
-@media (min-width: 769px) {
+@media (min-width: 771px) {
     .container {
         padding: 20px;
     }
@@ -687,9 +713,9 @@ form input[readonly] {
 }
 
 
-/* Mobile Card Layout (≤ 599px) */
+/* Mobile Card Layout (≤ 770px) */
 
-@media (max-width: 599px) {
+@media (max-width: 770px) {
     .catalog-toolbar,
     .catalog-filters {
         padding: 12px;
