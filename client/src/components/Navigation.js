@@ -29,8 +29,6 @@ const NavigationComponent = ({cartItemsCount = 0}) => {
                     <Link to="/" className="top-nav-logo-link" onClick={closeMenu} aria-label="Home">
                         <img className="top-nav-logo" src="/icons/logo.png" alt="Emerald Sip logo"/>
                     </Link>
-                    {isAdmin ?
-                        <Link to="/AddProduct" className="top-nav-link" onClick={closeMenu}>Add</Link> : null}
                 </div>
 
                 <div className={"top-nav-right " + (isMenuOpen ? "menu-open" : "")}>
