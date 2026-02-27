@@ -255,6 +255,15 @@ form input[readonly] {
     text-align: center;
 }
 
+.table-container tbody td:nth-child(1) {
+    padding-right: 18px;
+}
+
+.table-container thead th:nth-child(2),
+.table-container tbody td:nth-child(2) {
+    padding-left: 18px;
+}
+
 .table-sort-btn {
     display: inline-flex;
     align-items: center;
@@ -694,6 +703,12 @@ form input[readonly] {
 
         padding: 6px 0;
         border: 0;
+    }
+
+    .table-container tbody td:nth-child(1),
+    .table-container tbody td:nth-child(2) {
+        padding-left: 0;
+        padding-right: 0;
     }
 
     /* Hide unnecessary columns on mobile */
