@@ -38,11 +38,7 @@ export const App = () => {
     return (
         // BrowserRouter tracks URL changes in the browser
         <BrowserRouter>
-            <Navigation
-                searchName={searchName}
-                setSearchName={setSearchName}
-                cartItemsCount={cartItemsCount}
-            />
+            <Navigation cartItemsCount={cartItemsCount}/>
             <Switch>
                 <Route exact path="/Register" component={Register}/>
                 <Route exact path="/Login" component={Login}/>
@@ -54,6 +50,7 @@ export const App = () => {
                     render={() => (
                         <DisplayAllProducts
                             searchName={searchName}
+                            setSearchName={setSearchName}
                             cartItems={cartItems}
                             onAddToCart={isAdmin ? undefined : addToCart}
                         />
@@ -65,6 +62,7 @@ export const App = () => {
                     render={() => (
                         <DisplayAllProducts
                             searchName={searchName}
+                            setSearchName={setSearchName}
                             cartItems={cartItems}
                             onAddToCart={isAdmin ? undefined : addToCart}
                         />
@@ -93,6 +91,7 @@ export const App = () => {
                     render={() => (
                         <DisplayAllProducts
                             searchName={searchName}
+                            setSearchName={setSearchName}
                             cartItems={cartItems}
                             onAddToCart={isAdmin ? undefined : addToCart}
                         />
