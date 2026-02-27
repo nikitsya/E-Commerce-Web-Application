@@ -2,7 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {ACCESS_LEVEL_ADMIN} from "../config/global_constants"
 
-export const ProductDetailsModal = ({product, onClose, onAddToCart}) => {
+export const ProductDetailsModal = ({product, onClose, onAddToCart, isInCart = false}) => {
     if (!product) return null;
 
     const images = Array.isArray(product.images) ? product.images : [];
@@ -40,10 +40,14 @@ export const ProductDetailsModal = ({product, onClose, onAddToCart}) => {
                             type="button"
                             className="icon-button add-to-cart-icon-button"
                             onClick={handleAddToCart}
-                            aria-label="Add to Cart"
-                            title="Add to Cart"
+                            aria-label={isInCart ? "Added to Cart" : "Add to Cart"}
+                            title={isInCart ? "Added to Cart" : "Add to Cart"}
                         >
-                            <img className="add-to-cart-icon" src="/images/buttons/add-to-cart.png" alt="Add to Cart"/>
+                            <img
+                                className="add-to-cart-icon"
+                                src={isInCart ? "/images/buttons/added_to_cart.png" : "/images/buttons/add-to-cart.png"}
+                                alt={isInCart ? "Added to Cart" : "Add to Cart"}
+                            />
                         </button>
                     ) : null}
                     {isAdmin ? <Link className="green-button" to={"/EditProduct/" + product._id}>Edit</Link> : null}
