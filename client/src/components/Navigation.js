@@ -29,7 +29,6 @@ const NavigationComponent = ({searchName, setSearchName, cartItemsCount = 0}) =>
                     <Link to="/" className="top-nav-link" onClick={closeMenu}>Home</Link>
                     {isAdmin ?
                         <Link to="/AddProduct" className="top-nav-link" onClick={closeMenu}>Add</Link> : null}
-                    <Link to="/DisplayAllProducts" className="top-nav-link" onClick={closeMenu}>All Products</Link>
                     {!isAdmin ? <Link to="/Cart" className="top-nav-link" onClick={closeMenu}>Cart
                         ({cartItemsCount})</Link> : null}
                 </div>
