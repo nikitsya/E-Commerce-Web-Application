@@ -145,6 +145,11 @@ button.blue-button {
     gap: 8px;
 }
 
+.admin-actions-wrap {
+    flex-direction: column;
+    gap: 6px;
+}
+
 .product-actions-wrap .icon-button {
     margin: 0;
 }

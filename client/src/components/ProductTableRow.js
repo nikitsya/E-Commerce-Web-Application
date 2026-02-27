@@ -34,7 +34,7 @@ export const ProductTableRow = props => {
             <td data-label="Material">{props.product.material || "-"}</td>
             <td data-label="Color">{props.product.color || "-"}</td>
             <td data-label="Actions" onClick={stopRowClick}>
-                <div className="product-actions-wrap">
+                <div className={"product-actions-wrap " + (isAdmin ? "admin-actions-wrap" : "")}>
                     {canAddToCart ? (
                         <button
                             type="button"
