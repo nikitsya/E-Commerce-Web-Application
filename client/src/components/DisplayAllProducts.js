@@ -57,6 +57,7 @@ export const DisplayAllProducts = ({searchName = "", setSearchName = () => {}, c
     const [isColorFilterOpen, setIsColorFilterOpen] = useState(false)
     const [priceFilter, setPriceFilter] = useState("any")
     const [capacityFilter, setCapacityFilter] = useState("any")
+    const [sortConfig, setSortConfig] = useState({column: "name", direction: "asc"})
 
     useEffect(() => {
         //axios.defaults.withCredentials = true // needed for sessions to work
@@ -299,7 +300,13 @@ export const DisplayAllProducts = ({searchName = "", setSearchName = () => {}, c
                         {filteredProducts.length === 0 ? (
                             <p className="catalog-empty">No products found for the selected filters.</p>
                         ) : (
-                            <ProductTable products={filteredProducts} cartItems={cartItems} onAddToCart={onAddToCart}/>
+                            <ProductTable
+                                products={filteredProducts}
+                                cartItems={cartItems}
+                                onAddToCart={onAddToCart}
+                                sortConfig={sortConfig}
+                                onSortChange={setSortConfig}
+                            />
                         )}
                     </div>
                 </section>
