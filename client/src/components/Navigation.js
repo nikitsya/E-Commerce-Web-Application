@@ -31,8 +31,6 @@ const NavigationComponent = ({cartItemsCount = 0}) => {
                     </Link>
                     {isAdmin ?
                         <Link to="/AddProduct" className="top-nav-link" onClick={closeMenu}>Add</Link> : null}
-                    {!isAdmin ? <Link to="/Cart" className="top-nav-link" onClick={closeMenu}>Cart
-                        ({cartItemsCount})</Link> : null}
                 </div>
 
                 <div className={"top-nav-right " + (isMenuOpen ? "menu-open" : "")}>
@@ -46,6 +44,8 @@ const NavigationComponent = ({cartItemsCount = 0}) => {
                                       onClick={closeMenu}>Register</Link>
                             </>
                         )}
+                        {!isAdmin ? <Link to="/Cart" className="top-nav-link top-nav-cart-link" onClick={closeMenu}>Cart
+                            ({cartItemsCount})</Link> : null}
                     </div>
                     <Link to="/ResetDatabase" className="top-nav-link top-nav-danger" onClick={closeMenu}>Reset
                         Database</Link>

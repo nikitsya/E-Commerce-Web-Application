@@ -792,6 +792,10 @@ form input[readonly] {
     gap: 8px;
 }
 
+.top-nav-cart-link {
+    margin-left: auto;
+}
+
 
 .top-nav-link {
     text-decoration: none;
@@ -953,6 +957,10 @@ form input[readonly] {
 
     .top-nav-auth-row {
         flex-direction: column; /* Stack Login/Register on mobile */
+    }
+
+    .top-nav-cart-link {
+        margin-left: 0;
     }
 
     .top-nav-search {
