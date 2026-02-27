@@ -1,10 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Link} from "react-router-dom";
 import {ACCESS_LEVEL_ADMIN} from "../config/global_constants"
 
 const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
 
 export const ProductDetailsModal = ({product, onClose, onAddToCart, isInCart = false}) => {
+    useEffect(() => {
+        if (!product) {
+            return
+        }
+
+        const originalBodyOverflow = document.body.style.overflow
+        const originalHtmlOverflow = document.documentElement.style.overflow
+
+        document.body.style.overflow = "hidden"
+        document.documentElement.style.overflow = "hidden"
+
+        return () => {
+            document.body.style.overflow = originalBodyOverflow
+            document.documentElement.style.overflow = originalHtmlOverflow
+        }
+    }, [product])
+
     if (!product) return null;
 
     const images = Array.isArray(product.images) ? product.images : [];
