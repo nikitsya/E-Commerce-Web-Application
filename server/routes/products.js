@@ -139,7 +139,7 @@ const seedProductsIfEmpty = async () => {
             description: `Premium stainless steel reusable bottle with matte dark finish. Keeps drinks cold for up to 24 hours and hot for up to 12 hours.`,
             capacityMl: 750,
             material: `Steel`,
-            color: `Midnight Black`
+            color: `Black`
         },
         {
             name: `Classic Steel Loop Bottle`,
@@ -157,7 +157,7 @@ const seedProductsIfEmpty = async () => {
             description: `Brushed steel bottle with eco-friendly silicone carry loop. Compact and sustainable hydration solution.`,
             capacityMl: 600,
             material: `Steel`,
-            color: `Silver-Green`
+            color: `Silver`
         },
         {
             name: `Minimal White Bottle`,
@@ -175,7 +175,7 @@ const seedProductsIfEmpty = async () => {
             description: `Deep blue insulated bottle designed for travel and outdoor activities. Durable and leak-proof.`,
             capacityMl: 750,
             material: `Steel`,
-            color: `Ocean Blue`
+            color: `Blue`
         },
         {
             name: `Soft White Outdoor Bottle`,
@@ -184,7 +184,7 @@ const seedProductsIfEmpty = async () => {
             description: `Scratch-resistant matte white bottle built for hiking and adventure.`,
             capacityMl: 750,
             material: `Steel`,
-            color: `Soft White`
+            color: `White`
         },
         {
             name: `Coastal Steel Bottle`,
@@ -193,7 +193,7 @@ const seedProductsIfEmpty = async () => {
             description: `Premium double-wall stainless steel bottle inspired by coastal landscapes.`,
             capacityMl: 750,
             material: `Steel`,
-            color: `Brushed Silver`
+            color: `Silver`
         },
         {
             name: `Glass Tea Infuser Bottle`,
@@ -210,8 +210,8 @@ const seedProductsIfEmpty = async () => {
             images: [`/images/products/bluewater-sweden-p2lQtAPvTtQ-unsplash.jpg`],
             description: `Stylish amber-tinted glass bottle with removable infuser for tea and fruit drinks.`,
             capacityMl: 550,
-            material: `Glass`,
-            color: `Amber`
+            material: `Steel`,
+            color: `Silver`
         },
         {
             name: `Forest Glass Bottle`,
@@ -229,7 +229,7 @@ const seedProductsIfEmpty = async () => {
             description: `Insulated stainless steel bottle with smooth navy coating. Keeps drinks at ideal temperature for hours.`,
             capacityMl: 750,
             material: `Steel`,
-            color: `Navy`
+            color: `Silver`
         },
         {
             name: `Pure Blue Bottle`,
@@ -238,7 +238,7 @@ const seedProductsIfEmpty = async () => {
             description: `Lightweight reusable bottle with soft-touch blue sleeve. Perfect for commuting.`,
             capacityMl: 500,
             material: `Glass`,
-            color: `Light Blue`
+            color: `Blue`
         },
         {
             name: `Sky Sport Bottle`,
@@ -247,7 +247,7 @@ const seedProductsIfEmpty = async () => {
             description: `Minimalist reusable bottle with protective silicone sleeve and sport-style cap. Lightweight and easy to carry.`,
             capacityMl: 600,
             material: `Glass + Silicone`,
-            color: `Sky Blue`
+            color: `Blue`
         },
         {
             name: `Smart Filter Bottle`,
@@ -273,8 +273,8 @@ const seedProductsIfEmpty = async () => {
             images: [`/images/products/ocean-stone.jpg`],
             description: `Premium reusable bottle with unique ocean-inspired stone texture design. Durable and eye-catching.`,
             capacityMl: 650,
-            material: `Recycled Glass`,
-            color: `Ocean Blue`
+            material: `Glass`,
+            color: `Blue`
         }
     ])
 
