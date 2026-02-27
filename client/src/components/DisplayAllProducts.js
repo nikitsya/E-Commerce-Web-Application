@@ -26,14 +26,12 @@ export const DisplayAllProducts = ({searchName = "", cartItems = [], onAddToCart
     );
 
     return (
-        <div className="form-container">
-            <div className="table-container">
-                {filteredProducts.length === 0 ? (
-                    <p>No products found</p>
-                ) : (
-                    <ProductTable products={filteredProducts} cartItems={cartItems} onAddToCart={onAddToCart}/>
-                )}
-            </div>
+        <div className="table-container">
+            {filteredProducts.length === 0 ? (
+                <p>No products found</p>
+            ) : (
+                <ProductTable products={filteredProducts} cartItems={cartItems} onAddToCart={onAddToCart}/>
+            )}
         </div>
     )
 }

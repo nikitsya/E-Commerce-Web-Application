@@ -56,6 +56,7 @@ export const ProductTable = props => {
             <table>
                 <thead>
                 <tr>
+                    <th>Images</th>
                     <th>
                         <button type="button" className="table-sort-btn" onClick={() => handleSort("name")}>
                             Product Name {getSortIndicator("name")}
@@ -66,8 +67,6 @@ export const ProductTable = props => {
                             Price {getSortIndicator("price")}
                         </button>
                     </th>
-                    <th>Images</th>
-
                     <th>
                         <button type="button" className="table-sort-btn" onClick={() => handleSort("capacityMl")}>
                             Capacity (ml) {getSortIndicator("capacityMl")}

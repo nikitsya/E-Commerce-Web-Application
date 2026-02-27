@@ -24,9 +24,9 @@ export const ProductTableRow = props => {
 
     return (
         <tr onClick={handleRowClick} className="product-row-clickable">
+            <td data-label="Images">{firstImage ? <img className="product-thumb" src={firstImage} alt={props.product.name} /> : "-"}</td>
             <td data-label="Product Name">{props.product.name}</td>
             <td data-label="Price">{props.product.price}</td>
-            <td data-label="Images">{firstImage ? <img className="product-thumb" src={firstImage} alt={props.product.name} /> : "-"}</td>
             
             <td data-label="Capacity (ml)">{props.product.capacityMl ?? "-"}</td>
             <td data-label="Material">{props.product.material || "-"}</td>
