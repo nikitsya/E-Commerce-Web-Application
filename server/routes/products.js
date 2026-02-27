@@ -318,7 +318,7 @@ router.get(`/products`, (req, res, next) => {
 // Read one record
 router.get(`/products/:id`, (req, res, next) => 
 {
-    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => 
     {
      if (err) 
         { 
@@ -338,9 +338,9 @@ router.get(`/products/:id`, (req, res, next) =>
 // Add new record
 router.post(`/products`, (req, res, next) => 
 {
-    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => 
     {
-        if (err) 
+        if (err)  
         { 
             next(createError(403, `User is not logged in`))
         }
@@ -365,7 +365,7 @@ router.post(`/products`, (req, res, next) =>
 // Update one record
 router.put(`/products/:id`, (req, res, next) => 
 {
-    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => 
     {
         if (err) 
         { 
@@ -385,7 +385,7 @@ router.put(`/products/:id`, (req, res, next) =>
 // Delete one record
 router.delete(`/products/:id`, (req, res, next) => 
 {
-    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => 
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => 
     {
     if (err) 
         { 

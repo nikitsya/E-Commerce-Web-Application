@@ -12,13 +12,13 @@ export const Logout = props => {
     const handleSubmit = e => {
         e.preventDefault()
 
-        axios.defaults.withCredentials = true // needed for sessions to work
+        //axios.defaults.withCredentials = true // needed for sessions to work
         axios.post(`${SERVER_HOST}/users/logout`)
             .then(res => {
-                sessionStorage.clear()
+                 localStorage.clear()
 
-                sessionStorage.name = "GUEST"
-                sessionStorage.accessLevel = ACCESS_LEVEL_GUEST
+                //  localStorage.name = "GUEST"
+                //  localStorage.accessLevel = ACCESS_LEVEL_GUEST
                 setIsLoggedIn(false)
 
             })

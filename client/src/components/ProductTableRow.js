@@ -33,9 +33,9 @@ export const ProductTableRow = props => {
             <button type="button" className="blue-button" onClick={handleAddToCartClick}>Add to Cart</button>
 
             {/* Edit and Delete only for ADMIN */}
-            {sessionStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? 
+            {Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN ? 
                 <Link className="green-button" to={"/EditProduct/" + props.product._id}>Edit</Link> : null}  
-            {sessionStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?    
+            {Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN ?    
                 <Link className="red-button" to={"/DeleteProduct/" + props.product._id}>Delete</Link> : null}  
             </td>
         </tr>

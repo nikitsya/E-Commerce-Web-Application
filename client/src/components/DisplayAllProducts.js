@@ -8,8 +8,8 @@ export const DisplayAllProducts = ({searchName = "", onAddToCart}) => {
     const [products, setProducts] = useState([])
 
     useEffect(() => {
-        axios.defaults.withCredentials = true // needed for sessions to work
-        axios.get(`${SERVER_HOST}/products`)
+        //axios.defaults.withCredentials = true // needed for sessions to work
+        axios.get(`${SERVER_HOST}/products`, {headers: {"authorization": localStorage.token}})
             .then(res => {
                 setProducts(Array.isArray(res.data) ? res.data : [])
             })
