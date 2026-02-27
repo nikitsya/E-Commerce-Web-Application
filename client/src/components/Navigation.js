@@ -26,7 +26,9 @@ const NavigationComponent = ({searchName, setSearchName, cartItemsCount = 0}) =>
                     ☰
                 </button>
                 <div className={"top-nav-left " + (isMenuOpen ? "menu-open" : "")}>
-                    <Link to="/" className="top-nav-link" onClick={closeMenu}>Home</Link>
+                    <Link to="/" className="top-nav-logo-link" onClick={closeMenu} aria-label="Home">
+                        <img className="top-nav-logo" src="/icons/logo.png" alt="Emerald Sip logo"/>
+                    </Link>
                     {isAdmin ?
                         <Link to="/AddProduct" className="top-nav-link" onClick={closeMenu}>Add</Link> : null}
                     {!isAdmin ? <Link to="/Cart" className="top-nav-link" onClick={closeMenu}>Cart

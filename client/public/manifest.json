@@ -1,7 +1,7 @@
 {
-  "name": "react_app",
-  "short_name": "react_app",
-  "description": "react_app Worked Example",
+  "name": "Emerald Sip",
+  "short_name": "Emerald Sip",
+  "description": "Emerald Sip sustainable bottles shop",
   "start_url": "./",
   "scope": ".",
   "display": "standalone",
@@ -10,8 +10,8 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "icons/icon_small.png",
-      "sizes": "16x16 64x64",
+      "src": "icons/icon.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     {
