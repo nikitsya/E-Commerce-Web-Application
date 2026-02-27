@@ -31,8 +31,8 @@ Last reviewed: 2026-02-27
 |      | Partial | User-friendly client-side validation                                                                              |   5 |
 | ✅    |         | Router validation                                                                                                 | 2.5 |
 | ✅    |         | MongoDB model validation                                                                                          | 2.5 |
-| ✅    | ?       | Implement middleware                                                                                              | 2.5 |
-| ✅    | ?       | Implement middleware error handling                                                                               | 2.5 |
+| ✅    |         | Implement middleware                                                                                              | 2.5 |
+| ✅    |         | Implement middleware error handling                                                                               | 2.5 |
 | ✅    |         | Store data in MongoDB (localhost)                                                                                 | 2.5 |
 | ✅    |         | Encrypt administrator and customer passwords                                                                      | 2.5 |
 | ✅    |         | Filter (with search and sort)                                                                                     | 2.5 |
