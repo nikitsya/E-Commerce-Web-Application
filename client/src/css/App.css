@@ -543,6 +543,10 @@ form input[readonly] {
     accent-color: #6f8a55;
 }
 
+.catalog-checkbox-item span {
+    padding-left: 5px;
+}
+
 .catalog-checkbox-empty {
     margin: 0;
     font-size: 13px;
