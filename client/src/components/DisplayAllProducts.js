@@ -296,7 +296,16 @@ export const DisplayAllProducts = ({searchName = "", setSearchName = () => {}, c
                 <section className="catalog-results">
                     <div className="catalog-results-head">
                         <h2>{filteredProducts.length} products found</h2>
-                        {isAdmin ? <Link className="green-button catalog-add-product-button" to="/AddProduct">Add Product</Link> : null}
+                        {isAdmin ? (
+                            <Link
+                                className="catalog-add-product-link"
+                                to="/AddProduct"
+                                aria-label="Add Product"
+                                title="Add Product"
+                            >
+                                <img className="catalog-add-product-icon" src="/images/buttons/admin/add_product.png" alt="Add Product"/>
+                            </Link>
+                        ) : null}
                     </div>
 
                     <div className="table-container catalog-table-wrap">

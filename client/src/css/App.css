@@ -608,8 +608,12 @@ form input[readonly] {
     color: #2f3d2c;
 }
 
-.catalog-add-product-button {
+.catalog-add-product-link {
     margin: 0;
+}
+
+.catalog-add-product-icon {
+    height: 38px;
 }
 
 .catalog-table-wrap {
@@ -696,8 +700,8 @@ form input[readonly] {
         align-items: stretch;
     }
 
-    .catalog-add-product-button {
-        width: 100%;
+    .catalog-add-product-link {
+        align-self: flex-end;
     }
 
     /* Remove horizontal scroll caused by table min-width */
