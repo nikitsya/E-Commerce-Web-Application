@@ -45,21 +45,22 @@ export const Login = props => {
 
         setErrors({})
 
-        axios.defaults.withCredentials = true // needed for sessions to work
+        //axios.defaults.withCredentials = true // needed for sessions to work
         axios.post(`${SERVER_HOST}/users/login/${email}/${password}`)
             .then(res => {
                 if (res.data.errorMessage) {
                     throw new Error(res.data.errorMessage)
                 }
 
-                sessionStorage.name = res.data.name
-                sessionStorage.accessLevel = res.data.accessLevel
+                localStorage.name = res.data.name
+                localStorage.accessLevel = res.data.accessLevel
+                localStorage.token = res.data.token
                 setIsLoggedIn(true)
             })
             .catch(err => {
                 // default if not logged in
-                sessionStorage.name = "GUEST"
-                sessionStorage.accessLevel = ACCESS_LEVEL_GUEST
+                localStorage.name = "GUEST"
+                localStorage.accessLevel = ACCESS_LEVEL_GUEST
                 setServerError(err?.response?.data || err.message || "Login failed")
             })
     }

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Link, Redirect} from "react-router-dom"
 import axios from "axios"
 import {Button} from "./Button"
-import {SERVER_HOST} from "../config/global_constants"
+import {ACCESS_LEVEL_CUSTOMER, SERVER_HOST} from "../config/global_constants"
 
 export const EditProduct = props => {
     const [name, setName] = useState("")
@@ -12,11 +12,12 @@ export const EditProduct = props => {
     const [capacityMl, setCapacityMl] = useState("")
     const [material, setMaterial] = useState("")
     const [color, setColor] = useState("")
-    const [redirectToDisplayAllProducts, setRedirectToDisplayAllProducts] = useState(false)
+    const [redirectToDisplayAllProducts, setRedirectToDisplayAllProducts] = useState(localStorage.accessLevel < ACCESS_LEVEL_CUSTOMER)
+
 
     useEffect(() => {
-        axios.defaults.withCredentials = true // needed for sessions to work
-        axios.get(`${SERVER_HOST}/products/${props.match.params.id}`)
+        //axios.defaults.withCredentials = true // needed for sessions to work
+        axios.get(`${SERVER_HOST}/products/${props.match.params.id}`, {headers: {"authorization": localStorage.token}})
             .then((res) => {
                 setName(res.data.name || res.data.product || "")
                 setPrice(res.data.price)
@@ -70,8 +71,8 @@ export const EditProduct = props => {
             color: color.trim()
         }
 
-        axios.defaults.withCredentials = true // needed for sessions to work
-        axios.put(`${SERVER_HOST}/products/${props.match.params.id}`, productObject)
+        //axios.defaults.withCredentials = true // needed for sessions to work
+        axios.put(`${SERVER_HOST}/products/${props.match.params.id}`, productObject, {headers: {"authorization": localStorage.token}})
             .then(() => {
                 setRedirectToDisplayAllProducts(true)
             })

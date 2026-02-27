@@ -64,9 +64,12 @@ export const Register = () => {
 
         setErrors({})
 
-        axios.defaults.withCredentials = true // needed for sessions to work
+        //axios.defaults.withCredentials = true // needed for sessions to work
         axios.post(`${SERVER_HOST}/users/register/${name}/${email}/${password}`)
-            .then(() => {
+            .then((res) => {
+                localStorage.name = res.data.name
+                localStorage.accessLevel = res.data.accessLevel
+                localStorage.token = res.data.token
                 setIsRegistered(true)
             })
             .catch(err => {

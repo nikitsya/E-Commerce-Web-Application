@@ -14,8 +14,8 @@ export const DeleteProduct = props => {
         setIsDeleting(true)
         setError("")
 
-        axios.defaults.withCredentials = true // needed for sessions to work
-        axios.delete(`${SERVER_HOST}/products/${props.match.params.id}`)
+        //axios.defaults.withCredentials = true // needed for sessions to work
+        axios.delete(`${SERVER_HOST}/products/${props.match.params.id}`, {headers: {"authorization": localStorage.token}})
             .then(() => {
                 setRedirectToDisplayAllProducts(true)
             })

@@ -33,7 +33,7 @@ export const App = () => {
         localStorage.token = null
     }
 
-    const isAdmin = Number(sessionStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
+    const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
 
     return (
         // BrowserRouter tracks URL changes in the browser

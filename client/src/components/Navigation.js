@@ -9,8 +9,8 @@ const NavigationComponent = ({searchName, setSearchName, cartItemsCount = 0}) =>
 
     const closeMenu = () => setIsMenuOpen(false); // Close menu after link click
 
-    const isLoggedIn = Number(sessionStorage.accessLevel) > ACCESS_LEVEL_GUEST
-    const isAdmin = Number(sessionStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
+    const isLoggedIn = Number(localStorage.accessLevel) > ACCESS_LEVEL_GUEST
+    const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
 
     return (
         <>

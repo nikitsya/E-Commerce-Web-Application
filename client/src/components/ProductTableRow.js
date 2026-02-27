@@ -49,9 +49,9 @@ export const ProductTableRow = props => {
             ) : null}
 
             {/* Edit and Delete only for ADMIN */}
-            {isAdmin ? 
+            {Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN ? 
                 <Link className="green-button" to={"/EditProduct/" + props.product._id}>Edit</Link> : null}  
-            {isAdmin ?    
+            {Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN ?    
                 <Link className="red-button" to={"/DeleteProduct/" + props.product._id}>Delete</Link> : null}  
             </td>
         </tr>

@@ -13,7 +13,7 @@ export const AddProduct = () => {
     const [capacityMl, setCapacityMl] = useState("")
     const [material, setMaterial] = useState("")
     const [color, setColor] = useState("")
-    const [redirectToDisplayAllProducts, setRedirectToDisplayAllProducts] = useState(false)
+    const [redirectToDisplayAllProducts, setRedirectToDisplayAllProducts] = useState(localStorage.accessLevel < ACCESS_LEVEL_ADMIN)
 
     const handleNameChange = e => {
         setName(e.target.value)
@@ -56,11 +56,9 @@ export const AddProduct = () => {
             color: color.trim()
         }
 
-        axios.defaults.withCredentials = true // needed for sessions to work
-        axios.post(`${SERVER_HOST}/products`, productObject)
-            .then(() => {
-                setRedirectToDisplayAllProducts(true)
-            })
+        //axios.defaults.withCredentials = true // needed for sessions to work
+        axios.post(`${SERVER_HOST}/products`, productObject, {headers: {"authorization": localStorage.token}})
+            .then(res => setRedirectToDisplayAllProducts(true))
             .catch(err => console.log(`${err.response.data}\n${err}`))
     }
 

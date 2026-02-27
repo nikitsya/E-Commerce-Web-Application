@@ -7,7 +7,7 @@ export const LoggedInRoute = ({component: Component, exact, path, ...rest}) =>
     <Route
         exact={exact}
         path={path}
-        render={props => sessionStorage.accessLevel > ACCESS_LEVEL_GUEST
+        render={props => Number(localStorage.accessLevel) > ACCESS_LEVEL_GUEST
             ? <Component {...props} {...rest} />
             : <Redirect to="/DisplayAllProducts"/>}
     />
