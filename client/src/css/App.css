@@ -63,7 +63,7 @@ button.blue-button {
     justify-content: center;
     min-width: 130px;
     height: 38px;
-    padding: 0 14px; 
+    padding: 0 14px;
     margin-right: 8px;
     margin-top: 4px;
     border: 0;
@@ -74,7 +74,7 @@ button.blue-button {
     text-decoration: none;
     cursor: pointer;
     box-sizing: border-box;
-     white-space: nowrap;
+    white-space: nowrap;
     transition: background-color 0.2s ease;
 }
 
@@ -393,100 +393,101 @@ form input[readonly] {
     .container {
         padding: 20px;
     }
+
     .table-container table {
-    min-width: 0;
-}
+        min-width: 0;
+    }
 }
 
 
 /* Mobile Card Layout (≤ 599px) */
 
 @media (max-width: 599px) {
-  /* Remove horizontal scroll caused by table min-width */
-  .table-container {
-    overflow-x: hidden;
-  }
+    /* Remove horizontal scroll caused by table min-width */
+    .table-container {
+        overflow-x: hidden;
+    }
 
-  /* Reset desktop table width restriction */
-  .table-container table {
-    min-width: 0;
-  }
+    /* Reset desktop table width restriction */
+    .table-container table {
+        min-width: 0;
+    }
 
-  /* Hide table header on mobile */
-  .table-container thead {
-    display: none;
-  }
+    /* Hide table header on mobile */
+    .table-container thead {
+        display: none;
+    }
 
-  /* Convert table structure into block layout */
-  .table-container table,
-  .table-container tbody,
-  .table-container tr,
-  .table-container td {
-    display: block;
-    width: 100%;
-  }
+    /* Convert table structure into block layout */
+    .table-container table,
+    .table-container tbody,
+    .table-container tr,
+    .table-container td {
+        display: block;
+        width: 100%;
+    }
 
-  /* Card container */
-  .table-container tbody tr {
-    background: #fefffc;
-    border-radius: 16px;
-    margin-bottom: 18px;
-    padding: 18px;
-    box-shadow: none;
-    border: 1px solid #d4dfbf;
-    display: flex;
-    flex-direction: column;
-    align-items: center;   /* horizontal center */
-    text-align: center;    /* center text */
-  }
+    /* Card container */
+    .table-container tbody tr {
+        background: #fefffc;
+        border-radius: 16px;
+        margin-bottom: 18px;
+        padding: 18px;
+        box-shadow: none;
+        border: 1px solid #d4dfbf;
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* horizontal center */
+        text-align: center; /* center text */
+    }
 
-  /* Remove default table cell styling */
-  .table-container tbody td {
+    /* Remove default table cell styling */
+    .table-container tbody td {
 
-    padding: 6px 0;
-    border: 0;
-  }
+        padding: 6px 0;
+        border: 0;
+    }
 
-  /* Hide unnecessary columns on mobile */
-  .table-container tbody td:nth-child(4),
-  .table-container tbody td:nth-child(5),
-  .table-container tbody td:nth-child(6),
-  .table-container tbody td:nth-child(7) {
-    display: none;
-  }
+    /* Hide unnecessary columns on mobile */
+    .table-container tbody td:nth-child(4),
+    .table-container tbody td:nth-child(5),
+    .table-container tbody td:nth-child(6),
+    .table-container tbody td:nth-child(7) {
+        display: none;
+    }
 
-  /* Product name styling */
-  .table-container tbody td:nth-child(1) {
-    font-size: 25px;
-    font-weight: 750;
-    margin-bottom: 8px;
-  }
+    /* Product name styling */
+    .table-container tbody td:nth-child(1) {
+        font-size: 25px;
+        font-weight: 750;
+        margin-bottom: 8px;
+    }
 
-  /* Price styling */
-  .table-container tbody td:nth-child(2) {
-    font-size: 20px;
-    font-weight: 700;
-    color: #2f7a4f;
-    margin-bottom: 12px;
-  }
+    /* Price styling */
+    .table-container tbody td:nth-child(2) {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2f7a4f;
+        margin-bottom: 12px;
+    }
 
-  /* Image container spacing */
-  .table-container tbody td:nth-child(3) {
-    background: #eef3e6;
-    padding: 14px;
-    border-radius: 14px;
-  }
+    /* Image container spacing */
+    .table-container tbody td:nth-child(3) {
+        background: #eef3e6;
+        padding: 14px;
+        border-radius: 14px;
+    }
 
-  /* Product image styling */
-.product-thumb {
-  display: block;
-  width: 100%;
-  height: auto;        
-  max-height: 220px;   
-  object-fit: contain; 
-  border-radius: 0;
-  background: #f3f5ee; 
-}
+    /* Product image styling */
+    .product-thumb {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 220px;
+        object-fit: contain;
+        border-radius: 0;
+        background: #f3f5ee;
+    }
 }
 
 .top-nav {
@@ -564,21 +565,22 @@ form input[readonly] {
 
 .top-nav-danger {
     display: block;
-    width: 100%;          
+    width: 100%;
     text-align: center;
     padding: 8px 10px;
     box-sizing: border-box;
     color: #8d3f22;
     border: 1px solid #d9b5a3;
-    background-color: #fff7f3;  
+    background-color: #fff7f3;
 }
 
 .top-nav-danger:hover {
     background-color: #7e4a2c;
     color: #fff;
 }
+
 .top-nav-center {
-  
+
     display: flex;
     align-items: center;
     gap: 8px;
@@ -587,7 +589,7 @@ form input[readonly] {
 .top-nav-center .green-button {
     height: 36px;
     min-width: 90px;
-    margin: 0;           
+    margin: 0;
     padding: 0 12px;
 }
 
@@ -628,14 +630,14 @@ form input[readonly] {
     .top-nav {
         position: relative; /* Anchor dropdown sections */
         flex-wrap: wrap;
-     
+
     }
 
     .hamburger-btn {
         display: inline-flex; /* Show hamburger only on mobile */
         align-items: center;
         justify-content: center;
-        
+
     }
 
     .top-nav-left,
@@ -649,7 +651,7 @@ form input[readonly] {
     .top-nav-center.menu-open,
     .top-nav-right.menu-open {
         display: flex; /* Show sections when menu is open */
-       
+
     }
 
     .top-nav-left.menu-open,
@@ -657,7 +659,7 @@ form input[readonly] {
         flex-direction: column;
         gap: 8px;
         margin-top: 10px;
-        
+
     }
 
     .top-nav-center.menu-open {

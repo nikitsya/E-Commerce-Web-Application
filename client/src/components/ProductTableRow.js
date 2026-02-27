@@ -1,10 +1,10 @@
 import React from "react"
 import {Link} from "react-router-dom"
-import { ACCESS_LEVEL_ADMIN } from "../config/global_constants"
+import {ACCESS_LEVEL_ADMIN} from "../config/global_constants"
 
 
 export const ProductTableRow = props => {
-    const { product, onOpenDetails, isInCart = false } = props;
+    const {product, onOpenDetails, isInCart = false} = props;
     const onAddToCart = props.onAddToCart
     const canAddToCart = typeof onAddToCart === "function"
     const isAdmin = Number(sessionStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
@@ -24,35 +24,36 @@ export const ProductTableRow = props => {
 
     return (
         <tr onClick={handleRowClick} className="product-row-clickable">
-            <td data-label="Images">{firstImage ? <img className="product-thumb" src={firstImage} alt={props.product.name} /> : "-"}</td>
+            <td data-label="Images">{firstImage ?
+                <img className="product-thumb" src={firstImage} alt={props.product.name}/> : "-"}</td>
             <td data-label="Product Name">{props.product.name}</td>
             <td data-label="Price">{props.product.price}</td>
-            
+
             <td data-label="Capacity (ml)">{props.product.capacityMl ?? "-"}</td>
             <td data-label="Material">{props.product.material || "-"}</td>
             <td data-label="Color">{props.product.color || "-"}</td>
             <td data-label="Actions" onClick={stopRowClick}>
-            {canAddToCart ? (
-                <button
-                    type="button"
-                    className="icon-button add-to-cart-icon-button"
-                    onClick={handleAddToCartClick}
-                    aria-label={isInCart ? "Added to Cart" : "Add to Cart"}
-                    title={isInCart ? "Added to Cart" : "Add to Cart"}
-                >
-                    <img
-                        className="add-to-cart-icon"
-                        src={isInCart ? "/images/buttons/added_to_cart.png" : "/images/buttons/add-to-cart.png"}
-                        alt={isInCart ? "Added to Cart" : "Add to Cart"}
-                    />
-                </button>
-            ) : null}
+                {canAddToCart ? (
+                    <button
+                        type="button"
+                        className="icon-button add-to-cart-icon-button"
+                        onClick={handleAddToCartClick}
+                        aria-label={isInCart ? "Added to Cart" : "Add to Cart"}
+                        title={isInCart ? "Added to Cart" : "Add to Cart"}
+                    >
+                        <img
+                            className="add-to-cart-icon"
+                            src={isInCart ? "/images/buttons/added_to_cart.png" : "/images/buttons/add-to-cart.png"}
+                            alt={isInCart ? "Added to Cart" : "Add to Cart"}
+                        />
+                    </button>
+                ) : null}
 
-            {/* Edit and Delete only for ADMIN */}
-            {Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN ? 
-                <Link className="green-button" to={"/EditProduct/" + props.product._id}>Edit</Link> : null}  
-            {Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN ?    
-                <Link className="red-button" to={"/DeleteProduct/" + props.product._id}>Delete</Link> : null}  
+                {/* Edit and Delete only for ADMIN */}
+                {Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN ?
+                    <Link className="green-button" to={"/EditProduct/" + props.product._id}>Edit</Link> : null}
+                {Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN ?
+                    <Link className="red-button" to={"/DeleteProduct/" + props.product._id}>Delete</Link> : null}
             </td>
         </tr>
     )

@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {Redirect} from "react-router-dom"
 import axios from "axios"
 import {Button} from "./Button"
-import {ACCESS_LEVEL_GUEST, SERVER_HOST} from "../config/global_constants"
+import {SERVER_HOST} from "../config/global_constants"
 
 
 export const Logout = props => {
@@ -15,7 +15,7 @@ export const Logout = props => {
         //axios.defaults.withCredentials = true // needed for sessions to work
         axios.post(`${SERVER_HOST}/users/logout`)
             .then(res => {
-                 localStorage.clear()
+                localStorage.clear()
 
                 //  localStorage.name = "GUEST"
                 //  localStorage.accessLevel = ACCESS_LEVEL_GUEST

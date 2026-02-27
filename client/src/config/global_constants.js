@@ -2,7 +2,7 @@
 
 // Access level
 export const ACCESS_LEVEL_GUEST = 0
-export const ACCESS_LEVEL_CUSTOMER  = 1
+export const ACCESS_LEVEL_CUSTOMER = 1
 export const ACCESS_LEVEL_ADMIN = 2
 
 // Server

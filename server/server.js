@@ -27,11 +27,15 @@ app.use(require(`./routes/products`))
 app.use(require(`./routes/users`))
 
 // Start the server on the port from .env
-app.listen(process.env.SERVER_PORT, () => {console.log(`Connected to port ` + process.env.SERVER_PORT)})
+app.listen(process.env.SERVER_PORT, () => {
+    console.log(`Connected to port ` + process.env.SERVER_PORT)
+})
 
 // If route is not found, create a 404 error
 const createError = require('http-errors')
-app.use((req, res, next) => {next(createError(404))})
+app.use((req, res, next) => {
+    next(createError(404))
+})
 
 // Handle all other errors here
 app.use(function (err, req, res) {
