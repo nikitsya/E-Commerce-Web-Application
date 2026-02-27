@@ -54,6 +54,7 @@ export const DisplayAllProducts = ({searchName = "", setSearchName = () => {}, c
     const [products, setProducts] = useState([])
     const [materialFilter, setMaterialFilter] = useState("any")
     const [colorFilters, setColorFilters] = useState([])
+    const [isColorFilterOpen, setIsColorFilterOpen] = useState(false)
     const [priceFilter, setPriceFilter] = useState("any")
     const [capacityFilter, setCapacityFilter] = useState("any")
 
@@ -85,6 +86,12 @@ export const DisplayAllProducts = ({searchName = "", setSearchName = () => {}, c
 
     useEffect(() => {
         setColorFilters((currentFilters) => currentFilters.filter((color) => colorOptions.includes(color)))
+    }, [colorOptions])
+
+    useEffect(() => {
+        if (colorOptions.length === 0) {
+            setIsColorFilterOpen(false)
+        }
     }, [colorOptions])
 
     const normalizedSearch = searchName.trim().toLowerCase()
@@ -120,6 +127,7 @@ export const DisplayAllProducts = ({searchName = "", setSearchName = () => {}, c
         setSearchName("")
         setMaterialFilter("any")
         setColorFilters([])
+        setIsColorFilterOpen(false)
         setPriceFilter("any")
         setCapacityFilter("any")
     }
@@ -135,6 +143,8 @@ export const DisplayAllProducts = ({searchName = "", setSearchName = () => {}, c
     }
 
     const activeFilterChips = []
+    const colorFilterLabel = colorFilters.length === 0 ? "Any color" : `${colorFilters.length} selected`
+
     // Chips mirror active filters and provide one-click reset per filter.
     if (normalizedSearch) {
         activeFilterChips.push({
@@ -224,21 +234,33 @@ export const DisplayAllProducts = ({searchName = "", setSearchName = () => {}, c
 
                     <div className="catalog-filter-group">
                         <label>Color</label>
-                        <div className="catalog-checkbox-list" role="group" aria-label="Color filter">
-                            {colorOptions.map((color) => (
-                                <label key={color} className="catalog-checkbox-item">
-                                    <input
-                                        type="checkbox"
-                                        checked={colorFilters.includes(color)}
-                                        onChange={() => toggleColorFilter(color)}
-                                    />
-                                    <span>{color}</span>
-                                </label>
-                            ))}
-                            {colorOptions.length === 0 ? (
-                                <p className="catalog-checkbox-empty">No colors available</p>
-                            ) : null}
-                        </div>
+                        <button
+                            id="colorFilterToggle"
+                            type="button"
+                            className={`catalog-multiselect-toggle${isColorFilterOpen ? " is-open" : ""}`}
+                            onClick={() => setIsColorFilterOpen((currentState) => !currentState)}
+                            aria-haspopup="true"
+                            aria-expanded={isColorFilterOpen}
+                            aria-controls="colorFilterOptions"
+                            disabled={colorOptions.length === 0}
+                        >
+                            <span>{colorOptions.length === 0 ? "No colors available" : colorFilterLabel}</span>
+                        </button>
+
+                        {isColorFilterOpen ? (
+                            <div id="colorFilterOptions" className="catalog-checkbox-list" role="group" aria-label="Color filter">
+                                {colorOptions.map((color) => (
+                                    <label key={color} className="catalog-checkbox-item">
+                                        <input
+                                            type="checkbox"
+                                            checked={colorFilters.includes(color)}
+                                            onChange={() => toggleColorFilter(color)}
+                                        />
+                                        <span>{color}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        ) : null}
                     </div>
 
                     <div className="catalog-filter-group">
