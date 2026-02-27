@@ -4,7 +4,7 @@ import {ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_GUEST} from "../config/global_constants
 import {Logout} from "./Logout"
 
 
-const NavigationComponent = ({searchName, setSearchName, cartItemsCount = 0}) => {
+const NavigationComponent = ({cartItemsCount = 0}) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu state
 
     const closeMenu = () => setIsMenuOpen(false); // Close menu after link click
@@ -33,19 +33,6 @@ const NavigationComponent = ({searchName, setSearchName, cartItemsCount = 0}) =>
                         <Link to="/AddProduct" className="top-nav-link" onClick={closeMenu}>Add</Link> : null}
                     {!isAdmin ? <Link to="/Cart" className="top-nav-link" onClick={closeMenu}>Cart
                         ({cartItemsCount})</Link> : null}
-                </div>
-
-                <div className={"top-nav-center " + (isMenuOpen ? "menu-open" : "")}>
-                    <input
-                        className="top-nav-search"
-                        type="text"
-                        placeholder="Search by name..."
-                        value={searchName}
-                        onChange={(e) => setSearchName(e.target.value)}
-                    />
-                    <button className="green-button" type="button" onClick={() => setSearchName("")}>
-                        Clear
-                    </button>
                 </div>
 
                 <div className={"top-nav-right " + (isMenuOpen ? "menu-open" : "")}>
