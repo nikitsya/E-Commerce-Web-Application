@@ -56,7 +56,7 @@ export const ProductTable = props => {
             <table>
                 <thead>
                 <tr>
-                    <th>Images</th>
+                    <th></th>
                     <th>
                         <button type="button" className="table-sort-btn" onClick={() => handleSort("name")}>
                             Product Name {getSortIndicator("name")}
