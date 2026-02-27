@@ -834,15 +834,14 @@ form input[readonly] {
 }
 
 .site-footer {
-    max-width: 1000px;
-    margin: 12px auto 20px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: 1px solid #d7decb;
-    background-color: #fcfdf8;
+    margin: 10px auto 20px;
+    padding: 0 14px;
+    border: 0;
+    background: transparent;
     color: #3f4f39;
     text-align: center;
     font-size: 13px;
+    line-height: 1.4;
 }
 
 @media (max-width: 599px) {

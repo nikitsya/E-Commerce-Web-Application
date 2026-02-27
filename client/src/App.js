@@ -99,7 +99,7 @@ export const App = () => {
                 />
             </Switch>
             <footer className="site-footer">
-                Serving customers in Ireland and across the European Union.
+                © 2026 Emerald Sip. All rights reserved. Serving customers in Ireland and across the European Union.
             </footer>
         </BrowserRouter>
     )
