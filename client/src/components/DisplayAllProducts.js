@@ -16,10 +16,12 @@ const PRICE_RANGES = [
 
 const CAPACITY_RANGES = [
     {value: "any", label: "Any capacity"},
-    {value: "0-499", label: "Under 500 ml"},
-    {value: "500-749", label: "500 - 749 ml"},
-    {value: "750-999", label: "750 - 999 ml"},
-    {value: "1000-999999", label: "1000 ml and above"}
+    {value: "500-500", label: "500 ml"},
+    {value: "550-550", label: "550 ml"},
+    {value: "600-600", label: "600 ml"},
+    {value: "650-650", label: "650 ml"},
+    {value: "700-700", label: "700 ml"},
+    {value: "750-750", label: "750 ml"}
 ]
 
 const parseRange = (rangeValue) => {
