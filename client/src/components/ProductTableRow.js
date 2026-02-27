@@ -4,7 +4,7 @@ import { ACCESS_LEVEL_ADMIN } from "../config/global_constants"
 
 
 export const ProductTableRow = props => {
-    const { product, onOpenDetails } = props;
+    const { product, onOpenDetails, isInCart = false } = props;
     const onAddToCart = props.onAddToCart
     const canAddToCart = typeof onAddToCart === "function"
     const isAdmin = Number(sessionStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
@@ -37,10 +37,14 @@ export const ProductTableRow = props => {
                     type="button"
                     className="icon-button add-to-cart-icon-button"
                     onClick={handleAddToCartClick}
-                    aria-label="Add to Cart"
-                    title="Add to Cart"
+                    aria-label={isInCart ? "Added to Cart" : "Add to Cart"}
+                    title={isInCart ? "Added to Cart" : "Add to Cart"}
                 >
-                    <img className="add-to-cart-icon" src="/images/buttons/add-to-cart.png" alt="Add to Cart"/>
+                    <img
+                        className="add-to-cart-icon"
+                        src={isInCart ? "/images/buttons/added_to_cart.png" : "/images/buttons/add-to-cart.png"}
+                        alt={isInCart ? "Added to Cart" : "Add to Cart"}
+                    />
                 </button>
             ) : null}
 
