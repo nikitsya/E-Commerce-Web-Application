@@ -494,10 +494,10 @@ form input[readonly] {
 .top-nav-shell {
     width: 100%;
     max-width: none;
-    margin: 0;
+    margin: 0 0 24px 0;
     border: 0;
     border-radius: 0;
-    background-color: #fcfdf8;
+    background-color: #4a5f36;
 }
 
 .top-nav {
@@ -520,9 +520,9 @@ form input[readonly] {
     padding: 8px 12px;
     text-align: center;
     border-radius: 0;
-    border-bottom: 1px solid #d7decb;
-    background-color: #edf2e3;
-    color: #32462f;
+    border-bottom: 1px solid #6f8a55;
+    background-color: #3f5330;
+    color: #eef5e3;
     font-size: 13px;
     font-weight: 700;
 }
