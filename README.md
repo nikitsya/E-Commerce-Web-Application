@@ -42,7 +42,7 @@ Last reviewed: 2026-02-27
 |      | Partial | Show less data on a tablet row compared to a computer                                                             | 2.5 |
 | ✅    |         | Clicking a row/card opens modal with all data                                                                     | 2.5 |
 | ✅    |         | Use tokens and a `.PEM` file                                                                                      | 2.5 |
-|      | * | User-friendly client-side validation                                                                              |   5 |
+|      | *       | User-friendly client-side validation                                                                              |   5 |
 | ✅    |         | Router validation                                                                                                 | 2.5 |
 | ✅    |         | MongoDB model validation                                                                                          | 2.5 |
 | ✅    |         | Implement middleware                                                                                              | 2.5 |
