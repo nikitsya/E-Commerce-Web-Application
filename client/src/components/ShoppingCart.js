@@ -82,6 +82,9 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
 
             <div className="cart-summary">
                 <p><strong>Total:</strong> {formatPrice(total)}</p>
+
+                <BuyProduct price={total} items={items} />
+
                 <div className="cart-summary-actions">
                     <button type="button" className="red-button" onClick={onClearCart}>Clear Cart</button>
                     <Link className="green-button" to="/DisplayAllProducts">Continue Shopping</Link>
