@@ -155,6 +155,8 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
     </div>
 ) : null}
 
+    const guestValidationErrors = !isLoggedIn ? validateGuestDetails() : {}
+    const canPayAsGuest = isLoggedIn || Object.keys(guestValidationErrors).length === 0
 
                 <BuyProduct price={total} items={items} guestDetails={guestDetails}/>
 
