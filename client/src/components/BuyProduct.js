@@ -21,18 +21,27 @@ export const BuyProduct = props =>
 
     const onApprove = paymentData =>
     {
-        axios.post(`${SERVER_HOST}/sales/${paymentData.orderID}/${props.price}`, { items: props.items || []}, {headers: {"authorization": localStorage.token}})
-        .then(res =>
+        const isLoggedIn = Number(localStorage.accessLevel) > 0 && !!localStorage.token
+
+if (isLoggedIn) {
+    axios.post(
+        `${SERVER_HOST}/sales/${paymentData.orderID}/${props.price}`,
         {
-            setPayPalMessageType("SUCCESS")
-            setPayPalOrderID(paymentData.orderID)
-            setRedirectToPayPalMessage(true)
-        })
-        .catch(err =>
-        {
-            setPayPalMessageType("ERROR")
-            setRedirectToPayPalMessage(true)
-        })
+            items: props.items || [],
+            customerName: localStorage.name || "Registered Customer"
+        },
+        {headers: {authorization: localStorage.token}}
+    )
+    .then(() => {
+        setPayPalMessageType("SUCCESS")
+        setPayPalOrderID(paymentData.orderID)
+        setRedirectToPayPalMessage(true)
+    })
+    .catch(() => {
+        setPayPalMessageType("ERROR")
+        setRedirectToPayPalMessage(true)
+    })
+} 
     }
 
 
