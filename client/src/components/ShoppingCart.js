@@ -30,7 +30,19 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
     setGuestErrors((prev) => ({...prev, [field]: ""}))
     }
 
-    
+    const validateGuestDetails = () => {
+    const next = {}
+
+    if (!guestDetails.customerName.trim()) next.customerName = "Name is required"
+    if (!guestDetails.customerEmail.trim()) next.customerEmail = "Email is required"
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guestDetails.customerEmail)) next.customerEmail = "Invalid email format"
+
+    if (!guestDetails.customerAddress.trim()) next.customerAddress = "Address is required"
+    if (!/^\d{7,15}$/.test(guestDetails.customerPhone.trim())) next.customerPhone = "Phone must be 7-15 digits"
+
+    return next
+    }
+
 
     if (items.length === 0) {
         return (
