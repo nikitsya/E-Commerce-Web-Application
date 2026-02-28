@@ -8,6 +8,18 @@ const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
 export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClearCart}) => {
     const items = Array.isArray(cartItems) ? cartItems : []
 
+    const isLoggedIn = Number(localStorage.accessLevel) > 0 && !!localStorage.token
+
+    const [guestDetails, setGuestDetails] = useState({
+        customerName: "",
+        customerEmail: "",
+        customerAddress: "",
+        customerPhone: ""
+    })
+
+    const [guestErrors, setGuestErrors] = useState({})
+
+
     const total = items.reduce((sum, item) => {
         const price = Number(item.price) || 0
         const quantity = Number(item.quantity) || 0
