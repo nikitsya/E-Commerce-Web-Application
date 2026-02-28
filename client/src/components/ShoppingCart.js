@@ -58,7 +58,7 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
 
     
     return (
-        <div className="form-container">
+        <div className="form-container cart-page">
             <h2>Shopping Cart</h2>
 
             <div className="cart-list">
