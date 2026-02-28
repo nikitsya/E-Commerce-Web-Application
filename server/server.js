@@ -25,6 +25,7 @@ app.use(require(`cors`)({credentials: true, origin: process.env.LOCAL_HOST}))
 // Use route
 app.use(require(`./routes/products`))
 app.use(require(`./routes/users`))
+app.use(require(`./routes/sales`))
 
 // Start the server on the port from .env
 app.listen(process.env.SERVER_PORT, () => {

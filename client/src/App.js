@@ -13,6 +13,7 @@ import {ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_GUEST} from "./config/global_constants"
 import {LoggedInRoute} from "./components/LoggedInRoute"
 import {ShoppingCart} from "./components/ShoppingCart"
 import {useShoppingCart} from "./hooks/useShoppingCart"
+import {PayPalMessage} from "./components/PayPalMessage"
 
 
 // Main app component with all routes
@@ -42,6 +43,7 @@ export const App = () => {
             <Switch>
                 <Route exact path="/Register" component={Register}/>
                 <Route exact path="/Login" component={Login}/>
+                <Route exact path="/PayPalMessage/:messageType/:payPalPaymentID" component={PayPalMessage}/>
                 <Route exact path="/ResetDatabase" component={ResetDatabase}/>
 
                 <Route

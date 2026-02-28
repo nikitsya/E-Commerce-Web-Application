@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@paypal/react-paypal-js": "^9.0.0",
     "axios": "1.13.5",
     "bcryptjs": "^3.0.3",
     "react": "^16.9.0",
