@@ -41,7 +41,27 @@ if (isLoggedIn) {
         setPayPalMessageType("ERROR")
         setRedirectToPayPalMessage(true)
     })
-} 
+} else {
+    axios.post(
+        `${SERVER_HOST}/sales/guest/${paymentData.orderID}/${props.price}`,
+        {
+            items: props.items || [],
+            customerName: props.guestDetails?.customerName || "",
+            customerEmail: props.guestDetails?.customerEmail || "",
+            customerAddress: props.guestDetails?.customerAddress || "",
+            customerPhone: props.guestDetails?.customerPhone || ""
+        }
+    )
+    .then(() => {
+        setPayPalMessageType("SUCCESS")
+        setPayPalOrderID(paymentData.orderID)
+        setRedirectToPayPalMessage(true)
+    })
+    .catch(() => {
+        setPayPalMessageType("ERROR")
+        setRedirectToPayPalMessage(true)
+    })
+}
     }
 
 
