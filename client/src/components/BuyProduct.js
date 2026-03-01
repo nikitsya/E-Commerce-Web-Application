@@ -6,74 +6,61 @@ import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js"
 
 
 export const BuyProduct = props => {
+    // Redirect state for the post-payment status page.
     const [redirectToPayPalMessage, setRedirectToPayPalMessage] = useState(false)
     const [payPalMessageType, setPayPalMessageType] = useState(null)
     const [payPalOrderID, setPayPalOrderID] = useState(null)
 
+    // Centralized redirect helper keeps status transitions consistent.
+    const redirectWithStatus = (messageType, orderID = null) => {
+        setPayPalMessageType(messageType)
+        setPayPalOrderID(orderID)
+        setRedirectToPayPalMessage(true)
+    }
 
-    const createOrder = (data, actions) => {
+    // Creates PayPal order using current cart total in EUR.
+    const createOrder = (_, actions) => {
         const amount = (Number(props.price) || 0).toFixed(2)
         return actions.order.create({purchase_units: [{amount: {value: amount}}]})
     }
 
-
+    // After PayPal approval, persist sale in backend for either logged-in or guest checkout.
     const onApprove = paymentData => {
         const isLoggedIn = Number(localStorage.accessLevel) > 0 && !!localStorage.token
 
-        if (isLoggedIn) {
-            axios.post(
-                `${SERVER_HOST}/sales/${paymentData.orderID}/${props.price}`,
-                {
-                    items: props.items || [],
-                    customerName: localStorage.name || "Registered Customer"
-                },
-                {headers: {authorization: localStorage.token}}
-            )
-                .then(() => {
-                    setPayPalMessageType("SUCCESS")
-                    setPayPalOrderID(paymentData.orderID)
-                    setRedirectToPayPalMessage(true)
-                })
-                .catch(() => {
-                    setPayPalMessageType("ERROR")
-                    setRedirectToPayPalMessage(true)
-                })
-        } else {
-            axios.post(
-                `${SERVER_HOST}/sales/guest/${paymentData.orderID}/${props.price}`,
-                {
-                    items: props.items || [],
-                    customerName: props.guestDetails?.customerName || "",
-                    customerEmail: props.guestDetails?.customerEmail || "",
-                    customerAddress: props.guestDetails?.customerAddress || "",
-                    customerPhone: props.guestDetails?.customerPhone || ""
-                }
-            )
-                .then(() => {
-                    setPayPalMessageType("SUCCESS")
-                    setPayPalOrderID(paymentData.orderID)
-                    setRedirectToPayPalMessage(true)
-                })
-                .catch(() => {
-                    setPayPalMessageType("ERROR")
-                    setRedirectToPayPalMessage(true)
-                })
-        }
+        const orderID = paymentData.orderID
+        const endpoint = isLoggedIn
+            ? `${SERVER_HOST}/sales/${orderID}/${props.price}`
+            : `${SERVER_HOST}/sales/guest/${orderID}/${props.price}`
+
+        const payload = isLoggedIn
+            ? {
+                items: props.items || [],
+                customerName: localStorage.name || "Registered Customer"
+            } : {
+                items: props.items || [],
+                customerName: props.guestDetails?.customerName || "",
+                customerEmail: props.guestDetails?.customerEmail || "",
+                customerAddress: props.guestDetails?.customerAddress || "",
+                customerPhone: props.guestDetails?.customerPhone || ""
+            }
+
+        const requestConfig = isLoggedIn ? {headers: {authorization: localStorage.token}} : undefined
+
+        axios.post(endpoint, payload, requestConfig)
+            .then(() => {
+                redirectWithStatus("SUCCESS", orderID)
+            })
+            .catch(() => {
+                redirectWithStatus("ERROR")
+            })
     }
 
+    // Handles PayPal SDK/runtime errors.
+    const onError = () => redirectWithStatus("ERROR")
 
-    const onError = () => {
-        setPayPalMessageType("ERROR")
-        setRedirectToPayPalMessage(true)
-    }
-
-
-    const onCancel = () => {
-        // The user pressed the Paypal checkout popup window cancel button or closed the Paypal checkout popup window
-        setPayPalMessageType("CANCEL")
-        setRedirectToPayPalMessage(true)
-    }
-
+    // Triggered when user closes PayPal popup or clicks cancel.
+    const onCancel = () => redirectWithStatus("CANCEL")
 
     return (
         <div>
