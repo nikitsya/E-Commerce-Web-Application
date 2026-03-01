@@ -6,129 +6,6 @@ const jwt = require('jsonwebtoken')
 
 const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
 
-// Renames legacy `product` field to `name` for backward compatibility.
-// This keeps old documents readable by the current API without manual DB scripts.
-const migrateLegacyProductField = async () => {
-    await productsModel.collection.updateMany(
-        {product: {$exists: true}, name: {$exists: false}},
-        {$rename: {product: `name`}}
-    )
-}
-
-// Ensures newly introduced optional product fields always exist.
-// Existing documents get default values so frontend rendering stays predictable.
-const migrateAdditionalProductFields = async () => {
-    await productsModel.collection.updateMany(
-        {images: {$exists: false}},
-        {$set: {images: []}}
-    )
-    await productsModel.collection.updateMany(
-        {description: {$exists: false}},
-        {$set: {description: ``}}
-    )
-    await productsModel.collection.updateMany(
-        {material: {$exists: false}},
-        {$set: {material: ``}}
-    )
-    await productsModel.collection.updateMany(
-        {color: {$exists: false}},
-        {$set: {color: ``}}
-    )
-}
-
-// Ordered fallback image mapping for existing rows that were created without `images`.
-const productImageByRow = [
-    {
-        name: `Midnight Steel Bottle`,
-        image: `/images/products/bluewater-sweden-5hVQO80IX2c-unsplash.jpg`
-    },
-    {
-        name: `Classic Steel Loop Bottle`,
-        image: `/images/products/bluewater-sweden-262JN9gquco-unsplash.jpg`
-    },
-    {
-        name: `Eco Steel Bottle – Green Loop`,
-        image: `/images/products/bluewater-sweden-J-7q5DZLiYY-unsplash.jpg`
-    },
-    {
-        name: `Minimal White Bottle`,
-        image: `/images/products/bluewater-sweden-jVQUpOJfuKM-unsplash.jpg`
-    },
-    {
-        name: `Ocean Blue Travel Bottle`,
-        image: `/images/products/bluewater-sweden-KaYO8M107_Q-unsplash.jpg`
-    },
-    {
-        name: `Soft White Outdoor Bottle`,
-        image: `/images/products/bluewater-sweden-mufygNHZ2FA-unsplash.jpg`
-    },
-    {
-        name: `Coastal Steel Bottle`,
-        image: `/images/products/bluewater-sweden-nyNJTrPAXKw-unsplash.jpg`
-    },
-    {
-        name: `Glass Tea Infuser Bottle`,
-        image: `/images/products/bluewater-sweden-p2lQtAPvTtQ-unsplash.jpg`
-    },
-    {
-        name: `Amber Glass Infuser Bottle`,
-        image: `/images/products/bluewater-sweden-p6XsdEowMUE-unsplash.jpg`
-    },
-    {
-        name: `Forest Glass Bottle`,
-        image: `/images/products/bluewater-sweden-Y7arHAsA4_k-unsplash.jpg`
-    },
-    {
-        name: `Deep Navy Bottle`,
-        image: `/images/products/bluewater-sweden-zAi_Cu0oC_Y-unsplash.jpg`
-    },
-    {
-        name: `Pure Blue Bottle`,
-        image: `/images/products/bluewater-sweden-znGHaNGztB0-unsplash.jpg`
-    },
-    {
-        name: `Sky Sport Bottle`,
-        image: `/images/products/claudio-schwarz-MF5T5F9GhmY-unsplash.jpg`
-    },
-    {
-        name: `Smart Filter Bottle`,
-        image: `/images/products/marek-mucha-41GWWsgUIoo-unsplash.jpg`
-    },
-    {
-        name: `Mint Duo Bottle Set`,
-        image: `/images/products/quokkabottles-J62aicWwNhg-unsplash.jpg`
-    },
-    {
-        name: `Ocean Stone Bottle`,
-        image: `/images/products/quokkabottles-Jl3YZSHYKzc-unsplash.jpg`
-    }
-]
-
-// Assigns a default image per product name when images are missing.
-const migrateProductImagesByRow = async () => {
-    for (const item of productImageByRow) {
-        await productsModel.updateMany(
-            {name: item.name},
-            {$set: {images: [item.image]}}
-        )
-    }
-}
-
-// One-time migration for old documents that still use `product`
-migrateLegacyProductField().catch((err) => {
-    console.error(`Migration product->name failed:`, err.message)
-})
-
-// One-time migration for additional product fields
-migrateAdditionalProductFields().catch((err) => {
-    console.error(`Migration additional product fields failed:`, err.message)
-})
-
-// Keep image mapping aligned with row order
-migrateProductImagesByRow().catch((err) => {
-    console.error(`Migration product images by row failed:`, err.message)
-})
-
 // Inserts demo catalog only when collection is empty.
 // Returns metadata so callers can log or respond differently for seeded/non-seeded cases.
 const seedProductsIfEmpty = async () => {
@@ -324,7 +201,7 @@ router.get(`/products`, (req, res, next) => {
 
 // Protected endpoint: requires valid JWT to fetch a single product.
 router.get(`/products/:id`, (req, res, next) => {
-    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err) => {
         if (err) {
             next(createError(403, `User is not logged in`))
         } else {
@@ -361,7 +238,7 @@ router.post(`/products`, (req, res, next) => {
 // Protected endpoint: any authenticated user can update a product in current logic.
 // Note: unlike POST/DELETE, this route does not enforce admin-level authorization.
 router.put(`/products/:id`, (req, res, next) => {
-    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err) => {
         if (err) {
             next(createError(403, `User is not logged in`))
         } else {
