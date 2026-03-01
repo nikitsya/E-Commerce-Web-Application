@@ -101,7 +101,7 @@ router.post(`/users/login/:email/:password`, (req, res, next) => {
 })
 
 // Stateless logout endpoint: client is expected to discard its JWT token.
-router.post(`/users/logout`, (req, res, next) => {
+router.post(`/users/logout`, (req, res) => {
     res.json({})
 })
 
