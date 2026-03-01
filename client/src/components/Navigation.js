@@ -34,7 +34,7 @@ const NavigationComponent = ({cartItemsCount = 0}) => {
                 <div className={"top-nav-right " + (isMenuOpen ? "menu-open" : "")}>
                     <div className="top-nav-auth-row">
                         {isLoggedIn ? (
-                            <>
+                            <div className="top-nav-user-group">
                                 {profilePhoto && profilePhoto !== "null" ? (
                                     <img
                                         className="top-nav-profile-photo"
@@ -43,7 +43,8 @@ const NavigationComponent = ({cartItemsCount = 0}) => {
                                     />
                                 ) : null}
                                 <Logout/>
-                            </>
+                            </div>
+                            
                         ) : (
                             <>
                                 <Link to="/Login" className="top-nav-link" onClick={closeMenu}>Login</Link>
