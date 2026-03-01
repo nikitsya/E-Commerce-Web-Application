@@ -10,6 +10,9 @@ export const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    // Selected profile photo file for multipart upload.
+    const [selectedFile, setSelectedFile] = useState(null)
+
     // Redirect after successful registration.
     const [isRegistered, setIsRegistered] = useState(false)
     // Client-side validation errors by field.
