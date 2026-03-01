@@ -69,6 +69,7 @@ export const Register = () => {
 
         if (!confirmPassword) next.confirmPassword = "Please confirm password"
         else if (password !== confirmPassword) next.confirmPassword = "Passwords do not match"
+        if (!selectedFile) next.profilePhoto = "Profile photo is required"
 
         return next
     }
