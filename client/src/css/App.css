@@ -1071,7 +1071,10 @@ form input[readonly] {
 
 .top-nav-auth-row {
     display: flex;
-    gap: 8px;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .top-nav-link.top-nav-cart-link {
@@ -1138,7 +1141,8 @@ form input[readonly] {
 }
 
 .top-nav-danger {
-    display: block;
+    display: inline-block;
+    margin-top: 8px;
     width: 100%;
     text-align: center;
     padding: 8px 10px;
@@ -1151,6 +1155,12 @@ form input[readonly] {
 .top-nav-danger:hover {
     background-color: #7e4a2c;
     color: #fff;
+}
+
+.top-nav-user-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .hamburger-btn {
@@ -1310,3 +1320,4 @@ form input[readonly] {
     border: 2px solid #fff;
     margin-right: 10px;
 }
+
