@@ -10,7 +10,7 @@ export const EditProduct = props => {
     const {formValues, updateField, replaceFormValues} = useProductForm()
     // Preserve existing route guard behavior for unauthorized users.
     const [redirectToDisplayAllProducts, setRedirectToDisplayAllProducts] = useState(localStorage.accessLevel < ACCESS_LEVEL_CUSTOMER)
-    
+
     useEffect(() => {
         //axios.defaults.withCredentials = true // needed for sessions to work
         axios.get(`${SERVER_HOST}/products/${props.match.params.id}`, {headers: {"authorization": localStorage.token}})
