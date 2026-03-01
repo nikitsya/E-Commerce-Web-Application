@@ -2,6 +2,8 @@ import {useEffect, useState} from "react"
 
 const CART_STORAGE_KEY = "shoppingCartItems"
 
+// Reads cart snapshot from localStorage and normalizes values.
+// Any malformed payload gracefully falls back to an empty cart.
 const readCartFromStorage = () => {
     if (typeof window === "undefined") {
         return []
@@ -21,6 +23,7 @@ const readCartFromStorage = () => {
         return parsedCart
             .filter((item) => item && item._id)
             .map((item) => ({
+                // Keep a consistent item shape used by cart UI and checkout flow.
                 _id: item._id,
                 name: item.name || "",
                 price: Number(item.price) || 0,
@@ -33,12 +36,19 @@ const readCartFromStorage = () => {
 }
 
 export const useShoppingCart = () => {
+    // Initialize state lazily so storage is read only once on mount.
     const [cartItems, setCartItems] = useState(() => readCartFromStorage())
 
     useEffect(() => {
+        // Skip storage writes outside browser environments (tests/SSR).
+        if (typeof window === "undefined") {
+            return
+        }
+        // Persist current cart after every cart state change.
         localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems))
     }, [cartItems])
 
+    // Adds a product to cart or increments quantity if it already exists.
     const addToCart = (product) => {
         if (!product || !product._id) {
             return
@@ -68,6 +78,7 @@ export const useShoppingCart = () => {
         })
     }
 
+    // Updates quantity for a cart item; removes it when quantity is zero or less.
     const updateCartItemQuantity = (productId, nextQuantity) => {
         const normalizedQuantity = Math.floor(Number(nextQuantity))
 
@@ -89,14 +100,17 @@ export const useShoppingCart = () => {
         )
     }
 
+    // Removes a single item by product id.
     const removeCartItem = (productId) => {
         setCartItems((previousItems) => previousItems.filter((item) => item._id !== productId))
     }
 
+    // Clears the full cart, typically after successful checkout.
     const clearCart = () => {
         setCartItems([])
     }
 
+    // Badge value shown in navigation (sum of item quantities).
     const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0)
 
     return {
