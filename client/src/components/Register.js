@@ -158,6 +158,13 @@ export const Register = () => {
             />
             {/* Confirm-password validation message */}
             {errors.confirmPassword ? <div className="error-text">{errors.confirmPassword}</div> : null}<br/><br/>
+            
+            <input
+                type="file"
+                accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+                onChange={handleFileChange}
+            />
+            <br/><br/>
 
             <Button value="Register New User" className="green-button" onClick={handleSubmit}/>
             <Link className="red-button" to={"/DisplayAllProducts"}>Cancel</Link>
