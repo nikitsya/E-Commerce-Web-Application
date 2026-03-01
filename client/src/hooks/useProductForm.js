@@ -1,5 +1,6 @@
 import {useCallback, useState} from "react"
 
+// Baseline field values shared by product create/edit screens.
 const INITIAL_PRODUCT_FORM = {
     name: "",
     price: "",
@@ -10,6 +11,7 @@ const INITIAL_PRODUCT_FORM = {
     color: ""
 }
 
+// Converts API product response into form-friendly string values.
 export const mapProductToFormValues = (product = {}) => ({
     name: product.name || product.product || "",
     price: product.price ?? "",
@@ -20,6 +22,7 @@ export const mapProductToFormValues = (product = {}) => ({
     color: product.color || ""
 })
 
+// Converts form state back into normalized payload expected by backend routes.
 export const buildProductPayload = (formValues) => ({
     name: String(formValues.name || "").trim(),
     price: Number(formValues.price),
@@ -39,6 +42,7 @@ export const useProductForm = (initialValues = INITIAL_PRODUCT_FORM) => {
         ...initialValues
     })
 
+    // Returns stable change handlers for individual form fields.
     const updateField = useCallback((fieldName) => (event) => {
         const {value} = event.target
         setFormValues((previousValues) => ({
@@ -47,6 +51,7 @@ export const useProductForm = (initialValues = INITIAL_PRODUCT_FORM) => {
         }))
     }, [])
 
+    // Replaces all fields at once (useful when preloading Edit form data).
     const replaceFormValues = useCallback((nextValues = {}) => {
         setFormValues({
             ...INITIAL_PRODUCT_FORM,
