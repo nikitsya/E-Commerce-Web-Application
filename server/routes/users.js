@@ -33,7 +33,7 @@ router.post(`/users/reset_user_collection`, (req, res, next) => {
                 })
                     .then(createData => 
                         {
-                            emptyFolder(process.env.UPLOADED_FILES_FOLDER, result => res.json(createData))
+                            emptyFolder(process.env.UPLOADED_FILES_FOLDER, false, result => res.json(createData))
                         })                     
                     .catch(() => next(createError(500, `Failed to create Admin user for testing purposes`)))
             })
@@ -80,15 +80,24 @@ router.post(`/users/register/:name/:email/:password`, upload.single("profilePhot
                             // Issue JWT immediately after successful registration.
                             const token = jwt.sign({
                                 email: data.email,
-                                accessLevel: data.accessLevel
-                            }, JWT_PRIVATE_KEY, {algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY})
+                                accessLevel: data.accessLevel}, 
+                                JWT_PRIVATE_KEY, {algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY})
+
+                            fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.file.filename}`, 'base64', (readErr, fileData) =>
+                            {
+                                if (readErr) {
+                                    return next(readErr)
+                                }
+
                             res.json({name: data.name, accessLevel: data.accessLevel, token: token})
                         })
-                        .catch(() => next(createError(409, `User was not registered`)))
+                    })
+                    .catch(() => next(createError(409, `User was not registered`)))
                 })
             }
         })
         .catch(err => next(err))
+    }
 })
 
 // Authenticates existing user and returns JWT on successful password check.
