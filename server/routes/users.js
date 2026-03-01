@@ -31,7 +31,10 @@ router.post(`/users/reset_user_collection`, (req, res, next) => {
                     password: hash,
                     accessLevel: parseInt(process.env.ACCESS_LEVEL_ADMIN)
                 })
-                    .then(createData => res.json(createData))
+                    .then(createData => 
+                        {
+                            emptyFolder(process.env.UPLOADED_FILES_FOLDER, result => res.json(createData))
+                        })                     
                     .catch(() => next(createError(500, `Failed to create Admin user for testing purposes`)))
             })
         })
