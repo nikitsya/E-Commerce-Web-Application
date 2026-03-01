@@ -67,6 +67,7 @@ export const Login = () => {
                 // Persist session data used by route guards and protected requests.
                 localStorage.name = res.data.name
                 localStorage.accessLevel = res.data.accessLevel
+                localStorage.profilePhoto = res.data.profilePhoto || null
                 localStorage.token = res.data.token
                 setIsLoggedIn(true)
             })
