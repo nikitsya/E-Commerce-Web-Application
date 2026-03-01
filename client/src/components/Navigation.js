@@ -6,9 +6,7 @@ import {Logout} from "./Logout"
 
 const NavigationComponent = ({cartItemsCount = 0}) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false); // Mobile menu state
-
     const closeMenu = () => setIsMenuOpen(false); // Close menu after link click
-
     const isLoggedIn = Number(localStorage.accessLevel) > ACCESS_LEVEL_GUEST
     const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
 
@@ -45,11 +43,11 @@ const NavigationComponent = ({cartItemsCount = 0}) => {
                         {!isAdmin ? <Link to="/Cart" className="top-nav-link top-nav-cart-link" onClick={closeMenu}>Cart
                             ({cartItemsCount})</Link> : null}
                     </div>
-                    <Link to="/ResetDatabase" className="top-nav-link top-nav-danger" onClick={closeMenu}>Reset
-                        Database</Link>
+                    <Link to="/ResetDatabase" className="top-nav-link top-nav-danger" onClick={closeMenu}>Reset Database</Link>
                 </div>
             </nav>
         </header>
     );
 };
+
 export const Navigation = withRouter(NavigationComponent)
