@@ -2,10 +2,11 @@ const router = require(`express`).Router()
 const createError = require('http-errors')
 const usersModel = require(`../models/users`)
 const bcrypt = require('bcryptjs')  // Password hashing/checking for stored credentials.
-
 const fs = require('fs')
-const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
 const jwt = require('jsonwebtoken')
+
+const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
+
 
 // Development-only endpoint: clears users and recreates a known admin account.
 router.post(`/users/reset_user_collection`, (req, res, next) => {
