@@ -47,8 +47,10 @@ export const Register = () => {
 
     const handleFileChange = e =>
     {
-        // Save the selected profile photo file in state.
-        setSelectedFile(e.target.files[0])
+        // Keep the selected file for multipart/form-data submit.
+        setSelectedFile(e.target.files[0] || null)
+        // Clear stale server error once user re-selects file.
+        setServerError("")
     }
 
     const validate = () => {
