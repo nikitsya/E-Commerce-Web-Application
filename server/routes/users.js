@@ -72,7 +72,9 @@ router.post(`/users/register/:name/:email/:password`, upload.single("profilePhot
                         name: req.params.name,
                         email: req.params.email,
                         password: hash,
-                        accessLevel: parseInt(process.env.ACCESS_LEVEL_CUSTOMER)
+                        accessLevel: parseInt(process.env.ACCESS_LEVEL_CUSTOMER),
+                        profilePhotoFilename: req.file.filename
+
                     })
                         .then(data => {
                             // Issue JWT immediately after successful registration.
