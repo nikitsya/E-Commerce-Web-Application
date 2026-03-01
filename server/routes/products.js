@@ -1,12 +1,13 @@
 const router = require(`express`).Router()
 const createError = require('http-errors')
 const productsModel = require(`../models/products`)
-
 const fs = require('fs')
-const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
-
 const jwt = require('jsonwebtoken')
 
+const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
+
+// Renames legacy `product` field to `name` for backward compatibility.
+// This keeps old documents readable by the current API without manual DB scripts.
 const migrateLegacyProductField = async () => {
     await productsModel.collection.updateMany(
         {product: {$exists: true}, name: {$exists: false}},
@@ -14,6 +15,8 @@ const migrateLegacyProductField = async () => {
     )
 }
 
+// Ensures newly introduced optional product fields always exist.
+// Existing documents get default values so frontend rendering stays predictable.
 const migrateAdditionalProductFields = async () => {
     await productsModel.collection.updateMany(
         {images: {$exists: false}},
@@ -33,6 +36,7 @@ const migrateAdditionalProductFields = async () => {
     )
 }
 
+// Ordered fallback image mapping for existing rows that were created without `images`.
 const productImageByRow = [
     {
         name: `Midnight Steel Bottle`,
@@ -100,6 +104,7 @@ const productImageByRow = [
     }
 ]
 
+// Assigns a default image per product name when images are missing.
 const migrateProductImagesByRow = async () => {
     for (const item of productImageByRow) {
         await productsModel.updateMany(
@@ -124,6 +129,8 @@ migrateProductImagesByRow().catch((err) => {
     console.error(`Migration product images by row failed:`, err.message)
 })
 
+// Inserts demo catalog only when collection is empty.
+// Returns metadata so callers can log or respond differently for seeded/non-seeded cases.
 const seedProductsIfEmpty = async () => {
     const count = await productsModel.countDocuments()
     if (count > 0) {
@@ -291,7 +298,8 @@ seedProductsIfEmpty()
         console.error(`Automatic seed failed:`, err.message)
     })
 
-// Manual seed endpoint
+// Manual seed endpoint for development/testing environments.
+// Safe to call multiple times because seeding is guarded by countDocuments().
 router.post(`/products/seed`, async (req, res, next) => {
     try {
         const result = await seedProductsIfEmpty()
@@ -305,7 +313,7 @@ router.post(`/products/seed`, async (req, res, next) => {
     }
 })
 
-// Read all records
+// Public endpoint: returns all products sorted by insertion order.
 router.get(`/products`, (req, res, next) => {
     productsModel.find().sort({_id: 1})
         .then((data) => {
@@ -314,12 +322,13 @@ router.get(`/products`, (req, res, next) => {
         .catch((err) => next(err))
 })
 
-// Read one record
+// Protected endpoint: requires valid JWT to fetch a single product.
 router.get(`/products/:id`, (req, res, next) => {
     jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => {
         if (err) {
             next(createError(403, `User is not logged in`))
         } else {
+            // Returns null when ID is valid format but document does not exist.
             productsModel.findById(req.params.id)
                 .then(data => {
                     res.json(data)
@@ -329,12 +338,13 @@ router.get(`/products/:id`, (req, res, next) => {
     })
 })
 
-// Add new record
+// Protected endpoint: only admin users can create products.
 router.post(`/products`, (req, res, next) => {
     jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => {
         if (err) {
             next(createError(403, `User is not logged in`))
         } else {
+            // accessLevel is compared against configured admin threshold.
             if (decodedToken.accessLevel >= process.env.ACCESS_LEVEL_ADMIN) {
                 productsModel.create(req.body)
                     .then(data => {
@@ -348,7 +358,8 @@ router.post(`/products`, (req, res, next) => {
     })
 })
 
-// Update one record
+// Protected endpoint: any authenticated user can update a product in current logic.
+// Note: unlike POST/DELETE, this route does not enforce admin-level authorization.
 router.put(`/products/:id`, (req, res, next) => {
     jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => {
         if (err) {
@@ -363,7 +374,7 @@ router.put(`/products/:id`, (req, res, next) => {
     })
 })
 
-// Delete one record
+// Protected endpoint: only admin users can delete products.
 router.delete(`/products/:id`, (req, res, next) => {
     jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => {
         if (err) {
