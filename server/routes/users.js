@@ -89,7 +89,7 @@ router.post(`/users/register/:name/:email/:password`, upload.single("profilePhot
                                     return next(readErr)
                                 }
 
-                            res.json({name: data.name, accessLevel: data.accessLevel, token: token})
+                            res.json({name: data.name, accessLevel: data.accessLevel, profilePhoto: fileData, token: token})
                         })
                     })
                     .catch(() => next(createError(409, `User was not registered`)))
