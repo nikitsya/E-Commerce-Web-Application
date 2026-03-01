@@ -43,15 +43,18 @@ router.post(`/users/reset_user_collection`, (req, res, next) => {
 
 // Registers a customer account if email is not already present.
 router.post(`/users/register/:name/:email/:password`, upload.single("profilePhoto"), (req, res, next) => {
-    if (!req.file) {
+    if (!req.file) 
+        {
     return next(createError(601, `No file was selected to be uploaded`))
-}
-else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
-    return fs.unlink(`${process.env.UPLOADED_FILES_FOLDER}/${req.file.filename}`, () => {
+        }
+    else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") 
+        {
+        return fs.unlink(`${process.env.UPLOADED_FILES_FOLDER}/${req.file.filename}`, () => {
         res.json({errorMessage: `Only .png, .jpg and .jpeg format accepted`})
-    })
-}
-
+        })
+        }
+    else // uploaded file is valid
+{
     // Enforce unique email identity at application level.
     usersModel.findOne({email: req.params.email})
         .then(uniqueData => {
