@@ -59,7 +59,7 @@ router.post(`/users/register/:name/:email/:password`, upload.single("profilePhot
     usersModel.findOne({email: req.params.email})
         .then(uniqueData => {
             if (uniqueData) {
-                next(createError(403, `User already exists`))
+                return next(createError(403, `User already exists`))
             } else {
                 // Store only hashed passwords; never persist plaintext credentials.
                 bcrypt.hash(req.params.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (error, hash) => {
