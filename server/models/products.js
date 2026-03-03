@@ -7,7 +7,9 @@ let productsSchema = new mongoose.Schema({
     description: {type: String, trim: true, default: ``},
     capacityMl: {type: Number, min: 0},
     material: {type: String, trim: true, default: ``},
-    color: {type: String, trim: true, default: ``}
+    color: {type: String, trim: true, default: ``},
+    stockQty: { type: Number, required: true, min: 0, default: 0, validate: Number.isInteger },
+    lowStockThreshold: { type: Number, required: true, min: 0, default: 5, validate: Number.isInteger }
 }, {
     collection: `products`
 })
