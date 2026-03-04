@@ -5,7 +5,7 @@ import {Button} from "./Button"
 import {SERVER_HOST} from "../config/global_constants"
 
 
-export const Logout = () => {
+export const Logout = ({onLoggedOut = () => {}}) => {
     const [isLoggedIn, setIsLoggedIn] = useState(true)
 
     const handleSubmit = e => {
@@ -15,6 +15,7 @@ export const Logout = () => {
         axios.post(`${SERVER_HOST}/users/logout`)
             .then(() => {
                 localStorage.clear()
+                onLoggedOut()
 
                 //  localStorage.name = "GUEST"
                 //  localStorage.accessLevel = ACCESS_LEVEL_GUEST
