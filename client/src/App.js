@@ -14,6 +14,7 @@ import {LoggedInRoute} from "./components/LoggedInRoute"
 import {ShoppingCart} from "./components/ShoppingCart"
 import {useShoppingCart} from "./hooks/useShoppingCart"
 import {PayPalMessage} from "./components/PayPalMessage"
+import {AdminAdjustStock} from "./components/AdminAdjustStock"
 
 
 // Main app component with all routes
@@ -58,6 +59,11 @@ export const App = () => {
                 <Route exact path="/Login" component={Login}/>
                 <Route exact path="/PayPalMessage/:messageType/:payPalPaymentID" component={PayPalMessage}/>
                 <Route exact path="/ResetDatabase" component={ResetDatabase}/>
+                <Route
+                    exact
+                    path="/AdminAdjustStock"
+                    render={() => (isAdmin ? <AdminAdjustStock/> : <Redirect to="/DisplayAllProducts"/>)}
+                />
 
                 {/* Catalog routes share the same renderer to avoid duplicated props logic */}
                 <Route exact path="/" render={renderCatalogPage}/>
