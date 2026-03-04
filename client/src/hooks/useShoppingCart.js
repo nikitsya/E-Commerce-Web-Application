@@ -1,6 +1,18 @@
 import {useEffect, useState} from "react"
 
 const CART_STORAGE_KEY = "shoppingCartItems"
+const DEFAULT_CART_QUANTITY = 1
+
+const normalizeStockQty = (value, fallback = 0) => {
+    const normalizedFallback = Number.isFinite(Number(fallback)) ? Math.max(0, Math.floor(Number(fallback))) : 0
+    const parsedValue = Math.floor(Number(value))
+
+    if (!Number.isFinite(parsedValue) || parsedValue < 0) {
+        return normalizedFallback
+    }
+
+    return parsedValue
+}
 
 // Reads cart snapshot from localStorage and normalizes values.
 // Any malformed payload gracefully falls back to an empty cart.
@@ -22,14 +34,21 @@ const readCartFromStorage = () => {
 
         return parsedCart
             .filter((item) => item && item._id)
-            .map((item) => ({
-                // Keep a consistent item shape used by cart UI and checkout flow.
-                _id: item._id,
-                name: item.name || "",
-                price: Number(item.price) || 0,
-                image: item.image || "",
-                quantity: Number(item.quantity) > 0 ? Math.floor(Number(item.quantity)) : 1
-            }))
+            .map((item) => {
+                const quantity = Number(item.quantity) > 0 ? Math.floor(Number(item.quantity)) : DEFAULT_CART_QUANTITY
+                const stockQty = normalizeStockQty(item.stockQty, quantity)
+
+                return {
+                    // Keep a consistent item shape used by cart UI and checkout flow.
+                    _id: item._id,
+                    name: item.name || "",
+                    price: Number(item.price) || 0,
+                    image: item.image || "",
+                    quantity: Math.min(quantity, stockQty),
+                    stockQty
+                }
+            })
+            .filter((item) => item.quantity > 0)
     } catch {
         return []
     }
@@ -54,13 +73,22 @@ export const useShoppingCart = () => {
             return
         }
 
+        const stockQty = normalizeStockQty(product.stockQty)
+        if (stockQty <= 0) {
+            return
+        }
+
         setCartItems((previousItems) => {
             const existingItem = previousItems.find((item) => item._id === product._id)
 
             if (existingItem) {
                 return previousItems.map((item) =>
                     item._id === product._id
-                        ? {...item, quantity: item.quantity + 1}
+                        ? {
+                            ...item,
+                            stockQty,
+                            quantity: item.quantity < stockQty ? item.quantity + 1 : item.quantity
+                        }
                         : item
                 )
             }
@@ -72,7 +100,8 @@ export const useShoppingCart = () => {
                     name: product.name || "",
                     price: Number(product.price) || 0,
                     image: Array.isArray(product.images) && product.images.length > 0 ? product.images[0] : "",
-                    quantity: 1
+                    quantity: DEFAULT_CART_QUANTITY,
+                    stockQty
                 }
             ]
         })
@@ -92,11 +121,19 @@ export const useShoppingCart = () => {
         }
 
         setCartItems((previousItems) =>
-            previousItems.map((item) =>
-                item._id === productId
-                    ? {...item, quantity: normalizedQuantity}
-                    : item
-            )
+            previousItems.flatMap((item) => {
+                if (item._id !== productId) {
+                    return [item]
+                }
+
+                const stockQty = normalizeStockQty(item.stockQty, item.quantity)
+                const clampedQuantity = Math.min(normalizedQuantity, stockQty)
+                if (clampedQuantity <= 0) {
+                    return []
+                }
+
+                return [{...item, stockQty, quantity: clampedQuantity}]
+            })
         )
     }
 
