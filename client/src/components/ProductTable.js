@@ -14,6 +14,9 @@ export const ProductTable = props => {
     const onAddToCart = props.onAddToCart
     // Fast lookup for "already in cart" state by product id.
     const cartProductIdSet = new Set(cartItems.map((item) => item._id))
+    const cartQuantityByProductId = new Map(
+        cartItems.map((item) => [item._id, Number(item.quantity) || 0])
+    )
 
     const handleSort = (column) => {
         // Toggle sort direction when same column is clicked, otherwise reset to ascending.
@@ -86,6 +89,7 @@ export const ProductTable = props => {
                 {sortedProducts.map((product) => <ProductTableRow key={product._id} product={product}
                                                                   onOpenDetails={setSelectedProduct}
                                                                   isInCart={cartProductIdSet.has(product._id)}
+                                                                  cartQuantity={cartQuantityByProductId.get(product._id) || 0}
                                                                   onAddToCart={onAddToCart}/>)}
                 </tbody>
             </table>
@@ -93,6 +97,7 @@ export const ProductTable = props => {
             {/* Details modal opens when a row sets selectedProduct */}
             <ProductDetailsModal product={selectedProduct} onClose={() => setSelectedProduct(null)}
                                  isInCart={selectedProduct ? cartProductIdSet.has(selectedProduct._id) : false}
+                                 cartQuantity={selectedProduct ? (cartQuantityByProductId.get(selectedProduct._id) || 0) : 0}
                                  onAddToCart={onAddToCart}
             />
         </>

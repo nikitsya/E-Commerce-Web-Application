@@ -5,7 +5,7 @@ import {ACCESS_LEVEL_ADMIN} from "../config/global_constants"
 
 const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
 
-export const ProductDetailsModal = ({product, onClose, onAddToCart, isInCart = false}) => {
+export const ProductDetailsModal = ({product, onClose, onAddToCart, isInCart = false, cartQuantity = 0}) => {
     useEffect(() => {
         if (!product) return
 
@@ -35,7 +35,13 @@ export const ProductDetailsModal = ({product, onClose, onAddToCart, isInCart = f
     // Admin-only actions are shown based on access level in localStorage.
     const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
     const canAddToCart = typeof onAddToCart === "function"
-    const handleAddToCart = () => { if (canAddToCart) onAddToCart(product) }
+    const stockQty = Number.isFinite(Number(product.stockQty)) ? Math.max(0, Math.floor(Number(product.stockQty))) : 0
+    const isAtStockLimit = stockQty <= 0 || cartQuantity >= stockQty
+    const addToCartLabel = stockQty <= 0 ? "Out of Stock" : (isAtStockLimit ? "Stock Limit Reached" : (isInCart ? "Added to Cart" : "Add to Cart"))
+    const handleAddToCart = () => {
+        if (!canAddToCart || isAtStockLimit) return
+        onAddToCart(product)
+    }
 
     return (
         // Clicking backdrop closes modal.
@@ -79,13 +85,14 @@ export const ProductDetailsModal = ({product, onClose, onAddToCart, isInCart = f
                                 type="button"
                                 className="icon-button add-to-cart-icon-button"
                                 onClick={handleAddToCart}
-                                aria-label={isInCart ? "Added to Cart" : "Add to Cart"}
-                                title={isInCart ? "Added to Cart" : "Add to Cart"}
+                                disabled={isAtStockLimit}
+                                aria-label={addToCartLabel}
+                                title={addToCartLabel}
                             >
                                 <img
                                     className="add-to-cart-icon"
                                     src={isInCart ? "/images/buttons/added_to_cart.png" : "/images/buttons/add-to-cart.png"}
-                                    alt={isInCart ? "Added to Cart" : "Add to Cart"}
+                                    alt={addToCartLabel}
                                 />
                             </button>
                         ) : null}
