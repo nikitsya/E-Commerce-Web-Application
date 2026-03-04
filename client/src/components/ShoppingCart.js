@@ -87,6 +87,8 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
                     // Per-item calculated values for display.
                     const price = Number(item.price)
                     const quantity = Number(item.quantity) || 1
+                    const stockQty = Math.max(0, Math.floor(Number(item.stockQty)))
+                    const isAtStockLimit = stockQty <= 0 || quantity >= stockQty
                     const subtotal = price * quantity
 
                     return (
@@ -119,6 +121,8 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
                                         type="button"
                                         className="cart-qty-button"
                                         aria-label={`Increase quantity for ${item.name}`}
+                                        title={isAtStockLimit ? "Stock limit reached" : "Increase quantity"}
+                                        disabled={isAtStockLimit}
                                         onClick={() => onUpdateQuantity(item._id, quantity + 1)}
                                     >
                                         +
