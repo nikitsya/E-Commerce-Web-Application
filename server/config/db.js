@@ -1,12 +1,24 @@
 const mongoose = require('mongoose')
 
-const mongoUri = String(process.env.MONGODB_URI || "").trim()
-if (!mongoUri) {
-    throw new Error("MONGODB_URI is required.")
+const dbName = String(process.env.DB_NAME || "").trim()
+const dbUserName = String(process.env.DB_USER_NAME || "").trim()
+const dbUserPassword = String(process.env.DB_USER_PASSWORD || "").trim()
+const dbClusterHost = String(process.env.DB_CLUSTER_HOST || "").trim()
+
+if (!dbName) {
+    throw new Error("DB_NAME is required.")
 }
-if (!mongoUri.startsWith("mongodb+srv://")) {
-    throw new Error("MONGODB_URI must be an Atlas mongodb+srv URI.")
+if (!dbUserName) {
+    throw new Error("DB_USER_NAME is required.")
 }
+if (!dbUserPassword) {
+    throw new Error("DB_USER_PASSWORD is required.")
+}
+if (!dbClusterHost) {
+    throw new Error("DB_CLUSTER_HOST is required.")
+}
+
+const mongoUri = `mongodb+srv://${encodeURIComponent(dbUserName)}:${encodeURIComponent(dbUserPassword)}@${dbClusterHost}/${encodeURIComponent(dbName)}`
 
 mongoose.connect(mongoUri)
 
