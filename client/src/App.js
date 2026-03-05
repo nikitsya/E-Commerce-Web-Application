@@ -14,6 +14,8 @@ import {LoggedInRoute} from "./components/LoggedInRoute"
 import {ShoppingCart} from "./components/ShoppingCart"
 import {useShoppingCart} from "./hooks/useShoppingCart"
 import {PayPalMessage} from "./components/PayPalMessage"
+import {EditProfile} from "./components/EditProfile"
+
 
 
 // Main app component with all routes
