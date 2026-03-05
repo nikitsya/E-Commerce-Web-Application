@@ -62,5 +62,5 @@ Last reviewed: 2026-03-01
 |      | To do       | Logged-in customer view purchase history (with filter/search/sort/images)                                         | 2.5 |
 |      | To do       | Logged-in customer return products                                                                                | 2.5 |
 | ✅   |            | Logged-in customer create profile with photo, including error handling UI                                         | 2.5 |
-|      |in progress  | Logged-in customer edit profile with photo, including error handling UI                                           | 2.5 |
+| ✅   |            | Logged-in customer edit profile with photo, including error handling UI                                           | 2.5 |
 | ✅    |             | Guest customer purchase products and save customer/product details for sales history, including error handling UI | 2.5 |
