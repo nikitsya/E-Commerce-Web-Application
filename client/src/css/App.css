@@ -1842,3 +1842,18 @@ form input[readonly] {
     border: 2px solid #d8e5d2;
     margin-bottom: 12px;
 }
+.profile-file-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.profile-file-preview {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #d8e5d2;
+}
+
