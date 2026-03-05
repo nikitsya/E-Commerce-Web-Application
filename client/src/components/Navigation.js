@@ -71,7 +71,7 @@ const NavigationComponent = ({ cartItemsCount = 0 }) => {
                                                 View Customers
                                             </Link>
                                             <Link to="/AdminViewCustomersPurchaseHistory" className="top-nav-link" onClick={closeMenu}>
-                                                View Customers Purchase History
+                                                Purchase History
                                             </Link>
                                         </>
                                     ) : null}
