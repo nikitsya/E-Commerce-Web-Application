@@ -1048,6 +1048,10 @@ form input[readonly] {
     padding: 10px 12px;
 }
 
+.admin-stock-global-error p {
+    margin: 0 0 10px;
+}
+
 .admin-stock-empty {
     border: 1px solid #d4dfbf;
     border-radius: 10px;
@@ -1134,6 +1138,11 @@ form input[readonly] {
     outline: none;
     border-color: #7f9766;
     box-shadow: 0 0 0 2px rgba(127, 151, 102, 0.2);
+}
+
+.admin-stock-input-invalid {
+    border-color: #c95e39;
+    box-shadow: 0 0 0 2px rgba(201, 94, 57, 0.16);
 }
 
 .admin-stock-row-error {
