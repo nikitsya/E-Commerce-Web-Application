@@ -25,6 +25,9 @@ const [isLoading, setIsLoading] = useState(true)
 
 // Redirect to catalog after successful save.
 const [isSaved, setIsSaved] = useState(false)
+// Temporary client-side preview for newly selected image file.
+const [previewPhoto, setPreviewPhoto] = useState(null)
+
 
 useEffect(() => {
     // Load current user's profile using JWT.
