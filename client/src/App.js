@@ -84,6 +84,8 @@ export const App = () => {
                 <LoggedInRoute exact path="/AddProduct" component={AddProduct}/>
                 <LoggedInRoute exact path="/EditProduct/:id" component={EditProduct}/>
                 <LoggedInRoute exact path="/DeleteProduct/:id" component={DeleteProduct}/>
+                <LoggedInRoute exact path="/EditProfile" component={EditProfile}/>
+
 
                 {/* Fallback route keeps users on catalog for unknown paths */}
                 <Route render={renderCatalogPage}/>
