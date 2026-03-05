@@ -1,1 +1,147 @@
-[]
+[{
+  "_id": {
+    "$oid": "69a25323effa70e0ab8637d8"
+  },
+  "orderID": "8WX8705688006825P",
+  "total": 26.99,
+  "items": [
+    {
+      "_id": "699471d5b33f758c70331b83",
+      "name": "Eco Steel Bottle – Green Loop",
+      "price": 26.99,
+      "quantity": 1
+    }
+  ],
+  "isGuest": true,
+  "customerName": "Anna",
+  "customerEmail": "a@b.com",
+  "customerAddress": "asdas",
+  "customerPhone": "234234234",
+  "createdAt": {
+    "$date": "2026-02-28T02:29:55.474Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-28T02:29:55.474Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69a25521effa70e0ab8637e0"
+  },
+  "orderID": "58582967FY801030G",
+  "total": 52.98,
+  "items": [
+    {
+      "_id": "699471d5b33f758c70331b8c",
+      "name": "Pure Blue Bottle",
+      "price": 21.99,
+      "quantity": 1
+    },
+    {
+      "_id": "699471d5b33f758c70331b87",
+      "name": "Coastal Steel Bottle",
+      "price": 30.99,
+      "quantity": 1
+    }
+  ],
+  "isGuest": false,
+  "customerName": "Daria",
+  "customerEmail": "daria@daria.com",
+  "customerAddress": "",
+  "customerPhone": "",
+  "createdAt": {
+    "$date": "2026-02-28T02:38:25.192Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-28T02:38:25.192Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69a2562eeffa70e0ab8637e2"
+  },
+  "orderID": "1693065226960301X",
+  "total": 52.98,
+  "items": [
+    {
+      "_id": "699471d5b33f758c70331b8c",
+      "name": "Pure Blue Bottle",
+      "price": 21.99,
+      "quantity": 1
+    },
+    {
+      "_id": "699471d5b33f758c70331b87",
+      "name": "Coastal Steel Bottle",
+      "price": 30.99,
+      "quantity": 1
+    }
+  ],
+  "isGuest": false,
+  "customerName": "Daria",
+  "customerEmail": "daria@daria.com",
+  "customerAddress": "",
+  "customerPhone": "",
+  "createdAt": {
+    "$date": "2026-02-28T02:42:54.163Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-28T02:42:54.163Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69a2570deffa70e0ab8637e5"
+  },
+  "orderID": "126734225D035294V",
+  "total": 109.94999999999999,
+  "items": [
+    {
+      "_id": "699471d5b33f758c70331b8c",
+      "name": "Pure Blue Bottle",
+      "price": 21.99,
+      "quantity": 5
+    }
+  ],
+  "isGuest": false,
+  "customerName": "Daria",
+  "customerEmail": "daria@daria.com",
+  "customerAddress": "",
+  "customerPhone": "",
+  "createdAt": {
+    "$date": "2026-02-28T02:46:37.329Z"
+  },
+  "updatedAt": {
+    "$date": "2026-02-28T02:46:37.329Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69a6fcddb99aa94319076c9f"
+  },
+  "orderID": "8RB63836ST224784T",
+  "total": 28.99,
+  "items": [
+    {
+      "_id": "699471d5b33f758c70331b85",
+      "name": "Ocean Blue Travel Bottle",
+      "price": 28.99,
+      "quantity": 1
+    }
+  ],
+  "isGuest": true,
+  "customerName": "anna",
+  "customerEmail": "a@a.mail",
+  "customerAddress": "dsfsgf",
+  "customerPhone": "4543545345",
+  "createdAt": {
+    "$date": "2026-03-03T15:23:09.855Z"
+  },
+  "updatedAt": {
+    "$date": "2026-03-03T15:23:09.855Z"
+  },
+  "__v": 0
+}]
