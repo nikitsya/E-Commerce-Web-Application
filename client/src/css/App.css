@@ -1157,9 +1157,80 @@ form input[readonly] {
     font-size: 13px;
 }
 
+.admin-customers-page {
+    max-width: 1040px;
+    padding: 20px;
+}
+
+.admin-customers-table-wrap table {
+    min-width: 860px;
+}
+
+.admin-customers-table-wrap thead th:nth-child(1),
+.admin-customers-table-wrap tbody td:nth-child(1) {
+    width: 14%;
+}
+
+.admin-customers-table-wrap thead th:nth-child(2),
+.admin-customers-table-wrap tbody td:nth-child(2) {
+    width: 20%;
+}
+
+.admin-customers-table-wrap thead th:nth-child(3),
+.admin-customers-table-wrap tbody td:nth-child(3) {
+    width: 24%;
+    text-align: left;
+}
+
+.admin-customers-table-wrap thead th:nth-child(4),
+.admin-customers-table-wrap tbody td:nth-child(4) {
+    width: 16%;
+    text-align: left;
+}
+
+.admin-customers-table-wrap thead th:nth-child(5),
+.admin-customers-table-wrap tbody td:nth-child(5) {
+    width: 26%;
+    text-align: left;
+}
+
+.admin-customers-table-wrap tbody td:nth-child(1) {
+    padding-right: 12px;
+}
+
+.admin-customer-thumb,
+.admin-customer-thumb-placeholder {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+}
+
+.admin-customer-thumb {
+    display: block;
+    object-fit: cover;
+    border: 1px solid #dae3cd;
+}
+
+.admin-customer-thumb-placeholder {
+    border: 1px dashed #c9d5ba;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #60715a;
+    background: #f5f8ef;
+}
+
 @media (max-width: 680px) {
     .admin-stock-page {
         padding: 12px;
+    }
+
+    .admin-customers-page {
+        padding: 12px;
+    }
+
+    .admin-customers-table-wrap table {
+        min-width: 0;
     }
 
     .admin-stock-header {
@@ -1185,6 +1256,35 @@ form input[readonly] {
     .admin-stock-actions .green-button {
         width: 100%;
         margin-right: 0;
+    }
+
+    .admin-customers-table-wrap tbody td:nth-child(1) {
+        margin-bottom: 8px;
+    }
+
+    .admin-customers-table-wrap tbody td:nth-child(3) {
+        grid-column: 1 / -1;
+        justify-self: start;
+        font-size: 14px;
+        font-weight: 500;
+        color: #4f6150;
+    }
+
+    .admin-customers-table-wrap tbody td:nth-child(4),
+    .admin-customers-table-wrap tbody td:nth-child(5) {
+        display: block;
+        grid-column: 1 / -1;
+        width: 100%;
+        color: #4f6150;
+    }
+
+    .admin-customers-table-wrap .admin-customer-thumb,
+    .admin-customers-table-wrap .admin-customer-thumb-placeholder {
+        width: 100%;
+        max-width: none;
+        aspect-ratio: 16 / 10;
+        height: auto;
+        border-radius: 12px;
     }
 }
 

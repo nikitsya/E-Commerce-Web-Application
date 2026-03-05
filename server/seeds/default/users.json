@@ -11,17 +11,6 @@
     "__v": 0
   },
   {
-    "_id": "69a84459a1e6f8d35394e6f9",
-    "name": "User",
-    "email": "user@gmail.com",
-    "password": "$2b$04$ddWroA/ehghDZY05ChHRtOSzJUAxUKq2gNJ3EZ.nCVvE9VfL/HUF.",
-    "profilePhotoFilename": "",
-    "phone": "0891000001",
-    "address": "12 River View, Dublin",
-    "accessLevel": 1,
-    "__v": 0
-  },
-  {
     "_id": "6af000000000000000000001",
     "name": "Olivia Murphy",
     "email": "olivia.murphy@gmail.com",

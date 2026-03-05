@@ -189,6 +189,9 @@ useEffect(() => {
                 accept=".png,.jpg,.jpeg,image/png,image/jpeg"
                 onChange={handleFileChange}
             />
+            {previewPhoto ? (
+                <img className="profile-file-preview" src={previewPhoto} alt="New photo preview"/>
+            ) : null}
             {errors.profilePhoto ? <div className="error-text">{errors.profilePhoto}</div> : null}
             <br/><br/>
 
