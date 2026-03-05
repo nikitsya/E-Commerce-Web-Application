@@ -153,6 +153,7 @@ return (
         />
         {errors.address ? <div className="error-text">{errors.address}</div> : null}<br/>
 
+    <div className="profile-file-row">
         <input
             type="file"
             accept=".png,.jpg,.jpeg,image/png,image/jpeg"
@@ -165,7 +166,12 @@ return (
                     setPreviewPhoto(null)
                 }
             }}
-        /><br/><br/>
+        />
+        {previewPhoto ? (
+            <img className="profile-file-preview" src={previewPhoto} alt="New photo preview"/>
+        ) : null}
+    </div>
+    <br/><br/>
 
         <Button value="Save Profile" className="green-button" onClick={handleSubmit}/>
         <Link className="red-button" to={"/DisplayAllProducts"}>Cancel</Link>
