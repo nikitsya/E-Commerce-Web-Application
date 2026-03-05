@@ -95,7 +95,6 @@ const NavigationComponent = ({ cartItemsCount = 0 }) => {
                             )}
                             {!isAdmin ? <Link to="/Cart" className="top-nav-link top-nav-cart-link" onClick={closeMenu}>Cart ({cartItemsCount})</Link> : null}
                         </div>
-                        <Link to="/ResetDatabase" className="top-nav-link top-nav-danger" onClick={closeMenu}>Reset Database</Link>
                     </div>
                 </nav>
             </header>
