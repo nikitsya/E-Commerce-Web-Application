@@ -96,6 +96,10 @@ if (isLoading) {
     return <div className="form-container"><h2>Edit Profile</h2><div>Loading...</div></div>
 }
 
+if (isSaved) {
+    return <Redirect to="/DisplayAllProducts"/>
+}
+
 return (
     <form className="form-container" noValidate={true}>
         <h2>Edit Profile</h2>
