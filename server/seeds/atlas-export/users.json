@@ -1,0 +1,24 @@
+[
+  {
+    "_id": "69a6ab8cd7d3cba588dd48ba",
+    "name": "nikita",
+    "email": "nikita@gmail.com",
+    "password": "$2b$04$B8VFhicEJK7MldEjuJcCE.14WMgDyCkZvFtvYpuwqs9icQkuKpdGK",
+    "profilePhotoFilename": "b2401faeef672ee8ed794aaa23465524",
+    "phone": "",
+    "address": "",
+    "accessLevel": 2,
+    "__v": 0
+  },
+  {
+    "_id": "69a84459a1e6f8d35394e6f9",
+    "name": "User",
+    "email": "user@gmail.com",
+    "password": "$2b$04$ddWroA/ehghDZY05ChHRtOSzJUAxUKq2gNJ3EZ.nCVvE9VfL/HUF.",
+    "profilePhotoFilename": "69c21be015c3d2380fbf86217d681f67",
+    "phone": "",
+    "address": "",
+    "accessLevel": 1,
+    "__v": 0
+  }
+]
