@@ -121,10 +121,8 @@ return (
         {successMessage ? <div className="success-text">{successMessage}</div> : null}
 
         {profilePhoto ? (
-            <img className="profile-preview" src={previewPhoto} alt="Selected preview"/>
-        ) : profilePhoto ? (
-            <img className="profile-preview" src={`data:;base64,${profilePhoto}`} alt="Profile"/>
-        ) : null}
+           <img className="profile-preview" src={`data:;base64,${profilePhoto}`} alt="Current profile"/>
+) : null}
 
         <input
             className={errors.name ? "field-error" : ""}
