@@ -1826,3 +1826,19 @@ form input[readonly] {
     margin-right: 10px;
 }
 
+.success-text {
+    margin-top: -8px;
+    margin-bottom: 10px;
+    color: #2e6f3e;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.profile-preview {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #d8e5d2;
+    margin-bottom: 12px;
+}
