@@ -1,0 +1,243 @@
+[
+  {
+    "_id": "69a6b75e6503a9e4fdf80603",
+    "name": "Midnight Steel Bottle",
+    "price": 29.99,
+    "images": [
+      "/images/products/bluewater-sweden-262JN9gquco-unsplash.jpg"
+    ],
+    "description": "Premium stainless steel reusable bottle with matte dark finish. Keeps drinks cold for up to 24 hours and hot for up to 12 hours.",
+    "capacityMl": 750,
+    "material": "Steel",
+    "color": "Silver",
+    "stockQty": 35,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80604",
+    "name": "Classic Steel Loop Bottle",
+    "price": 24.99,
+    "images": [
+      "/images/products/bluewater-sweden-5hVQO80IX2c-unsplash.jpg"
+    ],
+    "description": "Durable stainless steel bottle with practical silicone loop lid. Lightweight and leak-proof for everyday use.",
+    "capacityMl": 600,
+    "material": "Steel",
+    "color": "Black",
+    "stockQty": 28,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80605",
+    "name": "Eco Steel Bottle – Green Loop",
+    "price": 26.99,
+    "images": [
+      "/images/products/bluewater-sweden-J-7q5DZLiYY-unsplash.jpg"
+    ],
+    "description": "Brushed steel bottle with eco-friendly silicone carry loop. Compact and sustainable hydration solution.",
+    "capacityMl": 600,
+    "material": "Steel",
+    "color": "Silver",
+    "stockQty": 24,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80606",
+    "name": "Minimal White Bottle",
+    "price": 27.99,
+    "images": [
+      "/images/products/bluewater-sweden-KaYO8M107_Q-unsplash.jpg"
+    ],
+    "description": "Sleek reusable bottle with soft white finish and double-wall insulation for long temperature retention.",
+    "capacityMl": 500,
+    "material": "Plastic",
+    "color": "White",
+    "stockQty": 19,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80607",
+    "name": "Ocean Blue Travel Bottle",
+    "price": 28.99,
+    "images": [
+      "/images/products/bluewater-sweden-Y7arHAsA4_k-unsplash.jpg"
+    ],
+    "description": "Deep blue insulated bottle designed for travel and outdoor activities. Durable and leak-proof.",
+    "capacityMl": 750,
+    "material": "Steel",
+    "color": "Blue",
+    "stockQty": 31,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80608",
+    "name": "Soft White Outdoor Bottle",
+    "price": 28.99,
+    "images": [
+      "/images/products/bluewater-sweden-jVQUpOJfuKM-unsplash.jpg"
+    ],
+    "description": "Scratch-resistant matte white bottle built for hiking and adventure.",
+    "capacityMl": 750,
+    "material": "Steel",
+    "color": "White",
+    "stockQty": 22,
+    "lowStockThreshold": 5,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80609",
+    "name": "Coastal Steel Bottle",
+    "price": 30.99,
+    "images": [
+      "/images/products/bluewater-sweden-mufygNHZ2FA-unsplash.jpg"
+    ],
+    "description": "Premium double-wall stainless steel bottle inspired by coastal landscapes.",
+    "capacityMl": 750,
+    "material": "Steel",
+    "color": "Transparent",
+    "stockQty": 18,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf8060a",
+    "name": "Glass Tea Infuser Bottle",
+    "price": 32.99,
+    "images": [
+      "/images/products/bluewater-sweden-nyNJTrPAXKw-unsplash.jpg"
+    ],
+    "description": "Elegant glass bottle with built-in stainless steel tea infuser. Perfect for loose-leaf tea.",
+    "capacityMl": 500,
+    "material": "Glass",
+    "color": "Transparent",
+    "stockQty": 14,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf8060b",
+    "name": "Amber Glass Infuser Bottle",
+    "price": 34.99,
+    "images": [
+      "/images/products/bluewater-sweden-p2lQtAPvTtQ-unsplash.jpg",
+      "/images/products/bluewater-sweden-p2lQtAPvTtQ-unsplash1.jpg"
+    ],
+    "description": "Stylish amber-tinted glass bottle with removable infuser for tea and fruit drinks.",
+    "capacityMl": 550,
+    "material": "Steel",
+    "color": "Silver",
+    "stockQty": 16,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf8060c",
+    "name": "Forest Glass Bottle",
+    "price": 23.99,
+    "images": [
+      "/images/products/bluewater-sweden-p6XsdEowMUE-unsplash.jpg"
+    ],
+    "description": "Clear double-wall glass bottle with stainless steel lid. Designed for eco-friendly daily use.",
+    "capacityMl": 550,
+    "material": "Glass",
+    "color": "White",
+    "stockQty": 26,
+    "lowStockThreshold": 5,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf8060d",
+    "name": "Deep Navy Bottle",
+    "price": 29.99,
+    "images": [
+      "/images/products/bluewater-sweden-zAi_Cu0oC_Y-unsplash.jpg"
+    ],
+    "description": "Insulated stainless steel bottle with smooth navy coating. Keeps drinks at ideal temperature for hours.",
+    "capacityMl": 750,
+    "material": "Steel",
+    "color": "Silver",
+    "stockQty": 20,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf8060e",
+    "name": "Pure Blue Bottle",
+    "price": 21.99,
+    "images": [
+      "/images/products/bluewater-sweden-znGHaNGztB0-unsplash.jpg"
+    ],
+    "description": "Lightweight reusable bottle with soft-touch blue sleeve. Perfect for commuting.",
+    "capacityMl": 500,
+    "material": "Steel",
+    "color": "Blue",
+    "stockQty": 33,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf8060f",
+    "name": "Sky Sport Bottle",
+    "price": 22.99,
+    "images": [
+      "/images/products/claudio-schwarz-MF5T5F9GhmY-unsplash.jpg"
+    ],
+    "description": "Minimalist reusable bottle with protective silicone sleeve and sport-style cap. Lightweight and easy to carry.",
+    "capacityMl": 600,
+    "material": "Plastic + Silicone",
+    "color": "Blue",
+    "stockQty": 27,
+    "lowStockThreshold": 20,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80610",
+    "name": "Smart Filter Bottle",
+    "price": 39.99,
+    "images": [
+      "/images/products/marek-mucha-41GWWsgUIoo-unsplash.jpg"
+    ],
+    "description": "Modern bottle with built-in filtration system and sleek black finish. Designed for clean and safe hydration.",
+    "capacityMl": 500,
+    "material": "Glass + Stainless Steel",
+    "color": "Black",
+    "stockQty": 12,
+    "lowStockThreshold": 10,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80611",
+    "name": "Mint Duo Bottle Set",
+    "price": 49.99,
+    "images": [
+      "/images/products/quokkabottles-J62aicWwNhg-unsplash.jpg"
+    ],
+    "description": "Set of 2 reusable mint bottles: one tumbler with stainless steel straw and one bamboo cap bottle. Stylish, eco-friendly and perfect for daily use.",
+    "capacityMl": 700,
+    "material": "Glass + Silicone + Bamboo",
+    "color": "Mint",
+    "stockQty": 11,
+    "lowStockThreshold": 5,
+    "__v": 0
+  },
+  {
+    "_id": "69a6b75e6503a9e4fdf80612",
+    "name": "Ocean Stone Bottle",
+    "price": 31.99,
+    "images": [
+      "/images/products/quokkabottles-Jl3YZSHYKzc-unsplash.jpg"
+    ],
+    "description": "Premium reusable bottle with unique ocean-inspired stone texture design. Durable and eye-catching.",
+    "capacityMl": 650,
+    "material": "Plastic",
+    "color": "Blue",
+    "stockQty": 17,
+    "lowStockThreshold": 10,
+    "__v": 0
+  }
+]
