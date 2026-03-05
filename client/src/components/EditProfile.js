@@ -5,7 +5,6 @@ import {Button} from "./Button"
 import {SERVER_HOST} from "../config/global_constants"
 
 export const EditProfile = () => {
-    return <div>Edit Profile</div>
 
 // Editable profile fields.
 const [name, setName] = useState("")
