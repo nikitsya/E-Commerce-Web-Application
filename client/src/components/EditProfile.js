@@ -90,3 +90,52 @@ const handleSubmit = (e) => {
 if (isLoading) {
     return <div className="form-container"><h2>Edit Profile</h2><div>Loading...</div></div>
 }
+
+return (
+    <form className="form-container" noValidate={true}>
+        <h2>Edit Profile</h2>
+
+        {serverError ? <div className="error-text">{serverError}</div> : null}
+        {successMessage ? <div className="success-text">{successMessage}</div> : null}
+
+        {profilePhoto ? <img className="profile-preview" src={`data:;base64,${profilePhoto}`} alt="Profile"/> : null}
+
+        <input
+            className={errors.name ? "field-error" : ""}
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+        />
+        {errors.name ? <div className="error-text">{errors.name}</div> : null}<br/>
+
+        <input type="email" value={email} disabled /><br/>
+
+        <input
+            className={errors.phone ? "field-error" : ""}
+            type="text"
+            placeholder="Phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+        />
+        {errors.phone ? <div className="error-text">{errors.phone}</div> : null}<br/>
+
+        <input
+            className={errors.address ? "field-error" : ""}
+            type="text"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+        />
+        {errors.address ? <div className="error-text">{errors.address}</div> : null}<br/>
+
+        <input
+            type="file"
+            accept=".png,.jpg,.jpeg,image/png,image/jpeg"
+            onChange={(e) => setSelectedFile(e.target.files[0] || null)}
+        /><br/><br/>
+
+        <Button value="Save Profile" className="green-button" onClick={handleSubmit}/>
+        <Link className="red-button" to={"/DisplayAllProducts"}>Cancel</Link>
+    </form>
+)
