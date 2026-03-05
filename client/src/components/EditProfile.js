@@ -24,6 +24,8 @@ const [serverError, setServerError] = useState("")
 const [successMessage, setSuccessMessage] = useState("")
 const [isLoading, setIsLoading] = useState(true)
 
+const [isSaved, setIsSaved] = useState(false)
+
 useEffect(() => {
     // Load current user's profile using JWT.
     axios.get(`${SERVER_HOST}/users/profile`, {headers: {authorization: localStorage.token}})
