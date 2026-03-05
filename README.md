@@ -48,7 +48,7 @@ Last reviewed: 2026-03-01
 | ✅    |             | Search (with filter and sort)                                                                                     | 2.5 |
 | ✅    |             | Sort (with filter and search)                                                                                     | 2.5 |
 | ✅    |             | Admin create product, including error handling UI                                                                 | 2.5 |
-|      | Partial     | Admin edit product, including error handling UI                                                                   | 2.5 |
+|      | *     | Admin edit product, including error handling UI                                                                   | 2.5 |
 | ✅    |             | Admin can add multiple images when adding product; images display                                                 | 2.5 |
 | ✅    |        | Admin adjust stock level, including error handling UI                                                             | 2.5 |
 |      | *       | Admin view customers                                                                                              | 2.5 |

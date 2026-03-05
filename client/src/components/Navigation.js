@@ -64,14 +64,14 @@ const NavigationComponent = ({ cartItemsCount = 0 }) => {
                                 <>
                                     {isAdmin ? (
                                         <>
-                                            <Link to="/AdminAdjustStock" className="top-nav-link" onClick={closeMenu}>
+                                            <Link to="/AdminAdjustStock" className="top-nav-link top-nav-admin-link" onClick={closeMenu}>
                                                 Adjust stock
                                             </Link>
-                                            <Link to="/AdminViewCustomers" className="top-nav-link" onClick={closeMenu}>
+                                            <Link to="/AdminViewCustomers" className="top-nav-link top-nav-admin-link" onClick={closeMenu}>
                                                 View Customers
                                             </Link>
-                                            <Link to="/AdminViewCustomersPurchaseHistory" className="top-nav-link" onClick={closeMenu}>
-                                                View Customers Purchase History
+                                            <Link to="/AdminViewCustomersPurchaseHistory" className="top-nav-link top-nav-admin-link" onClick={closeMenu}>
+                                                Purchase History
                                             </Link>
                                         </>
                                     ) : null}

@@ -1298,6 +1298,20 @@ form input[readonly] {
     background-color: #dfe8cf;
 }
 
+.top-nav-link.top-nav-admin-link {
+    background-color: #fff1c7;
+    color: #6b3f00;
+    border: 1px solid #d79a2b;
+    font-weight: 700;
+}
+
+.top-nav-link.top-nav-admin-link:hover,
+.top-nav-link.top-nav-admin-link:focus {
+    background-color: #e39f1f;
+    color: #ffffff;
+    border-color: #b67b13;
+}
+
 .top-nav-action {
     background-color: #6f8a55;
     color: #fff;
