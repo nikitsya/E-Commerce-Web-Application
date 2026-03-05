@@ -86,3 +86,7 @@ const handleSubmit = (e) => {
             setServerError(err?.response?.data || "Failed to update profile")
         })
 }
+
+if (isLoading) {
+    return <div className="form-container"><h2>Edit Profile</h2><div>Loading...</div></div>
+}
