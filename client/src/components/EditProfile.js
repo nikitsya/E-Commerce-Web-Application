@@ -85,6 +85,7 @@ const handleSubmit = (e) => {
             setProfilePhoto(res.data.profilePhoto || null)
             setSelectedFile(null)
             setSuccessMessage("Profile updated successfully")
+            setIsSaved(true)
         })
         .catch((err) => {
             setServerError(err?.response?.data || "Failed to update profile")
