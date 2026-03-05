@@ -3,16 +3,35 @@ const createError = require('http-errors')
 const usersModel = require(`../models/users`)
 const bcrypt = require('bcryptjs')  // Password hashing/checking for stored credentials.
 const fs = require('fs')
+const path = require('path')
 const jwt = require('jsonwebtoken')
 const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
 
 const multer = require('multer')
-const upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
+const uploadedFilesFolderPath = path.resolve(__dirname, `..`, process.env.UPLOADED_FILES_FOLDER)
+const getUploadedFilePath = (filename) => path.join(uploadedFilesFolderPath, filename)
+const upload = multer({dest: uploadedFilesFolderPath})
 
 const emptyFolder = require('empty-folder')
 
 // Validates phone format used by profile endpoints (7-15 digits).
 const isPhoneValid = (phone) => /^\d{7,15}$/.test(String(phone || ``).trim())
+
+// Reads stored profile photo file and returns base64 payload, or null when unavailable.
+const readProfilePhotoAsBase64 = (photoFilename) =>
+    new Promise((resolve) => {
+        if (!photoFilename) {
+            return resolve(null)
+        }
+
+        fs.readFile(getUploadedFilePath(photoFilename), "base64", (readErr, fileData) => {
+            if (readErr || !fileData) {
+                return resolve(null)
+            }
+
+            resolve(fileData)
+        })
+    })
 
 // Sends a consistent profile payload to the client, including base64 photo when available.
 const sendProfileResponse = (user, res) => {
@@ -25,19 +44,9 @@ const sendProfileResponse = (user, res) => {
         accessLevel: user.accessLevel
     }
 
-    if (!user.profilePhotoFilename) {
-        return res.json({...basePayload, profilePhoto: null})
-    }
-
-    // Read stored profile image and attach it as base64 to JSON response.
-    fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${user.profilePhotoFilename}`, "base64", (readErr, fileData) => {
-        // If image read fails, still return profile data without breaking profile page.
-        if (readErr || !fileData) {
-            return res.json({...basePayload, profilePhoto: null})
-        }
-        // Successful image read: return profile with photo payload.
-        res.json({...basePayload, profilePhoto: fileData})
-    })
+    readProfilePhotoAsBase64(user.profilePhotoFilename)
+        .then((profilePhoto) => res.json({...basePayload, profilePhoto}))
+        .catch(() => res.json({...basePayload, profilePhoto: null}))
 }
 
 
@@ -62,7 +71,7 @@ router.post(`/users/reset_user_collection`, (req, res, next) => {
                 })
                     .then(createData => 
                         {
-                            emptyFolder(process.env.UPLOADED_FILES_FOLDER, false, result => res.json(createData))
+                            emptyFolder(uploadedFilesFolderPath, false, result => res.json(createData))
                         })                     
                     .catch(() => next(createError(500, `Failed to create Admin user for testing purposes`)))
             })
@@ -78,7 +87,7 @@ router.post(`/users/register/:name/:email/:password`, upload.single("profilePhot
         }
     else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") 
         {
-        return fs.unlink(`${process.env.UPLOADED_FILES_FOLDER}/${req.file.filename}`, () => {
+        return fs.unlink(getUploadedFilePath(req.file.filename), () => {
         res.json({errorMessage: `Only .png, .jpg and .jpeg format accepted`})
         })
         }
@@ -112,7 +121,7 @@ router.post(`/users/register/:name/:email/:password`, upload.single("profilePhot
                                 accessLevel: data.accessLevel}, 
                                 JWT_PRIVATE_KEY, {algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY})
 
-                            fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.file.filename}`, 'base64', (readErr, fileData) =>
+                            fs.readFile(getUploadedFilePath(req.file.filename), 'base64', (readErr, fileData) =>
                             {
                                 if (readErr) {
                                     return next(readErr)
@@ -153,7 +162,7 @@ router.post(`/users/login/:email/:password`, (req, res, next) => {
                 )
 
                 fs.readFile(
-                    `${process.env.UPLOADED_FILES_FOLDER}/${data.profilePhotoFilename}`,
+                    getUploadedFilePath(data.profilePhotoFilename),
                     "base64",
                     (readErr, fileData) => {
                         if (readErr || !fileData) {
@@ -234,14 +243,14 @@ router.put(`/users/profile`, upload.single("profilePhoto"), (req, res, next) => 
                     // Only allow supported image MIME types.
                     if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
                         // Remove invalid uploaded file and return validation error.
-                        return fs.unlink(`${process.env.UPLOADED_FILES_FOLDER}/${req.file.filename}`, () => {
+                        return fs.unlink(getUploadedFilePath(req.file.filename), () => {
                             next(createError(400, `Only .png, .jpg and .jpeg format accepted`))
                         })
                     }
                     
                     // Remove previous profile photo file to avoid orphan files.
                     if (data.profilePhotoFilename) {
-                        fs.unlink(`${process.env.UPLOADED_FILES_FOLDER}/${data.profilePhotoFilename}`, () => {})
+                        fs.unlink(getUploadedFilePath(data.profilePhotoFilename), () => {})
                     }
                     // Save new random uploaded filename in user record.
                     updates.profilePhotoFilename = req.file.filename
@@ -251,6 +260,36 @@ router.put(`/users/profile`, upload.single("profilePhoto"), (req, res, next) => 
                 usersModel.findByIdAndUpdate(data._id, {$set: updates}, {new: true})
                     .then((updatedUser) => sendProfileResponse(updatedUser, res))
                     .catch((updateErr) => next(updateErr))
+            })
+            .catch((findErr) => next(findErr))
+    })
+})
+
+// Returns all customers for admin UI, including base64 profile photos when available.
+router.get(`/users`, (req, res, next) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => {
+        if (err) {
+            return next(createError(403, `User is not logged in`))
+        }
+
+        if (decodedToken.accessLevel < process.env.ACCESS_LEVEL_ADMIN) {
+            return next(createError(403, `User is not an administrator, so they cannot view customer records`))
+        }
+
+        usersModel.find({accessLevel: Number(process.env.ACCESS_LEVEL_CUSTOMER)})
+            .sort({_id: 1})
+            .then(async (users) => {
+                const payload = await Promise.all(users.map(async (user) => ({
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    phone: user.phone || ``,
+                    address: user.address || ``,
+                    accessLevel: user.accessLevel,
+                    profilePhoto: await readProfilePhotoAsBase64(user.profilePhotoFilename)
+                })))
+
+                res.json(payload)
             })
             .catch((findErr) => next(findErr))
     })
