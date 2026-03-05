@@ -23,3 +23,19 @@ const [errors, setErrors] = useState({})
 const [serverError, setServerError] = useState("")
 const [successMessage, setSuccessMessage] = useState("")
 const [isLoading, setIsLoading] = useState(true)
+
+useEffect(() => {
+    // Load current user's profile using JWT.
+    axios.get(`${SERVER_HOST}/users/profile`, {headers: {authorization: localStorage.token}})
+        .then((res) => {
+            setName(res.data.name || "")
+            setEmail(res.data.email || "")
+            setPhone(res.data.phone || "")
+            setAddress(res.data.address || "")
+            setProfilePhoto(res.data.profilePhoto || null)
+        })
+        .catch((err) => {
+            setServerError(err?.response?.data || "Failed to load profile")
+        })
+        .finally(() => setIsLoading(false))
+}, [])
