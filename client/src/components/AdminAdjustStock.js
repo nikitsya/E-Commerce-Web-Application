@@ -74,6 +74,12 @@ export const AdminAdjustStock = () => {
         loadProducts()
     }, [isAdmin, loadProducts])
 
+    const sortedProducts = [...products].sort((first, second) => {
+        const firstName = String(first?.name ?? "")
+        const secondName = String(second?.name ?? "")
+        return firstName.localeCompare(secondName, undefined, {sensitivity: "base"})
+    })
+
     if (!isAdmin) return <Redirect to="/DisplayAllProducts"/>
 
     const getCurrentStock = (productId) => {
@@ -160,7 +166,7 @@ export const AdminAdjustStock = () => {
 
             {!isLoading && products.length > 0 ? (
                 <div className="admin-stock-list">
-                    {products.map((product) => (
+                    {sortedProducts.map((product) => (
                         <article key={product._id} className="admin-stock-item">
                             <div className="admin-stock-main">
                                 {getFirstImage(product) ? (
