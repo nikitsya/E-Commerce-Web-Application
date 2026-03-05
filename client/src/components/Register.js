@@ -49,10 +49,17 @@ export const Register = () => {
 
     const handleFileChange = e =>
     {
-        // Keep the selected file for multipart/form-data submit.
-        setSelectedFile(e.target.files[0] || null)
-        // Clear stale server error once user re-selects file.
-        setServerError("")
+         const file = e.target.files[0] || null
+    // Keep the selected file for multipart/form-data submit.
+    setSelectedFile(file)
+    // Clear stale server error once user re-selects file.
+    setServerError("")
+
+    if (file) {
+        setPreviewPhoto(URL.createObjectURL(file))
+    } else {
+        setPreviewPhoto(null)
+    }
     }
 
     const validate = () => {
