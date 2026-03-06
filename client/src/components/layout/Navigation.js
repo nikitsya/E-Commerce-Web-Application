@@ -13,6 +13,7 @@ export const Navigation = ({ cartItemsCount = 0 }) => {
 
     const isLoggedIn = Number(localStorage.accessLevel) > ACCESS_LEVEL_GUEST
     const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
+    const profileRoleLabel = isAdmin ? "Administrator" : "Customer account"
 
     const profilePhoto = localStorage.profilePhoto
     const hasProfilePhoto = Boolean(profilePhoto && profilePhoto !== "null")
@@ -111,16 +112,20 @@ export const Navigation = ({ cartItemsCount = 0 }) => {
                 <div className="profile-modal-overlay" onClick={closeProfileModal}>
                     <div className="profile-modal-card" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Profile menu">
                         <button type="button" className="profile-modal-close" onClick={closeProfileModal} aria-label="Close profile menu">×</button>
-                        <div className="profile-modal-avatar-wrap">
-                            {hasProfilePhoto ? (
-                                <img className="profile-modal-avatar" src={`data:;base64,${profilePhoto}`} alt="Profile" />
-                            ) : (
-                                <span className="profile-modal-avatar-fallback">{profileInitial}</span>
-                            )}
+                        <div className="profile-modal-head">
+                            <div className="profile-modal-avatar-wrap">
+                                {hasProfilePhoto ? (
+                                    <img className="profile-modal-avatar" src={`data:;base64,${profilePhoto}`} alt="Profile" />
+                                ) : (
+                                    <span className="profile-modal-avatar-fallback">{profileInitial}</span>
+                                )}
+                            </div>
+                            <div className="profile-modal-title">{profileName}</div>
+                            <div className="profile-modal-badge">{profileRoleLabel}</div>
+                            <p className="profile-modal-subtitle">Manage your profile settings.</p>
                         </div>
-                        <div className="profile-modal-title">{profileName}</div>
                         <div className="profile-modal-actions">
-                            <Link to="/EditProfile" className="blue-button" onClick={closeProfileModal}>Edit Profile</Link>
+                            <Link to="/EditProfile" className="blue-button profile-modal-edit-button" onClick={closeProfileModal}>Edit Profile</Link>
                             <Logout onLoggedOut={closeProfileModal} />
                         </div>
                     </div>
