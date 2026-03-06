@@ -96,6 +96,52 @@ router.get(`/sales/my-purchase-history`, (req, res, next) => {
     })
 })
 
+// Logged-in customer returns one item from their own purchase history.
+router.patch(`/sales/return-item/:saleId/:itemId`, (req, res, next) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: [`HS256`]}, (err, decodedToken) => {
+        if (err || !decodedToken) {
+            return next(createError(403, `User is not logged in`))
+        }
+
+        const customerEmail = String(decodedToken.email || ``).trim()
+        if (!isEmailValid(customerEmail)) {
+            return next(createError(400, `Invalid customer email`))
+        }
+
+        salesModel.findById(req.params.saleId)
+            .then((sale) => {
+                if (!sale) {
+                    return next(createError(404, `Sale record not found`))
+                }
+
+                // Customer can return only their own non-guest purchases.
+                if (sale.isGuest || String(sale.customerEmail || ``).toLowerCase() !== customerEmail.toLowerCase()) {
+                    return next(createError(403, `You can only return items from your own purchases`))
+                }
+
+                const itemIndex = Array.isArray(sale.items)
+                    ? sale.items.findIndex((item) => String(item._id) === String(req.params.itemId))
+                    : -1
+
+                if (itemIndex === -1) {
+                    return next(createError(404, `Item not found in this sale`))
+                }
+
+                if (sale.items[itemIndex].isReturned) {
+                    return next(createError(400, `Item has already been returned`))
+                }
+
+                sale.items[itemIndex].isReturned = true
+                sale.items[itemIndex].returnedAt = new Date()
+
+                sale.save()
+                    .then((updatedSale) => res.json(formatSaleForCustomer(updatedSale)))
+                    .catch((saveErr) => next(saveErr))
+            })
+            .catch((findErr) => next(findErr))
+    })
+})
+
 // Admin endpoint to view customer purchase history (optionally by customerEmail query).
 router.get(`/sales/customers/purchase-history`, (req, res, next) => {
     jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: [`HS256`]}, (err, decodedToken) => {
