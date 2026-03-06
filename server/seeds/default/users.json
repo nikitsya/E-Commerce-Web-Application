@@ -262,5 +262,16 @@
     "address": "2 Heather Court, Balbriggan",
     "accessLevel": 1,
     "__v": 0
+  },
+  {
+    "_id": "6af000000000000000000018",
+    "name": "Daria",
+    "email": "daria@daria.com",
+    "password": "$2b$04$ddWroA/ehghDZY05ChHRtOSzJUAxUKq2gNJ3EZ.nCVvE9VfL/HUF.",
+    "profilePhotoFilename": "",
+    "phone": "0891000025",
+    "address": "18 River Walk, Dublin",
+    "accessLevel": 1,
+    "__v": 0
   }
 ]
