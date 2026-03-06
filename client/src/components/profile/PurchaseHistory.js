@@ -298,6 +298,8 @@ export const PurchaseHistory = () => {
                                                     const imageSrc = productImagesByID[itemID] || ""
                                                     const quantity = Number(item.quantity) || 1
                                                     const lineTotal = (Number(item.price) || 0) * quantity
+                                                    const itemKey = `${purchase._id}:${itemID}`
+                                                    const isReturning = returningItemKey === itemKey
 
                                                     return (
                                                         <li key={`${purchase._id || purchase.orderID || purchaseIndex}-${itemID || itemIndex}`}>
@@ -318,13 +320,15 @@ export const PurchaseHistory = () => {
                                                             {item.isReturned ? (
                                                                 <span className="purchase-returned-badge">Returned</span>
                                                             ) : (
-                                                                <button
+                                                               <button
                                                                     type="button"
                                                                     className="purchase-return-btn"
                                                                     onClick={() => handleReturnClick(purchase._id, itemID)}
+                                                                    disabled={isReturning}
                                                                 >
-                                                                    Return
+                                                                    {isReturning ? "Returning..." : "Return"}
                                                                 </button>
+
                                                             )}
                                                             </div>
 
