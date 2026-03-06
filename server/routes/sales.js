@@ -1,3 +1,4 @@
+const mongoose = require(`mongoose`)
 const router = require(`express`).Router()
 const createError = require(`http-errors`)
 const fs = require(`fs`)
@@ -73,6 +74,19 @@ const formatSaleForCustomer = (sale) => ({
         }))
         : []
 })
+
+// Middleware: validates MongoDB ObjectId params for sale/item return route.
+const validateReturnRouteParams = (req, res, next) => {
+    if (!mongoose.isValidObjectId(req.params.saleId)) {
+        return next(createError(400, `Invalid sale id`))
+    }
+
+    if (!mongoose.isValidObjectId(req.params.itemId)) {
+        return next(createError(400, `Invalid item id`))
+    }
+
+    next()
+}
 
 // Logged-in customer endpoint to view only their own purchase history.
 router.get(`/sales/my-purchase-history`, (req, res, next) => {
