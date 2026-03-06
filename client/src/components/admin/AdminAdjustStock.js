@@ -3,12 +3,13 @@ import axios from "axios"
 import {Link, Redirect} from "react-router-dom"
 import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../../config/global_constants"
 
-
+// Product cards show a single preview image, this helper safely extracts it.
 const getFirstImage = (product) => {
     if (!Array.isArray(product.images) || product.images.length === 0) return ""
     return product.images[0] || ""
 }
 
+// Maps backend/network errors to readable UI text for admin stock actions.
 const getErrorMessage = (error, fallbackMessage) => {
     const status = error?.response?.status
     if (status === 401 || status === 403) return "Your admin session expired. Please log in again."
@@ -23,6 +24,7 @@ const getErrorMessage = (error, fallbackMessage) => {
     return fallbackMessage
 }
 
+// Validates admin-entered stock values before sending update requests.
 const validateStockValue = (value) => {
     const textValue = String(value ?? "").trim()
     if (!textValue) return "Stock quantity is required."
@@ -34,6 +36,7 @@ const validateStockValue = (value) => {
     return ""
 }
 
+// Converts unknown stock values to a safe non-negative integer for UI display.
 const normalizeStockNumber = (value, fallback = 0) => {
     const numericValue = Number(value)
     if (!Number.isFinite(numericValue)) return fallback
@@ -41,6 +44,7 @@ const normalizeStockNumber = (value, fallback = 0) => {
 }
 
 export const AdminAdjustStock = () => {
+    // Guard this screen so only admin accounts can access stock controls.
     const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
     const [products, setProducts] = useState([])
     const [draftStockById, setDraftStockById] = useState({})
@@ -55,6 +59,7 @@ export const AdminAdjustStock = () => {
         setIsLoading(true)
         setLoadError("")
 
+        // Loads all products once and prepares editable stock draft values by product id.
         axios.get(`${SERVER_HOST}/products`, {headers: {"authorization": localStorage.token}})
             .then((response) => {
                 const nextProducts = Array.isArray(response.data) ? response.data : []
@@ -77,6 +82,7 @@ export const AdminAdjustStock = () => {
 
     useEffect(() => {
         if (!isAdmin) return
+        // Initial fetch for admin stock management table.
         loadProducts()
     }, [isAdmin, loadProducts])
 
@@ -94,6 +100,7 @@ export const AdminAdjustStock = () => {
     }
 
     const canSave = (productId) => {
+        // Save is enabled only when value is valid and actually changed.
         const draftValue = String(draftStockById[productId] ?? "").trim()
         if (validateStockValue(draftValue)) return false
         return Number(draftValue) !== getCurrentStock(productId)
@@ -130,6 +137,7 @@ export const AdminAdjustStock = () => {
                     throw new Error("Failed to save stock quantity.")
                 }
 
+                // Keep list and draft field in sync with backend-confirmed stock value.
                 const updatedStock = Number(response.data.stockQty)
                 setProducts((currentProducts) => currentProducts.map((product) => {
                     if (product._id !== productId) return product

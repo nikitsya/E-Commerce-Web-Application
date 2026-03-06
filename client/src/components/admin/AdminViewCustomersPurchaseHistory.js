@@ -3,8 +3,10 @@ import axios from "axios"
 import {Link, Redirect, withRouter} from "react-router-dom"
 import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../../config/global_constants"
 
+// Normalizes monetary values to EUR format used across admin reports.
 const formatCurrency = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
 
+// Formats purchase timestamps to a consistent Ireland locale view.
 const formatDateTime = (value) => {
     const parsedDate = new Date(value)
     if (Number.isNaN(parsedDate.getTime())) return "Unknown date"
@@ -18,6 +20,7 @@ const formatDateTime = (value) => {
     })
 }
 
+// Sort helper handles numeric/date columns and text columns in one place.
 const getSortValue = (purchase, column) => {
     if (column === "createdAt") return new Date(purchase.createdAt).getTime() || 0
     if (column === "total") return Number(purchase.total) || 0
@@ -43,6 +46,7 @@ const getErrorMessage = (error, fallbackMessage) => {
 }
 
 const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
+    // Restrict purchase analytics page to admin users.
     const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
     const [purchases, setPurchases] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -52,6 +56,7 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
     const [searchTerm, setSearchTerm] = useState("")
 
     const prefilledEmailFilter = useMemo(() => {
+        // Supports deep-linking from "View Customers" with pre-applied email filter.
         const queryEmail = new URLSearchParams(location.search).get("email")
         return String(queryEmail || "").trim()
     }, [location.search])
@@ -64,6 +69,7 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
         setIsLoading(true)
         setLoadError("")
 
+        // Loads the full purchase history for client-side filtering and sorting.
         axios.get(`${SERVER_HOST}/sales/customers/purchase-history`, {headers: {"authorization": localStorage.token}})
             .then((response) => {
                 setPurchases(Array.isArray(response.data) ? response.data : [])
@@ -77,6 +83,7 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
 
     useEffect(() => {
         if (!isAdmin) return
+        // Initial load for purchase-history table.
         loadPurchaseHistory()
     }, [isAdmin, loadPurchaseHistory])
 
@@ -95,6 +102,7 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
     }
 
     const filteredAndSortedPurchases = useMemo(() => {
+        // Combines customer type filter, free-text search and dynamic sorting.
         const normalizedSearch = searchTerm.trim().toLowerCase()
 
         const filtered = purchases.filter((purchase) => {
@@ -132,6 +140,7 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
     }, [customerType, purchases, searchTerm, sortConfig])
 
     const summary = useMemo(() => {
+        // Calculates top-level metrics shown above the table.
         const uniqueCustomers = new Set()
         let revenue = 0
 

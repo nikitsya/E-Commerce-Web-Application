@@ -4,6 +4,7 @@ import {Link, Redirect} from "react-router-dom"
 import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../../config/global_constants"
 
 export const AdminViewCustomers = () => {
+    // Restrict customer list and purchase metadata to admin users.
     const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
     const [customers, setCustomers] = useState([])
     const [orderedCustomerEmails, setOrderedCustomerEmails] = useState([])
@@ -30,6 +31,7 @@ export const AdminViewCustomers = () => {
         setIsLoading(true)
         setLoadError("")
 
+        // Pull both customer profiles and purchase-history summary in parallel.
         Promise.all([
             axios.get(`${SERVER_HOST}/users`, {headers: {"authorization": localStorage.token}}),
             axios.get(`${SERVER_HOST}/sales/customers/purchase-history`, {headers: {"authorization": localStorage.token}})
@@ -56,6 +58,7 @@ export const AdminViewCustomers = () => {
 
     useEffect(() => {
         if (!isAdmin) return
+        // Initial dataset for the admin customer screen.
         loadCustomers()
     }, [isAdmin, loadCustomers])
 
@@ -76,6 +79,7 @@ export const AdminViewCustomers = () => {
     const orderedCustomerEmailSet = useMemo(() => new Set(orderedCustomerEmails), [orderedCustomerEmails])
 
     const filteredAndSortedCustomers = useMemo(() => {
+        // Combines text search, order-presence filter and sortable columns.
         const normalizedSearch = searchTerm.trim().toLowerCase()
 
         const filteredCustomers = customers.filter((customer) => {
