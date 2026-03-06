@@ -173,7 +173,7 @@ return (
             }}
         />
         {previewPhoto ? (
-            <img className="profile-file-preview" src={previewPhoto} alt="New photo preview"/>
+            <img className="profile-file-preview" src={previewPhoto} alt="Profile preview"/>
         ) : null}
     </div>
     <br/><br/>
