@@ -23,7 +23,7 @@ How to use:
 - Leave the cell empty for `Partial` and `To do` items.
 - Update status as you complete work.
 
-Last reviewed: 06-Mar
+Last reviewed: 06-Mar (14:17)
 
 | Done | Status      | Requirement                                                                                                       | Max |
 |------|-------------|-------------------------------------------------------------------------------------------------------------------|----:|
