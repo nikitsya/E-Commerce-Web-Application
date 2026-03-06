@@ -53,6 +53,49 @@ const formatSaleForAdmin = (sale) => ({
         : []
 })
 
+// Formats sale payload for logged-in customer purchase history UI.
+const formatSaleForCustomer = (sale) => ({
+    _id: sale._id,
+    orderID: String(sale.orderID || ``),
+    total: Number(sale.total) || 0,
+    createdAt: sale.createdAt,
+    updatedAt: sale.updatedAt,
+    items: Array.isArray(sale.items)
+        ? sale.items.map((item) => ({
+            _id: String(item?._id || ``),
+            name: String(item?.name || ``).trim(),
+            price: Number(item?.price) || 0,
+            quantity: Math.max(1, Number(item?.quantity) || 1)
+        }))
+        : []
+})
+
+// Logged-in customer endpoint to view only their own purchase history.
+router.get(`/sales/my-purchase-history`, (req, res, next) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: [`HS256`]}, (err, decodedToken) => {
+        if (err || !decodedToken) {
+            return next(createError(403, `User is not logged in`))
+        }
+
+        if (Number(decodedToken.accessLevel) <= Number(process.env.ACCESS_LEVEL_GUEST || 0)) {
+            return next(createError(403, `Guest users cannot view purchase history`))
+        }
+
+        const customerEmail = String(decodedToken.email || ``).trim()
+        if (!isEmailValid(customerEmail)) {
+            return next(createError(400, `Invalid customer email`))
+        }
+
+        salesModel.find({
+            customerEmail: {$regex: new RegExp(`^${escapeRegex(customerEmail)}$`, `i`)},
+            isGuest: false
+        })
+            .sort({createdAt: -1, _id: -1})
+            .then((sales) => res.json((Array.isArray(sales) ? sales : []).map(formatSaleForCustomer)))
+            .catch((findErr) => next(findErr))
+    })
+})
+
 // Admin endpoint to view customer purchase history (optionally by customerEmail query).
 router.get(`/sales/customers/purchase-history`, (req, res, next) => {
     jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: [`HS256`]}, (err, decodedToken) => {

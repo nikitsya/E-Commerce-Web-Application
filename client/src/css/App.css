@@ -2668,6 +2668,7 @@ form input[readonly] {
 }
 
 .profile-modal-edit-button,
+.profile-modal-history-button,
 .profile-modal-actions .red-button {
     width: 100%;
     margin-right: 0;
@@ -2682,6 +2683,104 @@ form input[readonly] {
 .profile-modal-edit-button:hover,
 .profile-modal-edit-button:focus {
     background: #5a6f49;
+}
+
+.profile-modal-history-button {
+    background: #7c8f6d;
+}
+
+.profile-modal-history-button:hover,
+.profile-modal-history-button:focus {
+    background: #6d805e;
+    color: #ffffff;
+}
+
+.purchase-history-page {
+    max-width: 920px;
+    padding: 20px;
+}
+
+.purchase-history-header h2 {
+    margin: 0;
+}
+
+.purchase-history-subtitle {
+    margin: 8px 0 16px;
+    color: #4f6150;
+}
+
+.purchase-history-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.purchase-history-card {
+    border: 1px solid #d7e2cb;
+    border-radius: 14px;
+    background: #fbfef6;
+    padding: 14px;
+    box-shadow: 0 8px 18px rgba(72, 86, 58, 0.08);
+}
+
+.purchase-placeholder {
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #e4ecd7 0%, #f3f8ea 50%, #e4ecd7 100%);
+    background-size: 220% 100%;
+    animation: purchase-placeholder-wave 1.5s ease-in-out infinite;
+}
+
+.purchase-placeholder + .purchase-placeholder {
+    margin-top: 10px;
+}
+
+.purchase-placeholder-short {
+    width: 34%;
+}
+
+.purchase-placeholder-medium {
+    width: 58%;
+}
+
+.purchase-placeholder-long {
+    width: 82%;
+}
+
+.purchase-history-table-wrap table {
+    min-width: 880px;
+}
+
+.purchase-history-table-wrap thead th:nth-child(1),
+.purchase-history-table-wrap tbody td:nth-child(1) {
+    width: 19%;
+}
+
+.purchase-history-table-wrap thead th:nth-child(2),
+.purchase-history-table-wrap tbody td:nth-child(2) {
+    width: 24%;
+}
+
+.purchase-history-table-wrap thead th:nth-child(3),
+.purchase-history-table-wrap tbody td:nth-child(3) {
+    width: 12%;
+}
+
+.purchase-history-table-wrap thead th:nth-child(4),
+.purchase-history-table-wrap tbody td:nth-child(4) {
+    width: 45%;
+}
+
+@media (max-width: 680px) {
+    .purchase-history-table-wrap table {
+        min-width: 0;
+    }
+
+    .purchase-history-table-wrap tbody td:nth-child(4) {
+        display: block;
+        grid-column: 1 / -1;
+        width: 100%;
+        color: #4f6150;
+    }
 }
 
 @media (max-width: 680px) {
