@@ -6625,5 +6625,185 @@
       "$date": "2026-03-05T21:17:00.000Z"
     },
     "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7b8d1e4a9f2c3d5e6a7b8c01"
+    },
+    "orderID": "NKTA6A1B2C3D4E5F1",
+    "total": 39.99,
+    "items": [
+      {
+        "_id": "69a6b75e6503a9e4fdf80610",
+        "name": "Smart Filter Bottle",
+        "price": 39.99,
+        "quantity": 1
+      }
+    ],
+    "isGuest": false,
+    "customerName": "Nikita",
+    "customerEmail": "nikita.user@gmail.com",
+    "customerAddress": "12 River Lane, Dublin",
+    "customerPhone": "0891000101",
+    "createdAt": {
+      "$date": "2026-03-06T09:14:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-06T09:14:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7b8d1e4a9f2c3d5e6a7b8c02"
+    },
+    "orderID": "NKTA6A1B2C3D4E5F2",
+    "total": 59.98,
+    "items": [
+      {
+        "_id": "69a6b75e6503a9e4fdf8060d",
+        "name": "Deep Navy Bottle",
+        "price": 29.99,
+        "quantity": 2
+      }
+    ],
+    "isGuest": false,
+    "customerName": "Nikita",
+    "customerEmail": "nikita.user@gmail.com",
+    "customerAddress": "12 River Lane, Dublin",
+    "customerPhone": "0891000101",
+    "createdAt": {
+      "$date": "2026-03-07T11:36:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-07T11:36:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7b8d1e4a9f2c3d5e6a7b8c03"
+    },
+    "orderID": "NKTA6A1B2C3D4E5F3",
+    "total": 54.98,
+    "items": [
+      {
+        "_id": "69a6b75e6503a9e4fdf8060c",
+        "name": "Forest Glass Bottle",
+        "price": 23.99,
+        "quantity": 1
+      },
+      {
+        "_id": "69a6b75e6503a9e4fdf80609",
+        "name": "Coastal Steel Bottle",
+        "price": 30.99,
+        "quantity": 1
+      }
+    ],
+    "isGuest": false,
+    "customerName": "Nikita",
+    "customerEmail": "nikita.user@gmail.com",
+    "customerAddress": "12 River Lane, Dublin",
+    "customerPhone": "0891000101",
+    "createdAt": {
+      "$date": "2026-03-08T14:05:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-08T14:05:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7b8d1e4a9f2c3d5e6a7b8c04"
+    },
+    "orderID": "NKTA6A1B2C3D4E5F4",
+    "total": 80.97,
+    "items": [
+      {
+        "_id": "69a6b75e6503a9e4fdf80605",
+        "name": "Eco Steel Bottle – Green Loop",
+        "price": 26.99,
+        "quantity": 3
+      }
+    ],
+    "isGuest": false,
+    "customerName": "Nikita",
+    "customerEmail": "nikita.user@gmail.com",
+    "customerAddress": "12 River Lane, Dublin",
+    "customerPhone": "0891000101",
+    "createdAt": {
+      "$date": "2026-03-09T10:22:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-09T10:22:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7b8d1e4a9f2c3d5e6a7b8c05"
+    },
+    "orderID": "NKTA6A1B2C3D4E5F5",
+    "total": 94.97,
+    "items": [
+      {
+        "_id": "69a6b75e6503a9e4fdf8060b",
+        "name": "Amber Glass Infuser Bottle",
+        "price": 34.99,
+        "quantity": 1
+      },
+      {
+        "_id": "69a6b75e6503a9e4fdf80603",
+        "name": "Midnight Steel Bottle",
+        "price": 29.99,
+        "quantity": 2
+      }
+    ],
+    "isGuest": false,
+    "customerName": "Nikita",
+    "customerEmail": "nikita.user@gmail.com",
+    "customerAddress": "12 River Lane, Dublin",
+    "customerPhone": "0891000101",
+    "createdAt": {
+      "$date": "2026-03-10T16:40:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-10T16:40:00.000Z"
+    },
+    "__v": 0
+  },
+  {
+    "_id": {
+      "$oid": "7b8d1e4a9f2c3d5e6a7b8c06"
+    },
+    "orderID": "NKTA6A1B2C3D4E5F6",
+    "total": 72.97,
+    "items": [
+      {
+        "_id": "69a6b75e6503a9e4fdf8060f",
+        "name": "Sky Sport Bottle",
+        "price": 22.99,
+        "quantity": 2
+      },
+      {
+        "_id": "69a6b75e6503a9e4fdf8060e",
+        "name": "Pure Blue Bottle",
+        "price": 26.99,
+        "quantity": 1
+      }
+    ],
+    "isGuest": false,
+    "customerName": "Nikita",
+    "customerEmail": "nikita.user@gmail.com",
+    "customerAddress": "12 River Lane, Dublin",
+    "customerPhone": "0891000101",
+    "createdAt": {
+      "$date": "2026-03-11T19:55:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-03-11T19:55:00.000Z"
+    },
+    "__v": 0
   }
 ]
