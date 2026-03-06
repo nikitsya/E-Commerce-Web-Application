@@ -17,6 +17,14 @@ const verifyUsersJWTPassword = (req, res, next) => {
     })
 }
 
+// Middleware: allows only administrators to continue.
+const checkThatUserIsAnAdministrator = (req, res, next) => {
+    if (Number(req.decodedToken.accessLevel) >= Number(process.env.ACCESS_LEVEL_ADMIN)) {
+        next()
+    } else {
+        next(createError(403, `User is not an administrator`))
+    }
+}
 
 // Public endpoint: returns all products sorted by insertion order.
 router.get(`/products`, (req, res, next) => {
