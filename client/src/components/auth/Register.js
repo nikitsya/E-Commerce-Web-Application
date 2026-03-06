@@ -46,6 +46,7 @@ export const Register = () => {
     }
 
     useEffect(() => {
+        // Prevent memory leaks from object URLs created for local image preview.
         return () => {
             if (previewPhoto) {
                 URL.revokeObjectURL(previewPhoto)
@@ -105,6 +106,7 @@ export const Register = () => {
             {headers: {"Content-type": "multipart/form-data"}}
         )
             .then((res) => {
+                // Backend may return a successful HTTP status with an error payload.
                 if (res.data.errorMessage) {
                     setServerError(res.data.errorMessage)
                     return

@@ -13,6 +13,7 @@ export const getAuthErrorMessage = (error, fallbackMessage) => {
 export const setUserSession = ({name, accessLevel, profilePhoto, token}) => {
     localStorage.name = name
     localStorage.accessLevel = accessLevel
+    // Remove keys instead of storing "null"/"undefined" string values.
     if (profilePhoto) localStorage.profilePhoto = profilePhoto
     else localStorage.removeItem("profilePhoto")
     if (token) localStorage.token = token

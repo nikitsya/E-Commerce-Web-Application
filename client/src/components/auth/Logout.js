@@ -7,6 +7,7 @@ import {clearSession, getAuthErrorMessage} from "./authShared"
 
 
 export const Logout = ({onLoggedOut = () => {}}) => {
+    // Component redirects after successful logout request.
     const [isLoggedIn, setIsLoggedIn] = useState(true)
     const [serverError, setServerError] = useState("")
 
@@ -16,6 +17,7 @@ export const Logout = ({onLoggedOut = () => {}}) => {
 
         axios.post(`${SERVER_HOST}/users/logout`)
             .then(() => {
+                // Clear client session and notify parent navigation/profile UI.
                 clearSession()
                 onLoggedOut()
                 setIsLoggedIn(false)

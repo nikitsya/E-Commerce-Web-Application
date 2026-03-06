@@ -7,6 +7,7 @@ export const LoggedInRoute = ({component: Component, exact, path, ...rest}) =>
     <Route
         exact={exact}
         path={path}
+        // Guard protected routes by access level and a non-empty token value.
         render={props => Number(localStorage.accessLevel) > ACCESS_LEVEL_GUEST
             && Boolean(localStorage.token)
             && localStorage.token !== "null"

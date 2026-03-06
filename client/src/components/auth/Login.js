@@ -53,6 +53,7 @@ export const Login = () => {
 
         setErrors({})
 
+        // Backend login route currently accepts credentials via URL params.
         axios.post(`${SERVER_HOST}/users/login/${email}/${password}`)
             .then(res => {
                 // Backend returns errorMessage for invalid credentials.
