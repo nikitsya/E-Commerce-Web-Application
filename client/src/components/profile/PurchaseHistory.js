@@ -313,7 +313,7 @@ export const PurchaseHistory = () => {
                                                                 <button
                                                                     type="button"
                                                                     className="purchase-return-btn"
-                                                                    onClick={handleReturnClick}
+                                                                    onClick={() => handleReturnClick(purchase._id, itemID)}
                                                                 >
                                                                     Return
                                                                 </button>
