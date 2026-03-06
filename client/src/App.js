@@ -98,9 +98,13 @@ export const App = () => {
                     ))}
                 />
 
-                {/* Product management routes require logged-in status */}
+                {/* Product management routes */}
                 <LoggedInRoute exact path="/AddProduct" component={AddProduct}/>
-                <LoggedInRoute exact path="/EditProduct/:id" component={EditProduct}/>
+                <Route
+                    exact
+                    path="/EditProduct/:id"
+                    render={(routeProps) => (isAdmin ? <EditProduct {...routeProps}/> : <Redirect to="/DisplayAllProducts"/>)}
+                />
                 <LoggedInRoute exact path="/DeleteProduct/:id" component={DeleteProduct}/>
                 <LoggedInRoute exact path="/EditProfile" component={EditProfile}/>
 
