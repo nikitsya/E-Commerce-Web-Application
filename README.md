@@ -57,7 +57,7 @@ Last reviewed: 2026-03-01
 |      | *     | Filter/search/sort for products, customers, and purchase history                                                  | 2.5 |
 |      | Partial     | Add new record (including images), with error handling UI                                                         | 2.5 |
 |      | Partial     | Edit records (including images), with error handling UI                                                           | 2.5 |
-|      | Partial     | Delete products, including modal                                                                                  | 2.5 |
+|      | *     | Delete products, including modal                                                                                  | 2.5 |
 | ✅    |             | Logged-in customer purchase products                                                                              | 2.5 |
 |      | To do       | Logged-in customer view purchase history (with filter/search/sort/images)                                         | 2.5 |
 |      | To do       | Logged-in customer return products                                                                                | 2.5 |
