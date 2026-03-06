@@ -39,6 +39,8 @@ export const PurchaseHistory = () => {
     const [periodFilter, setPeriodFilter] = useState("all")
     const [sortConfig, setSortConfig] = useState({column: "createdAt", direction: "desc"})
 
+    const [returningItemKey, setReturningItemKey] = useState("")
+
     const loadPurchaseHistory = useCallback(() => {
         setIsLoading(true)
         setLoadError("")
