@@ -5,6 +5,19 @@ const fs = require('fs')
 const jwt = require('jsonwebtoken')
 const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
 
+// Middleware: verifies JWT and exposes decoded token for next handlers.
+const verifyUsersJWTPassword = (req, res, next) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err, decodedToken) => {
+        if (err) {
+            next(createError(403, `User is not logged in`))
+        } else {
+            req.decodedToken = decodedToken
+            next()
+        }
+    })
+}
+
+
 // Public endpoint: returns all products sorted by insertion order.
 router.get(`/products`, (req, res, next) => {
     productsModel.find().sort({_id: 1})
