@@ -28,6 +28,14 @@ const checkThatUserIsAnAdministrator = (req, res, next) => {
     }
 }
 
+// Middleware: validates MongoDB ObjectId route parameter.
+const validateProductIDParam = (req, res, next) => {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+        return next(createError(400, `Invalid product id`))
+    }
+    next()
+}
+
 // Public endpoint: returns all products sorted by insertion order.
 router.get(`/products`, (req, res, next) => {
     productsModel.find().sort({_id: 1})
@@ -87,14 +95,5 @@ const deleteProductDocument = (req, res, next) => {
 
 // Delete one product (admin only).
 router.delete(`/products/:id`, validateProductIDParam, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, deleteProductDocument)
-
-// Middleware: validates MongoDB ObjectId route parameter.
-const validateProductIDParam = (req, res, next) => {
-    if (!mongoose.isValidObjectId(req.params.id)) {
-        return next(createError(400, `Invalid product id`))
-    }
-    next()
-}
-
 
 module.exports = router
