@@ -83,7 +83,23 @@ export const PurchaseHistory = () => {
     }
 
     // Temporary placeholder for return action; API wiring in next step.
-    const handleReturnClick = () => {}
+    const handleReturnClick = (saleId, itemId) => {
+    setLoadError("")
+
+    requestReturnItem(saleId, itemId)
+        .then((res) => {
+            setPurchases((previousPurchases) => {
+                const updatedSale = res.data
+                return previousPurchases.map((purchase) =>
+                    String(purchase._id) === String(updatedSale._id) ? updatedSale : purchase
+                )
+            })
+        })
+        .catch((error) => {
+            setLoadError(getAdminErrorMessage(error, "Failed to return item. Please try again."))
+        })
+}
+
 
     const requestReturnItem = (saleId, itemId) => {
     return axios.patch(
