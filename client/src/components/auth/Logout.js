@@ -1,8 +1,8 @@
 import React, {useState} from "react"
 import {Redirect} from "react-router-dom"
 import axios from "axios"
-import {Button} from "./Button"
-import {SERVER_HOST} from "../config/global_constants"
+import {Button} from "../Button"
+import {SERVER_HOST} from "../../config/global_constants"
 
 
 export const Logout = ({onLoggedOut = () => {}}) => {

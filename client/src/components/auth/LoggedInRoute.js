@@ -1,6 +1,6 @@
 import React from 'react'
 import {Redirect, Route} from "react-router-dom"
-import {ACCESS_LEVEL_GUEST} from "../config/global_constants"
+import {ACCESS_LEVEL_GUEST} from "../../config/global_constants"
 
 
 export const LoggedInRoute = ({component: Component, exact, path, ...rest}) =>
