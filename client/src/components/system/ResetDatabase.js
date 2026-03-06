@@ -6,9 +6,11 @@ import {SERVER_HOST} from "../../config/global_constants"
 
 
 export const ResetDatabase = () => {
+    // Redirect back to catalog after reset endpoint completes successfully.
     const [isReset, setIsReset] = useState(false)
 
     const resetUsersModel = () => {
+        // Testing-only endpoint that recreates default user data.
         axios.post(`${SERVER_HOST}/users/reset_user_collection`)
             .then(() => {
                 localStorage.clear()
