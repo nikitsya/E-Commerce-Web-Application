@@ -30,6 +30,54 @@ const parseTotal = (totalParam) => {
 
 const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || ``).trim())
 const isPhoneValid = (phone) => /^\d{7,15}$/.test(String(phone || ``).trim())
+const escapeRegex = (value) => String(value || ``).replace(/[.*+?^${}()|[\]\\]/g, `\\$&`)
+
+// Formats sale payload for admin history UI and strips any unexpected fields.
+const formatSaleForAdmin = (sale) => ({
+    _id: sale._id,
+    orderID: String(sale.orderID || ``),
+    total: Number(sale.total) || 0,
+    isGuest: Boolean(sale.isGuest),
+    customerName: String(sale.customerName || ``).trim(),
+    customerEmail: String(sale.customerEmail || ``).trim(),
+    customerAddress: String(sale.customerAddress || ``).trim(),
+    customerPhone: String(sale.customerPhone || ``).trim(),
+    createdAt: sale.createdAt,
+    updatedAt: sale.updatedAt,
+    items: Array.isArray(sale.items)
+        ? sale.items.map((item) => ({
+            _id: String(item?._id || ``),
+            name: String(item?.name || ``).trim(),
+            price: Number(item?.price) || 0,
+            quantity: Math.max(1, Number(item?.quantity) || 1)
+        }))
+        : []
+})
+
+// Admin endpoint to view customer purchase history (optionally by customerEmail query).
+router.get(`/sales/customers/purchase-history`, (req, res, next) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: [`HS256`]}, (err, decodedToken) => {
+        if (err || !decodedToken) {
+            return next(createError(403, `User is not logged in`))
+        }
+
+        if (Number(decodedToken.accessLevel) < Number(process.env.ACCESS_LEVEL_ADMIN)) {
+            return next(createError(403, `User is not an administrator, so they cannot view purchase history`))
+        }
+
+        const customerEmail = String(req.query.customerEmail || ``).trim()
+        const query = {}
+
+        if (customerEmail) {
+            query.customerEmail = {$regex: new RegExp(`^${escapeRegex(customerEmail)}$`, `i`)}
+        }
+
+        salesModel.find(query)
+            .sort({createdAt: -1, _id: -1})
+            .then((sales) => res.json((Array.isArray(sales) ? sales : []).map(formatSaleForAdmin)))
+            .catch((findErr) => next(findErr))
+    })
+})
 
 // Logged-in customer purchase (JWT required)
 router.post(`/sales/:orderID/:total`, (req, res, next) => {
