@@ -27,21 +27,17 @@ router.get(`/products`, (req, res, next) => {
         .catch((err) => next(err))
 })
 
-// Protected endpoint: requires valid JWT to fetch a single product.
-router.get(`/products/:id`, (req, res, next) => {
-    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithms: ["HS256"]}, (err) => {
-        if (err) {
-            next(createError(403, `User is not logged in`))
-        } else {
-            // Returns null when ID is valid format but document does not exist.
-            productsModel.findById(req.params.id)
-                .then(data => {
-                    res.json(data)
-                })
-                .catch((err) => next(err))
-        }
-    })
-})
+// Route handler: returns one product document by ID after auth middleware passes.
+const getProductDocument = (req, res, next) => {
+    productsModel.findById(req.params.id)
+        .then(data => {
+            res.json(data)
+        })
+        .catch((err) => next(err))
+}
+
+router.get(`/products/:id`, verifyUsersJWTPassword, getProductDocument)
+
 
 // Protected endpoint: only admin users can create products.
 router.post(`/products`, (req, res, next) => {
