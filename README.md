@@ -59,7 +59,7 @@ Last reviewed: 06-Mar (14:17)
 |      | Partial     | Edit records (including images), with error handling UI                                                           | 2.5 |
 | ✅    |      | Delete products, including modal                                                                                  | 2.5 |
 | ✅    |             | Logged-in customer purchase products                                                                              | 2.5 |
-|      | *       | Logged-in customer view purchase history (with filter/search/sort/images)                                         | 2.5 |
+| ✅    |        | Logged-in customer view purchase history (with filter/search/sort/images)                                         | 2.5 |
 |      | To do       | Logged-in customer return products                                                                                | 2.5 |
 | ✅   |            | Logged-in customer create profile with photo, including error handling UI                                         | 2.5 |
 | ✅   |            | Logged-in customer edit profile with photo, including error handling UI                                           | 2.5 |
