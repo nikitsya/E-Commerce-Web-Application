@@ -74,7 +74,7 @@ const updateProductDocument = (req, res, next) => {
 }
 
 // Update one product (admin only).
-router.put(`/products/:id`, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, updateProductDocument)
+router.put(`/products/:id`, validateProductIDParam, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, updateProductDocument)
 
 // Route handler: deletes one product document by ID.
 const deleteProductDocument = (req, res, next) => {
