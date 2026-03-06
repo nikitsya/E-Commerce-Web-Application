@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"; // useState controls mobile menu open/close
 import { Link, withRouter } from "react-router-dom";
-import { ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_GUEST } from "../config/global_constants"
-import {Logout} from "./auth/Logout"
+import { ACCESS_LEVEL_ADMIN, ACCESS_LEVEL_GUEST } from "../../config/global_constants"
+import {Logout} from "../auth/Logout"
 
 
 const NavigationComponent = ({ cartItemsCount = 0 }) => {

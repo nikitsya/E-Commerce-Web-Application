@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {Link, Redirect} from "react-router-dom"
 import axios from "axios"
-import {Button} from "../Button"
+import {Button} from "../ui/Button"
 import {SERVER_HOST} from "../../config/global_constants"
 
 export const Register = () => {

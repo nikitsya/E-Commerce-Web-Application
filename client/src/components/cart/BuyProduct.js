@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import axios from "axios"
 import {Redirect} from "react-router-dom"
-import {SANDBOX_CLIENT_ID, SERVER_HOST} from "../config/global_constants"
+import {SANDBOX_CLIENT_ID, SERVER_HOST} from "../../config/global_constants"
 import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js"
 
 
