@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {BrowserRouter, Link, Redirect, Route, Switch} from "react-router-dom"
 import {DisplayAllProducts} from "./components/DisplayAllProducts"
 import {AddProduct} from "./components/AddProduct"
@@ -34,12 +34,14 @@ export const App = () => {
         clearCart
     } = useShoppingCart()
 
-    // Initialize guest session defaults when app is opened for the first time.
-    if (typeof localStorage.accessLevel === "undefined") {
-        localStorage.name = "GUEST"
-        localStorage.accessLevel = ACCESS_LEVEL_GUEST
-        localStorage.token = null
-    }
+    useEffect(() => {
+        // Initialize guest session defaults once when the app is first mounted.
+        if (typeof localStorage.accessLevel === "undefined") {
+            localStorage.name = "GUEST"
+            localStorage.accessLevel = ACCESS_LEVEL_GUEST
+            localStorage.token = null
+        }
+    }, [])
 
     // Admin users can manage products, customers can buy products.
     const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
@@ -62,47 +64,38 @@ export const App = () => {
                 <Route exact path="/Login" component={Login}/>
                 <Route exact path="/PayPalMessage/:messageType/:payPalPaymentID" component={PayPalMessage}/>
                 <Route exact path="/ResetDatabase" component={ResetDatabase}/>
-                <Route
-                    exact
-                    path="/AdminAdjustStock"
+                <Route exact path="/AdminAdjustStock"
                     render={() => (isAdmin ? <AdminAdjustStock/> : <Redirect to="/DisplayAllProducts"/>)}
                 />
-                <Route
-                    exact
-                    path="/AdminViewCustomers"
+                <Route exact path="/AdminViewCustomers"
                     render={() => (isAdmin ? <AdminViewCustomers/> : <Redirect to="/DisplayAllProducts"/>)}
                 />
-                <Route
-                    exact
-                    path="/AdminViewCustomersPurchaseHistory"
+                <Route exact path="/AdminViewCustomersPurchaseHistory"
                     render={() => (isAdmin ? <AdminViewCustomersPurchaseHistory/> : <Redirect to="/DisplayAllProducts"/>)}
                 />
 
                 {/* Catalog routes share the same renderer to avoid duplicated props logic */}
                 <Route exact path="/" render={renderCatalogPage}/>
                 <Route exact path="/DisplayAllProducts" render={renderCatalogPage}/>
-                <Route
-                    exact
-                    path="/Cart"
+                <Route exact path="/Cart"
                     // Admin accounts are redirected because checkout flow is customer-only.
-                    render={() => (isAdmin ? (
-                        <Redirect to="/DisplayAllProducts"/>
-                    ) : (
-                        <ShoppingCart
+                    render={() => (isAdmin
+                        ? (<Redirect to="/DisplayAllProducts"/>)
+                        : (<ShoppingCart
                             cartItems={cartItems}
                             onUpdateQuantity={updateCartItemQuantity}
                             onRemoveItem={removeCartItem}
                             onClearCart={clearCart}
-                        />
-                    ))}
+                        />))
+                    }
                 />
 
                 {/* Product management routes */}
                 <LoggedInRoute exact path="/AddProduct" component={AddProduct}/>
-                <Route
-                    exact
-                    path="/EditProduct/:id"
-                    render={(routeProps) => (isAdmin ? <EditProduct {...routeProps}/> : <Redirect to="/DisplayAllProducts"/>)}
+                <Route exact path="/EditProduct/:id"
+                    render={(routeProps) => (isAdmin
+                        ? <EditProduct {...routeProps}/>
+                        : <Redirect to="/DisplayAllProducts"/>)}
                 />
                 <LoggedInRoute exact path="/DeleteProduct/:id" component={DeleteProduct}/>
                 <LoggedInRoute exact path="/EditProfile" component={EditProfile}/>
