@@ -5,7 +5,6 @@
   "dependencies": {
     "@paypal/react-paypal-js": "^9.0.0",
     "axios": "1.13.5",
-    "bcryptjs": "^3.0.3",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
@@ -35,8 +34,5 @@
   "description": "Client application for the Sustainable Home Store e-commerce project",
   "main": "index.js",
   "author": "Hanna Bokariuk, Nikita Smiichyk",
-  "license": "ISC",
-  "devDependencies": {
-    "http-errors": "^2.0.1"
-  }
+  "license": "ISC"
 }
