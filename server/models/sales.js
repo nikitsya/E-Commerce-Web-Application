@@ -7,7 +7,10 @@ let salesSchema = new mongoose.Schema({
             _id: {type: String, required: true},
             name: {type: String, required: true, trim: true},
             price: {type: Number, required: true, min: 0},
-            quantity: {type: Number, required: true, min: 1}
+            quantity: {type: Number, required: true, min: 1},
+            isReturned: {type: Boolean, required: true, default: false},
+            returnedAt: {type: Date, default: null}
+
         }],
         isGuest: {type: Boolean, required: true, default: false},
         customerName: {type: String, required: true, trim: true},
