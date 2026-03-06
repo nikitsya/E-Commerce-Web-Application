@@ -254,7 +254,7 @@ export const AdminViewCustomers = () => {
                                             className="blue-button admin-customer-history-link"
                                             to={`/AdminViewCustomersPurchaseHistory?email=${encodeURIComponent(customer.email)}`}
                                         >
-                                            View history
+                                            View
                                         </Link>
                                     ) : (
                                         <span>Unavailable</span>
