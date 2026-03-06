@@ -82,56 +82,60 @@ router.post(`/users/reset_user_collection`, (req, res, next) => {
 
 // Registers a customer account if email is not already present.
 router.post(`/users/register/:name/:email/:password`, upload.single("profilePhoto"), (req, res, next) => {
-    if (!req.file) { return next(createError(601, `No file was selected to be uploaded`)) }
-    else if (req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
+    if (req.file && req.file.mimetype !== "image/png" && req.file.mimetype !== "image/jpg" && req.file.mimetype !== "image/jpeg") {
         return fs.unlink(getUploadedFilePath(req.file.filename), () => {
             res.json({errorMessage: `Only .png, .jpg and .jpeg format accepted`})
         })
-    } else {
-        // uploaded file is valid
-        // Enforce unique email identity at application level.
-        usersModel.findOne({email: req.params.email})
-            .then(uniqueData => {
-                if (uniqueData) {
-                    return next(createError(403, `User already exists`))
-                } else {
-                    // Store only hashed passwords; never persist plaintext credentials.
-                    bcrypt.hash(req.params.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (error, hash) => {
-                        if (error) {
-                            return next(error)
-                        }
+    }
 
-                        // New users are created with customer access level by default.
-                        usersModel.create({
-                            name: req.params.name,
-                            email: req.params.email,
-                            password: hash,
-                            accessLevel: parseInt(process.env.ACCESS_LEVEL_CUSTOMER),
-                            profilePhotoFilename: req.file.filename
+    // Enforce unique email identity at application level.
+    usersModel.findOne({email: req.params.email})
+        .then(uniqueData => {
+            if (uniqueData) {
+                return next(createError(403, `User already exists`))
+            } else {
+                // Store only hashed passwords; never persist plaintext credentials.
+                bcrypt.hash(req.params.password, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (error, hash) => {
+                    if (error) {
+                        return next(error)
+                    }
 
-                        })
-                            .then(data => {
-                                // Issue JWT immediately after successful registration.
-                                const token = jwt.sign({
-                                    email: data.email,
-                                    accessLevel: data.accessLevel},
-                                    JWT_PRIVATE_KEY, {algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY})
+                    const uploadedPhotoFilename = req.file ? req.file.filename : ``
 
-                                fs.readFile(getUploadedFilePath(req.file.filename), 'base64', (readErr, fileData) =>
-                                {
-                                    if (readErr) {
-                                        return next(readErr)
-                                    }
+                    // New users are created with customer access level by default.
+                    usersModel.create({
+                        name: req.params.name,
+                        email: req.params.email,
+                        password: hash,
+                        accessLevel: parseInt(process.env.ACCESS_LEVEL_CUSTOMER),
+                        profilePhotoFilename: uploadedPhotoFilename
+
+                    })
+                        .then(data => {
+                            // Issue JWT immediately after successful registration.
+                            const token = jwt.sign({
+                                email: data.email,
+                                accessLevel: data.accessLevel},
+                                JWT_PRIVATE_KEY, {algorithm: 'HS256', expiresIn: process.env.JWT_EXPIRY})
+
+                            if (!uploadedPhotoFilename) {
+                                return res.json({name: data.name, accessLevel: data.accessLevel, profilePhoto: null, token: token})
+                            }
+
+                            fs.readFile(getUploadedFilePath(uploadedPhotoFilename), 'base64', (readErr, fileData) =>
+                            {
+                                if (readErr) {
+                                    return next(readErr)
+                                }
 
                                 res.json({name: data.name, accessLevel: data.accessLevel, profilePhoto: fileData, token: token})
                             })
                         })
                         .catch(() => next(createError(409, `User was not registered`)))
-                    })
-                }
-            })
-            .catch(err => next(err))
-    }
+                })
+            }
+        })
+        .catch(err => next(err))
 })
 
 // Authenticates existing user and returns JWT on successful password check.

@@ -169,6 +169,12 @@ form label {
     color: #44513d;
 }
 
+.form-helper-text {
+    margin: -2px 0 8px;
+    color: #607059;
+    font-size: 13px;
+}
+
 form input,
 form textarea,
 form select {

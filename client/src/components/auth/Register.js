@@ -71,7 +71,6 @@ export const Register = () => {
 
         if (!confirmPassword) next.confirmPassword = "Please confirm password"
         else if (password !== confirmPassword) next.confirmPassword = "Passwords do not match"
-        if (!selectedFile) next.profilePhoto = "Profile photo is required"
 
         return next
     }
@@ -164,13 +163,15 @@ export const Register = () => {
             {/* Confirm-password validation message */}
             {errors.confirmPassword ? <div className="error-text">{errors.confirmPassword}</div> : null}<br/><br/>
             
+            <label htmlFor="registerProfilePhoto">Profile photo (optional)</label>
             <input
+                id="registerProfilePhoto"
                 type="file"
                 accept=".png,.jpg,.jpeg,image/png,image/jpeg"
                 onChange={handleFileChange}
             />
             {previewPhoto ? (
-                <img className="profile-file-preview" src={previewPhoto} alt="New photo preview"/>
+                <img className="profile-file-preview" src={previewPhoto} alt="Profile preview"/>
             ) : null}
             {errors.profilePhoto ? <div className="error-text">{errors.profilePhoto}</div> : null}
             <br/><br/>
