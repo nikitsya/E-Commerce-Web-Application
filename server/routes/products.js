@@ -46,7 +46,7 @@ const getProductDocument = (req, res, next) => {
         .catch((err) => next(err))
 }
 
-router.get(`/products/:id`, verifyUsersJWTPassword, getProductDocument)
+router.get(`/products/:id`, validateProductIDParam, verifyUsersJWTPassword, getProductDocument)
 
 
 // Route handler: creates a new product document.
