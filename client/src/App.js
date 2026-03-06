@@ -15,7 +15,6 @@ import {ShoppingCart} from "./components/ShoppingCart"
 import {useShoppingCart} from "./hooks/useShoppingCart"
 import {PayPalMessage} from "./components/PayPalMessage"
 import {EditProfile} from "./components/EditProfile"
-
 import {AdminAdjustStock} from "./components/AdminAdjustStock"
 import {AdminViewCustomers} from "./components/AdminViewCustomers"
 import {AdminViewCustomersPurchaseHistory} from "./components/AdminViewCustomersPurchaseHistory"
