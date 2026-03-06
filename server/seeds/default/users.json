@@ -273,5 +273,60 @@
     "address": "18 River Walk, Dublin",
     "accessLevel": 1,
     "__v": 0
+  },
+  {
+    "_id": "6af000000000000000000019",
+    "name": "Nora Keating",
+    "email": "nora.keating@gmail.com",
+    "password": "$2b$04$ddWroA/ehghDZY05ChHRtOSzJUAxUKq2gNJ3EZ.nCVvE9VfL/HUF.",
+    "profilePhotoFilename": "",
+    "phone": "0891000026",
+    "address": "47 Seaview Drive, Cork",
+    "accessLevel": 1,
+    "__v": 0
+  },
+  {
+    "_id": "6af00000000000000000001a",
+    "name": "Paddy O'Leary",
+    "email": "paddy.oleary@gmail.com",
+    "password": "$2b$04$ddWroA/ehghDZY05ChHRtOSzJUAxUKq2gNJ3EZ.nCVvE9VfL/HUF.",
+    "profilePhotoFilename": "",
+    "phone": "0891000027",
+    "address": "9 Forest Glen, Mayo",
+    "accessLevel": 1,
+    "__v": 0
+  },
+  {
+    "_id": "6af00000000000000000001b",
+    "name": "Ciara Dunne",
+    "email": "ciara.dunne@gmail.com",
+    "password": "$2b$04$ddWroA/ehghDZY05ChHRtOSzJUAxUKq2gNJ3EZ.nCVvE9VfL/HUF.",
+    "profilePhotoFilename": "",
+    "phone": "0891000028",
+    "address": "12 Riverside Walk, Galway",
+    "accessLevel": 1,
+    "__v": 0
+  },
+  {
+    "_id": "6af00000000000000000001c",
+    "name": "Eoin McKenna",
+    "email": "eoin.mckenna@gmail.com",
+    "password": "$2b$04$ddWroA/ehghDZY05ChHRtOSzJUAxUKq2gNJ3EZ.nCVvE9VfL/HUF.",
+    "profilePhotoFilename": "",
+    "phone": "0891000029",
+    "address": "5 Garden Court, Louth",
+    "accessLevel": 1,
+    "__v": 0
+  },
+  {
+    "_id": "6af00000000000000000001d",
+    "name": "Aisling Kerr",
+    "email": "aisling.kerr@gmail.com",
+    "password": "$2b$04$ddWroA/ehghDZY05ChHRtOSzJUAxUKq2gNJ3EZ.nCVvE9VfL/HUF.",
+    "profilePhotoFilename": "",
+    "phone": "0891000030",
+    "address": "31 Willow Park, Meath",
+    "accessLevel": 1,
+    "__v": 0
   }
 ]
