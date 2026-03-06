@@ -1072,6 +1072,11 @@ form input[readonly] {
     padding: 12px;
 }
 
+.admin-stock-item-low {
+    border-color: #d7a191;
+    background: #fff1ed;
+}
+
 .admin-stock-main {
     display: flex;
     align-items: center;
@@ -1110,9 +1115,42 @@ form input[readonly] {
     color: #253128;
 }
 
-.admin-stock-meta p {
+.admin-stock-meta p:not(.admin-stock-level):not(.admin-stock-limit) {
     margin: 4px 0 0;
     color: #4f6150;
+}
+
+.admin-stock-levels {
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-stock-level,
+.admin-stock-limit {
+    margin: 0;
+    border-radius: 999px;
+    padding: 2px 9px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.admin-stock-level {
+    color: #2f5d30;
+    background: #e6f3dc;
+}
+
+.admin-stock-limit {
+    color: #46524a;
+    background: #edf2e6;
+}
+
+.admin-stock-level-low,
+.admin-stock-limit-low {
+    color: #6a2015;
+    background: #f4b5aa;
 }
 
 .admin-stock-actions {
@@ -1143,6 +1181,12 @@ form input[readonly] {
 .admin-stock-input-invalid {
     border-color: #c95e39;
     box-shadow: 0 0 0 2px rgba(201, 94, 57, 0.16);
+}
+
+.admin-stock-input-low {
+    background: #ffe1db;
+    border-color: #cf6b4f;
+    box-shadow: none;
 }
 
 .admin-stock-row-error {

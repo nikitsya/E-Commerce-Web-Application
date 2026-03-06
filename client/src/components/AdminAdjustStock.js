@@ -34,6 +34,12 @@ const validateStockValue = (value) => {
     return ""
 }
 
+const normalizeStockNumber = (value, fallback = 0) => {
+    const numericValue = Number(value)
+    if (!Number.isFinite(numericValue)) return fallback
+    return Math.max(0, Math.floor(numericValue))
+}
+
 export const AdminAdjustStock = () => {
     const isAdmin = Number(localStorage.accessLevel) >= ACCESS_LEVEL_ADMIN
     const [products, setProducts] = useState([])
@@ -166,60 +172,83 @@ export const AdminAdjustStock = () => {
 
             {!isLoading && products.length > 0 ? (
                 <div className="admin-stock-list">
-                    {sortedProducts.map((product) => (
-                        <article key={product._id} className="admin-stock-item">
-                            <div className="admin-stock-main">
-                                {getFirstImage(product) ? (
-                                    <img
-                                        className="admin-stock-image"
-                                        src={getFirstImage(product)}
-                                        alt={product.name}
-                                    />
-                                ) : (
-                                    <div className="admin-stock-image-placeholder">No image</div>
-                                )}
+                    {sortedProducts.map((product) => {
+                        const currentStock = normalizeStockNumber(product.stockQty)
+                        const lowStockLimit = normalizeStockNumber(product.lowStockThreshold)
+                        const draftValue = String(draftStockById[product._id] ?? "").trim()
+                        const isValidDraftValue = /^\d+$/.test(draftValue)
+                        const draftStock = isValidDraftValue ? Number(draftValue) : null
+                        const isCurrentAtOrBelowLimit = currentStock <= lowStockLimit
+                        const isDraftAtOrBelowLimit = draftStock !== null && draftStock <= lowStockLimit
+                        const inputClassName = [
+                            "admin-stock-input",
+                            fieldErrorById[product._id] ? "admin-stock-input-invalid" : "",
+                            !fieldErrorById[product._id] && isDraftAtOrBelowLimit ? "admin-stock-input-low" : ""
+                        ].filter(Boolean).join(" ")
+                        const stockItemClassName = "admin-stock-item" + (isCurrentAtOrBelowLimit ? " admin-stock-item-low" : "")
 
-                                <div className="admin-stock-meta">
-                                    <h3>{product.name}</h3>
-                                    <p>Current quantity: {product.stockQty ?? 0}</p>
+                        return (
+                            <article key={product._id} className={stockItemClassName}>
+                                <div className="admin-stock-main">
+                                    {getFirstImage(product) ? (
+                                        <img
+                                            className="admin-stock-image"
+                                            src={getFirstImage(product)}
+                                            alt={product.name}
+                                        />
+                                    ) : (
+                                        <div className="admin-stock-image-placeholder">No image</div>
+                                    )}
+
+                                    <div className="admin-stock-meta">
+                                        <h3>{product.name}</h3>
+                                        <div className="admin-stock-levels">
+                                            <p className={"admin-stock-level" + (isCurrentAtOrBelowLimit ? " admin-stock-level-low" : "")}>
+                                                Qty: {currentStock}
+                                            </p>
+                                            <p className={"admin-stock-limit" + (isCurrentAtOrBelowLimit ? " admin-stock-limit-low" : "")}>
+                                                Limit: {lowStockLimit}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="admin-stock-actions">
-                                <input
-                                    className={"admin-stock-input" + (fieldErrorById[product._id] ? " admin-stock-input-invalid" : "")}
-                                    type="number"
-                                    min="0"
-                                    step="1"
-                                    value={draftStockById[product._id] ?? ""}
-                                    onChange={(event) => handleDraftChange(product._id, event.target.value)}
-                                    aria-invalid={Boolean(fieldErrorById[product._id])}
-                                    aria-describedby={`stock-error-${product._id}`}
-                                />
+                                <div className="admin-stock-actions">
+                                    <input
+                                        className={inputClassName}
+                                        type="number"
+                                        min="0"
+                                        step="1"
+                                        value={draftStockById[product._id] ?? ""}
+                                        onChange={(event) => handleDraftChange(product._id, event.target.value)}
+                                        aria-invalid={Boolean(fieldErrorById[product._id])}
+                                        aria-describedby={`stock-error-${product._id}`}
+                                    />
 
-                                <button
-                                    type="button"
-                                    className="green-button"
-                                    onClick={() => handleSave(product._id)}
-                                    disabled={Boolean(savingById[product._id]) || !canSave(product._id)}
-                                >
-                                    {savingById[product._id] ? "Saving..." : "Save"}
-                                </button>
-                            </div>
+                                    <button
+                                        type="button"
+                                        className="green-button"
+                                        onClick={() => handleSave(product._id)}
+                                        disabled={Boolean(savingById[product._id]) || !canSave(product._id)}
+                                    >
+                                        {savingById[product._id] ? "Saving..." : "Save"}
+                                    </button>
+                                </div>
 
-                            {fieldErrorById[product._id] ? (
-                                <p id={`stock-error-${product._id}`} className="admin-stock-row-error">{fieldErrorById[product._id]}</p>
-                            ) : null}
+                                {fieldErrorById[product._id] ? (
+                                    <p id={`stock-error-${product._id}`} className="admin-stock-row-error">{fieldErrorById[product._id]}</p>
+                                ) : null}
 
-                            {saveErrorById[product._id] ? (
-                                <p className="admin-stock-row-error" role="alert">{saveErrorById[product._id]}</p>
-                            ) : null}
+                                {saveErrorById[product._id] ? (
+                                    <p className="admin-stock-row-error" role="alert">{saveErrorById[product._id]}</p>
+                                ) : null}
 
-                            {saveSuccessById[product._id] ? (
-                                <p className="admin-stock-row-success" role="status">Stock updated.</p>
-                            ) : null}
-                        </article>
-                    ))}
+                                {saveSuccessById[product._id] ? (
+                                    <p className="admin-stock-row-success" role="status">Stock updated.</p>
+                                ) : null}
+                            </article>
+                        )
+                    })}
                 </div>
             ) : null}
         </div>
