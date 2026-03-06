@@ -39,6 +39,8 @@ export const PurchaseHistory = () => {
     const [periodFilter, setPeriodFilter] = useState("all")
     const [sortConfig, setSortConfig] = useState({column: "createdAt", direction: "desc"})
 
+    const [returningItemKey, setReturningItemKey] = useState("")
+
     const loadPurchaseHistory = useCallback(() => {
         setIsLoading(true)
         setLoadError("")
@@ -81,6 +83,37 @@ export const PurchaseHistory = () => {
             return {column, direction: column === "createdAt" ? "desc" : "asc"}
         })
     }
+
+ // Handles logged-in item return request and refreshes the updated sale in local state.
+    const handleReturnClick = (saleId, itemId) => {
+    setLoadError("")
+    const itemKey = `${saleId}:${itemId}`
+    setReturningItemKey(itemKey)
+
+    requestReturnItem(saleId, itemId)
+        .then((res) => {
+            setPurchases((previousPurchases) => {
+                const updatedSale = res.data
+                return previousPurchases.map((purchase) =>
+                    String(purchase._id) === String(updatedSale._id) ? updatedSale : purchase
+                )
+            })
+        })
+        .catch((error) => {
+            setLoadError(getAdminErrorMessage(error, "Failed to return item. Please try again."))
+        })
+        .finally(() => setReturningItemKey(""))
+}
+
+
+    const requestReturnItem = (saleId, itemId) => {
+    return axios.patch(
+        `${SERVER_HOST}/sales/return-item/${saleId}/${itemId}`,
+        {},
+        {headers: {"authorization": localStorage.token}}
+    )
+}
+
 
     const periodOptions = useMemo(() => {
         const periodsByValue = new Map()
@@ -265,6 +298,8 @@ export const PurchaseHistory = () => {
                                                     const imageSrc = productImagesByID[itemID] || ""
                                                     const quantity = Number(item.quantity) || 1
                                                     const lineTotal = (Number(item.price) || 0) * quantity
+                                                    const itemKey = `${purchase._id}:${itemID}`
+                                                    const isReturning = returningItemKey === itemKey
 
                                                     return (
                                                         <li key={`${purchase._id || purchase.orderID || purchaseIndex}-${itemID || itemIndex}`}>
@@ -280,7 +315,22 @@ export const PurchaseHistory = () => {
                                                                 )}
                                                                 <span>{item.name || "Item"} x {quantity}</span>
                                                             </span>
-                                                            <strong>{formatPrice(lineTotal)}</strong>
+                                                            <div className="purchase-history-item-right">
+                                                                <strong>{formatPrice(lineTotal)}</strong>
+                                                            {item.isReturned ? (
+                                                                <span className="purchase-returned-badge">Returned</span>
+                                                            ) : (
+                                                               <button
+                                                                    type="button"
+                                                                    className="purchase-return-btn"
+                                                                    onClick={() => handleReturnClick(purchase._id, itemID)}
+                                                                    disabled={isReturning}
+                                                                >
+                                                                    {isReturning ? "Returning..." : "Return"}
+                                                                </button>
+                                                            )}
+                                                            </div>
+
                                                         </li>
                                                     )
                                                 })}
