@@ -23,7 +23,7 @@ How to use:
 - Leave the cell empty for `Partial` and `To do` items.
 - Update status as you complete work.
 
-Last reviewed: 06-Mar (16:35)
+Last reviewed: 07-Mar (current update)
 
 | Done | Status      | Requirement                                                                                                       | Max |
 |------|-------------|-------------------------------------------------------------------------------------------------------------------|----:|
@@ -55,8 +55,8 @@ Last reviewed: 06-Mar (16:35)
 | ✅    |        | Admin view customers purchase history                                                                             | 2.5 |
 | ✅    |             | Admin delete product                                                                                              | 2.5 |
 | ✅    |      | Filter/search/sort for products, customers, and purchase history                                                  | 2.5 |
-|      | Partial     | Add new record (including images), with error handling UI                                                         | 2.5 |
-|      | Partial     | Edit records (including images), with error handling UI                                                           | 2.5 |
+| ✅    |             | Add new record (including images), with error handling UI                                                         | 2.5 |
+| ✅    |             | Edit records (including images), with error handling UI                                                           | 2.5 |
 | ✅    |      | Delete products, including modal                                                                                  | 2.5 |
 | ✅    |             | Logged-in customer purchase products                                                                              | 2.5 |
 | ✅    |        | Logged-in customer view purchase history (with filter/search/sort/images)                                         | 2.5 |
