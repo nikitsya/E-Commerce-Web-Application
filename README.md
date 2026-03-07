@@ -9,22 +9,6 @@ Nikita Smiichyk
 
 # CA2 Progress Tracker
 
-This file tracks CA2 rubric progress with checklist boxes.
-
-Legend:
-
-- `Done`: requirement is implemented and verified in code.
-- `Partial`: implemented in part, but still missing rubric expectations.
-- `To do`: not implemented yet.
-
-How to use:
-
-- Put `✅` only when a requirement fully matches the rubric.
-- Leave the cell empty for `Partial` and `To do` items.
-- Update status as you complete work.
-
-Last reviewed: 07-Mar (current update)
-
 | Done | Status      | Requirement                                                                                                       | Max |
 |------|-------------|-------------------------------------------------------------------------------------------------------------------|----:|
 |      | Partial     | Provide the user with an excellent visual appearance                                                              |   5 |
