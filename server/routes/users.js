@@ -233,7 +233,6 @@ router.put(`/users/profile`, upload.single("profilePhoto"), (req, res, next) => 
                 // Profile validation rules for professional error handling UI.
                 if (!name) return next(createError(400, `Name is required`))
                 if (phone && !isPhoneValid(phone)) return next(createError(400, `Phone must be 7-15 digits`))
-                if (!address) return next(createError(400, `Address is required`))
 
                 // Prepare DB update object with text fields.
                 const updates = {name, phone, address}
