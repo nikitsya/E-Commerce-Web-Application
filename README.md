@@ -73,17 +73,12 @@ Authors:
 
 ## Screenshots
 
-### Main Pages
-
 ![Screenshot 1](./docs/screenshots/screen-01.png)
 ![Screenshot 2](./docs/screenshots/screen-02.png)
 ![Screenshot 3](./docs/screenshots/screen-03.png)
 ![Screenshot 4](./docs/screenshots/screen-04.png)
 ![Screenshot 5](./docs/screenshots/screen-05.png)
 ![Screenshot 6](./docs/screenshots/screen-06.png)
-
-### Additional Views
-
 ![Screenshot 7](./docs/screenshots/screen-07.png)
 ![Screenshot 8](./docs/screenshots/screen-08.png)
 ![Screenshot 9](./docs/screenshots/screen-09.png)
