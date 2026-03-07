@@ -40,6 +40,8 @@ export const PurchaseHistory = () => {
     const [sortConfig, setSortConfig] = useState({column: "createdAt", direction: "desc"})
 
     const [returningItemKey, setReturningItemKey] = useState("")
+    // Holds item pending return confirmation modal.
+    const [itemToReturn, setItemToReturn] = useState(null)
 
     const loadPurchaseHistory = useCallback(() => {
         setIsLoading(true)
