@@ -86,6 +86,21 @@ export const PurchaseHistory = () => {
         })
     }
 
+// Opens confirmation modal before triggering return API.
+const openReturnConfirm = (saleId, item) => {
+    setLoadError("")
+    setItemToReturn({
+        saleId: String(saleId),
+        itemId: String(item?._id || ""),
+        itemName: String(item?.name || "Item")
+    })
+}
+
+// Closes return confirmation modal without API call.
+const closeReturnConfirm = () => {
+    setItemToReturn(null)
+}
+
  // Handles logged-in item return request and refreshes the updated sale in local state.
     const handleReturnClick = (saleId, itemId) => {
     setLoadError("")
