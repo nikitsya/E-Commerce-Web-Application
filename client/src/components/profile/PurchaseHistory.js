@@ -342,7 +342,7 @@ const closeReturnConfirm = () => {
                                                                <button
                                                                     type="button"
                                                                     className="purchase-return-btn"
-                                                                    onClick={() => openReturnConfirm(purchase._id, itemID)}
+                                                                    onClick={() => openReturnConfirm(purchase._id, item)}
                                                                     disabled={isReturning}
                                                                 >
                                                                     {isReturning ? "Returning..." : "Return"}
