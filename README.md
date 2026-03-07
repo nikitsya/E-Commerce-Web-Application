@@ -188,9 +188,3 @@ Main route groups:
   - Customer purchase history
   - Item return route
   - Admin purchase history
-
-## Progress Tracker
-
-Project progress checklist is maintained in:
-
-- [ProgressTracker.md](./ProgressTracker.md)
