@@ -73,6 +73,9 @@ Authors:
 
 ## Screenshots
 
+<details>
+  <summary>Click to open screenshots</summary>
+
 ![Screenshot 1](./docs/screenshots/screen-01.png)
 ![Screenshot 2](./docs/screenshots/screen-02.png)
 ![Screenshot 3](./docs/screenshots/screen-03.png)
@@ -87,6 +90,8 @@ Authors:
 ![Screenshot 12](./docs/screenshots/screen-12.png)
 ![Screenshot 13](./docs/screenshots/screen-13.png)
 ![Screenshot 14](./docs/screenshots/screen-14.png)
+
+</details>
 
 ## Prerequisites
 
