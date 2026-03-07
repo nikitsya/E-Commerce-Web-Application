@@ -32,7 +32,6 @@ const getSortValue = (purchase, column) => {
 
 export const PurchaseHistory = () => {
     const [purchases, setPurchases] = useState([])
-    const [productImagesByID, setProductImagesByID] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const [loadError, setLoadError] = useState("")
     const [searchTerm, setSearchTerm] = useState("")
@@ -42,32 +41,19 @@ export const PurchaseHistory = () => {
     const [returningItemKey, setReturningItemKey] = useState("")
     // Holds item pending return confirmation modal.
     const [itemToReturn, setItemToReturn] = useState(null)
+    const [selectedPurchase, setSelectedPurchase] = useState(null)
 
     const loadPurchaseHistory = useCallback(() => {
         setIsLoading(true)
         setLoadError("")
 
-        Promise.all([
-            axios.get(`${SERVER_HOST}/sales/my-purchase-history`, {headers: {"authorization": localStorage.token}}),
-            axios.get(`${SERVER_HOST}/products`, {headers: {"authorization": localStorage.token}})
-        ])
-            .then(([purchaseResponse, productResponse]) => {
+        axios.get(`${SERVER_HOST}/sales/my-purchase-history`, {headers: {"authorization": localStorage.token}})
+            .then((purchaseResponse) => {
                 const nextPurchases = Array.isArray(purchaseResponse.data) ? purchaseResponse.data : []
-                const products = Array.isArray(productResponse.data) ? productResponse.data : []
-                const imageMap = {}
-
-                products.forEach((product) => {
-                    const productID = String(product?._id || "").trim()
-                    const firstImage = Array.isArray(product?.images) && product.images.length > 0 ? product.images[0] : ""
-                    if (productID && firstImage) imageMap[productID] = firstImage
-                })
-
                 setPurchases(nextPurchases)
-                setProductImagesByID(imageMap)
             })
             .catch((error) => {
                 setPurchases([])
-                setProductImagesByID({})
                 setLoadError(getAdminErrorMessage(error, "Failed to load purchase history. Please try again."))
             })
             .finally(() => setIsLoading(false))
@@ -76,6 +62,38 @@ export const PurchaseHistory = () => {
     useEffect(() => {
         loadPurchaseHistory()
     }, [loadPurchaseHistory])
+
+    useEffect(() => {
+        if (!selectedPurchase) return undefined
+
+        const originalBodyOverflow = document.body.style.overflow
+        const originalHtmlOverflow = document.documentElement.style.overflow
+
+        document.body.style.overflow = "hidden"
+        document.documentElement.style.overflow = "hidden"
+
+        return () => {
+            document.body.style.overflow = originalBodyOverflow
+            document.documentElement.style.overflow = originalHtmlOverflow
+        }
+    }, [selectedPurchase])
+
+    useEffect(() => {
+        if (!selectedPurchase) return undefined
+
+        const handleEscapeKey = (event) => {
+            if (event.key === "Escape") setSelectedPurchase(null)
+        }
+
+        window.addEventListener("keydown", handleEscapeKey)
+        return () => window.removeEventListener("keydown", handleEscapeKey)
+    }, [selectedPurchase])
+
+    useEffect(() => {
+        if (!selectedPurchase) return
+        const stillExists = purchases.some((purchase) => String(purchase._id) === String(selectedPurchase._id))
+        if (!stillExists) setSelectedPurchase(null)
+    }, [purchases, selectedPurchase])
 
     const handleSort = (column) => {
         setSortConfig((previousConfig) => {
@@ -305,7 +323,11 @@ export const PurchaseHistory = () => {
                             const itemsCount = items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0)
 
                             return (
-                                <tr key={purchase._id || purchase.orderID || `purchase-row-${purchaseIndex}`}>
+                                <tr
+                                    key={purchase._id || purchase.orderID || `purchase-row-${purchaseIndex}`}
+                                    className="product-row-clickable"
+                                    onClick={() => setSelectedPurchase(purchase)}
+                                >
                                     <td data-label="Date">{formatDateTime(purchase.createdAt)}</td>
                                     <td data-label="Order ID">{purchase.orderID || "-"}</td>
                                     <td data-label="Total">{formatPrice(purchase.total)}</td>
@@ -314,15 +336,17 @@ export const PurchaseHistory = () => {
                                         {items.length > 0 ? (
                                             <ul className="admin-purchase-items-list purchase-history-items-list">
                                                 {items.map((item, itemIndex) => {
-                                                    const itemID = String(item?._id || "")
-                                                    const imageSrc = productImagesByID[itemID] || ""
+                                                    const imageSrc = String(item?.image || "").trim()
                                                     const quantity = Number(item.quantity) || 1
                                                     const lineTotal = (Number(item.price) || 0) * quantity
-                                                    const itemKey = `${purchase._id}:${itemID}`
+                                                    const itemKey = `${purchase._id}:${String(item?._id || "")}`
                                                     const isReturning = returningItemKey === itemKey
 
                                                     return (
-                                                        <li key={`${purchase._id || purchase.orderID || purchaseIndex}-${itemID || itemIndex}`}>
+                                                        <li
+                                                            key={`${purchase._id || purchase.orderID || purchaseIndex}-${String(item?._id || "") || itemIndex}`}
+                                                            onClick={(event) => event.stopPropagation()}
+                                                        >
                                                             <span className="purchase-history-item-main">
                                                                 {imageSrc ? (
                                                                     <img
@@ -345,7 +369,10 @@ export const PurchaseHistory = () => {
                                                                     <button
                                                                         type="button"
                                                                         className="purchase-return-btn"
-                                                                        onClick={() => openReturnConfirm(purchase._id, item)}
+                                                                        onClick={(event) => {
+                                                                            event.stopPropagation()
+                                                                            openReturnConfirm(purchase._id, item)
+                                                                        }}
                                                                         disabled={isReturning}
                                                                     >
                                                                         {isReturning ? "Returning..." : "Return"}
@@ -368,6 +395,64 @@ export const PurchaseHistory = () => {
                     </table>
                 </div>
             ) : null}
+
+            {selectedPurchase ? (
+                <div className="modal-overlay" onClick={() => setSelectedPurchase(null)}>
+                    <div
+                        className="modal-card admin-details-modal"
+                        onClick={(event) => event.stopPropagation()}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label="Purchase details"
+                    >
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h3>Order {selectedPurchase.orderID || "-"}</h3>
+                                <button type="button" className="blue-button modal-close-btn"
+                                        onClick={() => setSelectedPurchase(null)}>
+                                    Close
+                                </button>
+                            </div>
+
+                            <div className="modal-stats">
+                                <span className="modal-stat">{formatDateTime(selectedPurchase.createdAt)}</span>
+                                <span className="modal-stat">{formatPrice(selectedPurchase.total)}</span>
+                                <span className="modal-stat">
+                                    {(Array.isArray(selectedPurchase.items) ? selectedPurchase.items : [])
+                                        .reduce((sum, item) => sum + (Number(item.quantity) || 0), 0)} items
+                                </span>
+                            </div>
+
+                            <ul className="admin-detail-items-list">
+                                {(Array.isArray(selectedPurchase.items) ? selectedPurchase.items : []).map((item, index) => {
+                                    const quantity = Number(item?.quantity) || 1
+                                    const lineTotal = (Number(item?.price) || 0) * quantity
+                                    const imageSrc = String(item?.image || "").trim()
+
+                                    return (
+                                        <li key={`${selectedPurchase._id || selectedPurchase.orderID}-${String(item?._id || index)}`}>
+                                            <span className="admin-detail-item-main">
+                                                {imageSrc
+                                                    ? <img className="purchase-history-item-image" src={imageSrc}
+                                                           alt={item?.name || "Item"}/>
+                                                    : <span className="purchase-history-item-image-placeholder">-</span>}
+                                                <span>{String(item?.name || "Unnamed item")} x {quantity}</span>
+                                            </span>
+                                            <span className="admin-detail-item-right">
+                                                <strong>{formatPrice(lineTotal)}</strong>
+                                                {item?.isReturned ? (
+                                                    <span className="purchase-returned-badge">Returned</span>
+                                                ) : null}
+                                            </span>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            ) : null}
+
             {itemToReturn ? (
                 <div className="modal-overlay" onClick={closeReturnConfirm}>
                     <div

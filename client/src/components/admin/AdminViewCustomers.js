@@ -19,6 +19,7 @@ export const AdminViewCustomers = () => {
     const [sortConfig, setSortConfig] = useState({column: "name", direction: "asc"})
     const [searchTerm, setSearchTerm] = useState("")
     const [orderFilter, setOrderFilter] = useState("all")
+    const [selectedCustomer, setSelectedCustomer] = useState(null)
 
     const loadCustomers = useCallback(() => {
         setIsLoading(true)
@@ -54,6 +55,37 @@ export const AdminViewCustomers = () => {
         // Initial dataset for the admin customer screen.
         loadCustomers()
     }, [isAdmin, loadCustomers])
+
+    useEffect(() => {
+        if (!selectedCustomer) return undefined
+
+        const originalBodyOverflow = document.body.style.overflow
+        const originalHtmlOverflow = document.documentElement.style.overflow
+        document.body.style.overflow = "hidden"
+        document.documentElement.style.overflow = "hidden"
+
+        return () => {
+            document.body.style.overflow = originalBodyOverflow
+            document.documentElement.style.overflow = originalHtmlOverflow
+        }
+    }, [selectedCustomer])
+
+    useEffect(() => {
+        if (!selectedCustomer) return undefined
+
+        const handleEscapeKey = (event) => {
+            if (event.key === "Escape") setSelectedCustomer(null)
+        }
+
+        window.addEventListener("keydown", handleEscapeKey)
+        return () => window.removeEventListener("keydown", handleEscapeKey)
+    }, [selectedCustomer])
+
+    useEffect(() => {
+        if (!selectedCustomer) return
+        const stillExists = customers.some((customer) => String(customer._id) === String(selectedCustomer._id))
+        if (!stillExists) setSelectedCustomer(null)
+    }, [customers, selectedCustomer])
 
     const handleSort = (column) => {
         setSortConfig((previousConfig) => {
@@ -232,7 +264,11 @@ export const AdminViewCustomers = () => {
 
                         <tbody>
                         {filteredAndSortedCustomers.map((customer) => (
-                            <tr key={customer._id}>
+                            <tr
+                                key={customer._id}
+                                className="product-row-clickable"
+                                onClick={() => setSelectedCustomer(customer)}
+                            >
                                 <td data-label="Photo">
                                     {customer.profilePhoto ? (
                                         <img
@@ -248,7 +284,7 @@ export const AdminViewCustomers = () => {
                                 <td data-label="Email">{customer.email || "Not provided"}</td>
                                 <td data-label="Phone">{customer.phone || "Not provided"}</td>
                                 <td data-label="Address">{customer.address || "Not provided"}</td>
-                                <td data-label="History">
+                                <td data-label="History" onClick={(event) => event.stopPropagation()}>
                                     {customer.email ? (
                                         <Link
                                             className="blue-button admin-customer-history-link"
@@ -260,7 +296,7 @@ export const AdminViewCustomers = () => {
                                         <span>Unavailable</span>
                                     )}
                                 </td>
-                                <td data-label="Actions">
+                                <td data-label="Actions" onClick={(event) => event.stopPropagation()}>
                                     <button
                                         type="button"
                                         className="icon-button admin-action-link admin-customer-delete-icon-button"
@@ -277,6 +313,50 @@ export const AdminViewCustomers = () => {
                         ))}
                         </tbody>
                     </table>
+                </div>
+            ) : null}
+
+            {selectedCustomer ? (
+                <div className="modal-overlay" onClick={() => setSelectedCustomer(null)}>
+                    <div
+                        className="modal-card admin-details-modal"
+                        onClick={(event) => event.stopPropagation()}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label="Customer details"
+                    >
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h3>{selectedCustomer.name || "Customer details"}</h3>
+                                <button type="button" className="blue-button modal-close-btn"
+                                        onClick={() => setSelectedCustomer(null)}>
+                                    Close
+                                </button>
+                            </div>
+
+                            <div className="modal-stats">
+                                <span className="modal-stat">{selectedCustomer.email || "Email not provided"}</span>
+                                <span className="modal-stat">{selectedCustomer.phone || "Phone not provided"}</span>
+                                <span className="modal-stat">
+                                    {orderedCustomerEmailSet.has(String(selectedCustomer.email || "").toLowerCase())
+                                        ? "Has purchase history"
+                                        : "No purchases yet"}
+                                </span>
+                            </div>
+
+                            {selectedCustomer.profilePhoto ? (
+                                <img
+                                    className="confirm-delete-image admin-details-photo"
+                                    src={`data:;base64,${selectedCustomer.profilePhoto}`}
+                                    alt={selectedCustomer.name || "Customer"}
+                                />
+                            ) : null}
+
+                            <p className="modal-description">
+                                Address: {selectedCustomer.address || "Not provided"}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             ) : null}
 

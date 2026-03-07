@@ -11,12 +11,16 @@ const normalizeItems = (items) => {
     if (!Array.isArray(items)) return []
     return items
         .filter((item) => item && item._id)
-        .map((item) => ({
-            _id: String(item._id),
-            name: String(item.name || ``).trim(),
-            price: Number(item.price) || 0,
-            quantity: Math.max(1, Number(item.quantity) || 1)
-        }))
+        .map((item) => {
+            const fallbackImage = Array.isArray(item.images) && item.images.length > 0 ? item.images[0] : ``
+            return {
+                _id: String(item._id),
+                name: String(item.name || ``).trim(),
+                image: String(item.image || fallbackImage || ``).trim(),
+                price: Number(item.price) || 0,
+                quantity: Math.max(1, Number(item.quantity) || 1)
+            }
+        })
 }
 
 // Accepts only finite non-negative totals from URL params.
@@ -48,6 +52,7 @@ const formatSaleForAdmin = (sale) => ({
         ? sale.items.map((item) => ({
             _id: String(item?._id || ``),
             name: String(item?.name || ``).trim(),
+            image: String(item?.image || ``).trim(),
             price: Number(item?.price) || 0,
             quantity: Math.max(1, Number(item?.quantity) || 1),
             isReturned: Boolean(item?.isReturned),
@@ -67,6 +72,7 @@ const formatSaleForCustomer = (sale) => ({
         ? sale.items.map((item) => ({
             _id: String(item?._id || ``),
             name: String(item?.name || ``).trim(),
+            image: String(item?.image || ``).trim(),
             price: Number(item?.price) || 0,
             quantity: Math.max(1, Number(item?.quantity) || 1),
             isReturned: Boolean(item?.isReturned),

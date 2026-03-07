@@ -43,6 +43,7 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
     const [customerType, setCustomerType] = useState("all")
     const [sortConfig, setSortConfig] = useState({column: "createdAt", direction: "desc"})
     const [searchTerm, setSearchTerm] = useState("")
+    const [selectedPurchase, setSelectedPurchase] = useState(null)
 
     const prefilledEmailFilter = useMemo(() => {
         // Supports deep-linking from "View Customers" with pre-applied email filter.
@@ -75,6 +76,37 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
         // Initial load for purchase-history table.
         loadPurchaseHistory()
     }, [isAdmin, loadPurchaseHistory])
+
+    useEffect(() => {
+        if (!selectedPurchase) return undefined
+
+        const originalBodyOverflow = document.body.style.overflow
+        const originalHtmlOverflow = document.documentElement.style.overflow
+        document.body.style.overflow = "hidden"
+        document.documentElement.style.overflow = "hidden"
+
+        return () => {
+            document.body.style.overflow = originalBodyOverflow
+            document.documentElement.style.overflow = originalHtmlOverflow
+        }
+    }, [selectedPurchase])
+
+    useEffect(() => {
+        if (!selectedPurchase) return undefined
+
+        const handleEscapeKey = (event) => {
+            if (event.key === "Escape") setSelectedPurchase(null)
+        }
+
+        window.addEventListener("keydown", handleEscapeKey)
+        return () => window.removeEventListener("keydown", handleEscapeKey)
+    }, [selectedPurchase])
+
+    useEffect(() => {
+        if (!selectedPurchase) return
+        const stillExists = purchases.some((purchase) => String(purchase._id) === String(selectedPurchase._id))
+        if (!stillExists) setSelectedPurchase(null)
+    }, [purchases, selectedPurchase])
 
     const handleSort = (column) => {
         setSortConfig((previousConfig) => {
@@ -237,7 +269,11 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
                             const itemsCount = items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0)
 
                             return (
-                                <tr key={purchase._id}>
+                                <tr
+                                    key={purchase._id}
+                                    className="product-row-clickable"
+                                    onClick={() => setSelectedPurchase(purchase)}
+                                >
                                     <td data-label="Date">{formatDateTime(purchase.createdAt)}</td>
                                     <td data-label="Order ID">{purchase.orderID || "Unknown order"}</td>
                                     <td data-label="Customer">
@@ -275,6 +311,67 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
                         })}
                         </tbody>
                     </table>
+                </div>
+            ) : null}
+
+            {selectedPurchase ? (
+                <div className="modal-overlay" onClick={() => setSelectedPurchase(null)}>
+                    <div
+                        className="modal-card admin-details-modal"
+                        onClick={(event) => event.stopPropagation()}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label="Purchase details"
+                    >
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h3>Order {selectedPurchase.orderID || "-"}</h3>
+                                <button type="button" className="blue-button modal-close-btn"
+                                        onClick={() => setSelectedPurchase(null)}>
+                                    Close
+                                </button>
+                            </div>
+
+                            <div className="modal-stats">
+                                <span className="modal-stat">{formatDateTime(selectedPurchase.createdAt)}</span>
+                                <span className="modal-stat">{formatCurrency(selectedPurchase.total)}</span>
+                                <span className="modal-stat">{selectedPurchase.isGuest ? "Guest" : "Registered"}</span>
+                            </div>
+
+                            <p className="modal-description">
+                                {selectedPurchase.customerName || "Unknown customer"} | {selectedPurchase.customerEmail || "Email not provided"}
+                            </p>
+                            <p className="modal-description">
+                                {selectedPurchase.customerPhone || "Phone not provided"} | {selectedPurchase.customerAddress || "Address not provided"}
+                            </p>
+
+                            <ul className="admin-detail-items-list">
+                                {(Array.isArray(selectedPurchase.items) ? selectedPurchase.items : []).map((item, index) => {
+                                    const quantity = Number(item?.quantity) || 1
+                                    const lineTotal = (Number(item?.price) || 0) * quantity
+                                    const imageSrc = String(item?.image || "").trim()
+
+                                    return (
+                                        <li key={`${selectedPurchase._id || selectedPurchase.orderID}-${String(item?._id || index)}`}>
+                                            <span className="admin-detail-item-main">
+                                                {imageSrc
+                                                    ? <img className="purchase-history-item-image" src={imageSrc}
+                                                           alt={item?.name || "Item"}/>
+                                                    : <span className="purchase-history-item-image-placeholder">-</span>}
+                                                <span>{String(item?.name || "Unnamed item")} × {quantity}</span>
+                                            </span>
+                                            <span className="admin-detail-item-right">
+                                                <strong>{formatCurrency(lineTotal)}</strong>
+                                                {item?.isReturned ? (
+                                                    <span className="purchase-returned-badge">Returned</span>
+                                                ) : null}
+                                            </span>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             ) : null}
         </div>

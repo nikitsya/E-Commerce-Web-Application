@@ -339,8 +339,8 @@ form input[readonly] {
     border-radius: 6px;
 }
 
-/* Narrow desktop/tablet: keep image and text separated */
-@media (min-width: 681px) and (max-width: 930px) {
+/* Narrow desktop: keep image and text separated */
+@media (min-width: 769px) and (max-width: 980px) {
     .table-container thead th:nth-child(1),
     .table-container tbody td:nth-child(1) {
         width: 24%;
@@ -384,7 +384,7 @@ form input[readonly] {
 }
 
 /* Tablet view: show less row data than desktop by hiding secondary columns */
-@media (min-width: 681px) and (max-width: 992px) {
+@media (min-width: 600px) and (max-width: 768px) {
     .table-container thead th:nth-child(5),
     .table-container tbody td:nth-child(5),
     .table-container thead th:nth-child(6),
@@ -569,6 +569,50 @@ form input[readonly] {
     margin: 0;
 }
 
+.admin-details-modal {
+    max-width: 860px;
+}
+
+.admin-details-photo {
+    height: 220px;
+}
+
+.admin-detail-items-list {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 8px;
+}
+
+.admin-detail-items-list li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #d7decb;
+    border-radius: 10px;
+    padding: 8px;
+    background: #fefffc;
+}
+
+.admin-detail-item-main {
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-detail-item-main span:last-child {
+    overflow-wrap: anywhere;
+}
+
+.admin-detail-item-right {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .confirm-delete-card {
     width: 100%;
     max-width: 440px;
@@ -618,7 +662,7 @@ form input[readonly] {
     margin: 0;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 599px) {
     .modal-overlay {
         padding: 8px;
     }
@@ -931,7 +975,7 @@ form input[readonly] {
     background-color: #fefffc;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
     .catalog-layout {
         grid-template-columns: 1fr;
     }
@@ -941,8 +985,8 @@ form input[readonly] {
     }
 }
 
-/* Desktop */
-@media (min-width: 681px) {
+/* Tablet and desktop table layout */
+@media (min-width: 600px) {
     .container {
         padding: 20px;
     }
@@ -953,9 +997,9 @@ form input[readonly] {
 }
 
 
-/* Mobile Card Layout (≤ 680px) */
+/* Mobile Card Layout (≤ 599px) */
 
-@media (max-width: 680px) {
+@media (max-width: 599px) {
     .catalog-toolbar,
     .catalog-filters {
         padding: 12px;
@@ -1552,7 +1596,7 @@ form input[readonly] {
     font-size: 13px;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 599px) {
     .admin-stock-page {
         padding: 12px;
     }
@@ -1865,7 +1909,7 @@ form input[readonly] {
     line-height: 1.4;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 599px) {
     .top-nav {
         position: relative; /* Anchor dropdown sections */
         flex-wrap: wrap;
@@ -2283,7 +2327,7 @@ form input[readonly] {
     }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 599px) {
     .cart-page {
         padding: 14px;
         gap: 16px;
@@ -2467,7 +2511,7 @@ form input[readonly] {
     margin: 0;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 599px) {
     .paypal-status-page {
         margin-top: 12px;
         padding: 16px;
@@ -2828,7 +2872,7 @@ form input[readonly] {
     font-weight: 700;
 }
 
-@media (max-width: 680px) {
+@media (max-width: 599px) {
     .purchase-history-table-wrap table {
         min-width: 0;
     }
@@ -2849,7 +2893,7 @@ form input[readonly] {
     }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 599px) {
     .profile-modal-card {
         width: min(340px, 100%);
         padding: 22px 14px 14px;

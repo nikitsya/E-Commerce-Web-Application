@@ -6,6 +6,7 @@ let salesSchema = new mongoose.Schema({
         items: [{
             _id: {type: String, required: true},
             name: {type: String, required: true, trim: true},
+            image: {type: String, trim: true, default: ``},
             price: {type: Number, required: true, min: 0},
             quantity: {type: Number, required: true, min: 1},
             isReturned: {type: Boolean, required: true, default: false},
