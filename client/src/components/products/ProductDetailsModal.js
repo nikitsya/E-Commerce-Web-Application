@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {ACCESS_LEVEL_ADMIN} from "../../config/global_constants"
 
@@ -32,6 +32,12 @@ export const ProductDetailsModal = ({
 
     // Render nothing when no product is selected.
     if (!product) return null;
+
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+        useEffect(() => {
+        setSelectedImageIndex(0)
+    }, [product?._id])
+
 
     // Normalize image data and split into hero + thumbnail gallery.
     const images = Array.isArray(product.images) ? product.images : []
