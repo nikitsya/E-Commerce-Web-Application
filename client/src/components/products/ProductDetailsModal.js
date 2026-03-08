@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {ACCESS_LEVEL_ADMIN} from "../../config/global_constants"
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ACCESS_LEVEL_ADMIN } from "../../config/global_constants"
 
 
 const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
 
 export const ProductDetailsModal = ({
-                                        product,
-                                        onClose,
-                                        onAddToCart,
-                                        onRequestDelete,
-                                        isInCart = false,
-                                        cartQuantity = 0
-                                    }) => {
+    product,
+    onClose,
+    onAddToCart,
+    onRequestDelete,
+    isInCart = false,
+    cartQuantity = 0
+}) => {
     useEffect(() => {
         if (!product) return
 
@@ -34,7 +34,7 @@ export const ProductDetailsModal = ({
     if (!product) return null;
 
     const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-        useEffect(() => {
+    useEffect(() => {
         setSelectedImageIndex(0)
     }, [product?._id])
 
@@ -69,10 +69,10 @@ export const ProductDetailsModal = ({
         <div className="modal-overlay" onClick={onClose}>
             {/* Stop click bubbling so interactions inside modal do not close it */}
             <div className="modal-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true"
-                 aria-label={product.name}>
+                aria-label={product.name}>
                 <div className="modal-hero">
-                    { selectedImage
-                        ? ( <img className="modal-hero-image" src={selectedImage} alt={product.name}/>)
+                    {selectedImage
+                        ? (<img className="modal-hero-image" src={selectedImage} alt={product.name} />)
                         : (<div className="modal-hero-empty">No image available</div>)
                     }
                 </div>
@@ -92,12 +92,23 @@ export const ProductDetailsModal = ({
 
                     <p className="modal-description">{product.description || "-"}</p>
 
-                    {/* Optional additional product images */}
-                    {additionalImages.length > 0
-                        ? (<div className="modal-images"> {additionalImages.map((src, i) => (
-                            <img key={i} className="modal-thumb" src={src} alt={`${product.name}-extra-${i + 1}`}/>
-                        ))}</div>)
-                        : null}
+                    {/* Product gallery thumbnails: click any thumbnail to make it the hero image */}
+                    {images.length > 1 ? (
+                        <div className="modal-images">
+                            {images.map((src, i) => (
+                                <button
+                                    key={i}
+                                    type="button"
+                                    className={"modal-thumb-button " + (i === selectedImageIndex ? "is-active" : "")}
+                                    onClick={() => setSelectedImageIndex(i)}
+                                    aria-label={`Show image ${i + 1}`}
+                                >
+                                    <img className="modal-thumb" src={src} alt={`${product.name}-image-${i + 1}`} />
+                                </button>
+                            ))}
+                        </div>
+                    ) : null}
+
 
                     <div className="modal-actions">
                         {/* Customer action: add item to cart */}
