@@ -13,6 +13,9 @@ export const ProductDetailsModal = ({
     isInCart = false,
     cartQuantity = 0
 }) => {
+
+    const [selectedImageIndex, setSelectedImageIndex] = useState(0)
+
     useEffect(() => {
         if (!product) return
 
@@ -30,14 +33,12 @@ export const ProductDetailsModal = ({
         }
     }, [product])
 
-    // Render nothing when no product is selected.
-    if (!product) return null;
-
-    const [selectedImageIndex, setSelectedImageIndex] = useState(0)
     useEffect(() => {
         setSelectedImageIndex(0)
     }, [product?._id])
 
+    // Render nothing when no product is selected.
+    if (!product) return null;
 
     // Normalize image data and split into hero + thumbnail gallery.
     const images = Array.isArray(product.images) ? product.images : []
