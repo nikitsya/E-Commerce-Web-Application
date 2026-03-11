@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {ACCESS_LEVEL_ADMIN} from "../../config/global_constants"
+import {resolveImageSrc} from "../../utils/resolveImageSrc"
 
 
 const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
@@ -41,7 +42,7 @@ export const ProductDetailsModal = ({
     if (!product) return null;
 
     // Normalize image data and split into hero + thumbnail gallery.
-    const images = Array.isArray(product.images) ? product.images : []
+    const images = (Array.isArray(product.images) ? product.images : []).map((image) => resolveImageSrc(image)).filter(Boolean)
     const selectedImage = images.length > 0 ? images[selectedImageIndex] || images[0] : ""
 
     // Display fallback when optional fields are missing.

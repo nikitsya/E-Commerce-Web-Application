@@ -1,20 +1,33 @@
-import React from "react"
+import React, {useEffect, useMemo} from "react"
 import {Link} from "react-router-dom"
 import {Button} from "../ui/Button"
+import {resolveImageSrc} from "../../utils/resolveImageSrc"
 
 // Shared product form fields used by both Add and Edit pages.
 export const ProductFormFields = ({
                                       formValues,
                                       onFieldChange,
+                                      onImageFilesChange,
+                                      selectedImageFiles = [],
                                       submitLabel,
                                       onSubmit,
                                       errors = {},
                                       serverError = ""
                                   }) => {
-    const imagePreviewList = String(formValues.images || "")
-        .split(",")
-        .map((value) => value.trim())
-        .filter((value) => value !== "")
+    const existingImagePreviewList = Array.isArray(formValues.images)
+        ? formValues.images.map((image) => resolveImageSrc(image)).filter((image) => image !== "")
+        : []
+
+    const selectedImagePreviewList = useMemo(
+        () => (Array.isArray(selectedImageFiles) ? selectedImageFiles.map((file) => URL.createObjectURL(file)) : []),
+        [selectedImageFiles]
+    )
+
+    useEffect(() => () => {
+        selectedImagePreviewList.forEach((previewUrl) => URL.revokeObjectURL(previewUrl))
+    }, [selectedImagePreviewList])
+
+    const imagePreviewList = selectedImagePreviewList.length > 0 ? selectedImagePreviewList : existingImagePreviewList
 
     return (
 
@@ -43,13 +56,15 @@ export const ProductFormFields = ({
             />
             {errors.price ? <div className="error-text">{errors.price}</div> : null}
 
-            <label>Images (comma separated)</label>
+            <label>Images</label>
+            <div className="form-helper-text">Upload one or more image files. Selecting new files will replace current images.</div>
             <input
-                type="text"
-                name="images"
-                value={formValues.images}
+                type="file"
+                name="productImages"
+                multiple
+                accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
                 className={errors.images ? "field-error" : ""}
-                onChange={onFieldChange(`images`)}
+                onChange={onImageFilesChange}
             />
             {errors.images ? <div className="error-text">{errors.images}</div> : null}
 

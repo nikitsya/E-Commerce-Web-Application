@@ -4,11 +4,12 @@ import {Redirect} from "react-router-dom"
 import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../../config/global_constants"
 import {AdminPageHeader} from "./AdminPageHeader"
 import {getAdminErrorMessage} from "./adminShared"
+import {resolveImageSrc} from "../../utils/resolveImageSrc"
 
 // Product cards show a single preview image, this helper safely extracts it.
 const getFirstImage = (product) => {
     if (!Array.isArray(product.images) || product.images.length === 0) return ""
-    return product.images[0] || ""
+    return resolveImageSrc(product.images[0])
 }
 
 // Validates admin-entered stock values before sending update requests.

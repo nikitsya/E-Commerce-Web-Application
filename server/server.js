@@ -8,6 +8,9 @@ require('./config/db')
 const express = require(`express`)
 const app = express()
 
+// Serves uploaded files (profile photos and product images) from /uploads.
+app.use(`/uploads`, express.static(path.resolve(__dirname, process.env.UPLOADED_FILES_FOLDER)))
+
 // Parse JSON data sent from client (available in req.body)
 app.use(require(`body-parser`).json())
 

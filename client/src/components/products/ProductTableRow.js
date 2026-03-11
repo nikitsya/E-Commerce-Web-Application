@@ -1,6 +1,7 @@
 import React from "react"
 import {Link} from "react-router-dom"
 import {ACCESS_LEVEL_ADMIN} from "../../config/global_constants"
+import {resolveImageSrc} from "../../utils/resolveImageSrc"
 
 const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
 
@@ -20,7 +21,7 @@ export const ProductTableRow = props => {
         : (stockQty <= 0 ? "Out of Stock" : (isAtStockLimit ? "Stock Limit Reached" : "Add to Cart"))
     // First image is used as table thumbnail preview.
     const images = Array.isArray(product.images) ? product.images : []
-    const firstImage = images.length > 0 ? images[0] : ""
+    const firstImage = images.length > 0 ? resolveImageSrc(images[0]) : ""
 
     // Clicking any non-action area of the row opens product details modal.
     const handleRowClick = () => onOpenDetails(product)

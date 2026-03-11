@@ -3,7 +3,7 @@ import {Redirect} from "react-router-dom"
 import axios from "axios"
 import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../../config/global_constants"
 import {
-    buildProductPayload,
+    buildProductFormData,
     mapProductToFormValues,
     useProductForm,
     validateProductForm
@@ -52,11 +52,20 @@ export const EditProduct = props => {
     const [errors, setErrors] = useState({})
     const [serverError, setServerError] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [selectedImageFiles, setSelectedImageFiles] = useState([])
 
     // Reuse base field updater and clear stale errors for edited field.
     const handleFieldChange = (fieldName) => (event) => {
         updateField(fieldName)(event)
         setErrors((previousErrors) => ({...previousErrors, [fieldName]: ""}))
+        setServerError("")
+    }
+
+    // Handles replacement upload of one or multiple product image files.
+    const handleImageFilesChange = (event) => {
+        const nextFiles = Array.from(event.target.files || [])
+        setSelectedImageFiles(nextFiles)
+        setErrors((previousErrors) => ({...previousErrors, images: ""}))
         setServerError("")
     }
 
@@ -68,6 +77,7 @@ export const EditProduct = props => {
             .then((res) => {
                 // Map API product shape to editable text field values.
                 replaceFormValues(mapProductToFormValues(res.data))
+                setSelectedImageFiles([])
             })
             .catch((error) => setServerError(getEditProductErrorMessage(error, "Unable to load product")))
     }, [props.match.params.id, replaceFormValues])
@@ -79,19 +89,22 @@ export const EditProduct = props => {
         setServerError("")
 
         // Block submit until local validation passes.
-        const nextErrors = validateProductForm(formValues)
+        const nextErrors = validateProductForm(formValues, {selectedImageFiles})
         if (Object.keys(nextErrors).length > 0) {
             setErrors(nextErrors)
             return
         }
         setErrors({})
 
-        // Normalize and sanitize data before sending update request.
-        const productObject = buildProductPayload(formValues)
+        // Build multipart payload with text fields and optional replacement images.
+        const formData = buildProductFormData(formValues, selectedImageFiles)
         setIsSubmitting(true)
 
-        //axios.defaults.withCredentials = true // needed for sessions to work
-        axios.put(`${SERVER_HOST}/products/${props.match.params.id}`, productObject, {headers: {"authorization": localStorage.token}})
+        axios.put(`${SERVER_HOST}/products/${props.match.params.id}`, formData, {
+            headers: {
+                "authorization": localStorage.token
+            }
+        })
             .then(() => {
                 setRedirectToDisplayAllProducts(true)
             })
@@ -104,6 +117,8 @@ export const EditProduct = props => {
             <ProductFormFields
                 formValues={formValues}
                 onFieldChange={handleFieldChange}
+                onImageFilesChange={handleImageFilesChange}
+                selectedImageFiles={selectedImageFiles}
                 submitLabel={isSubmitting ? "Updating..." : "Update"}
                 onSubmit={handleSubmit}
                 errors={errors}

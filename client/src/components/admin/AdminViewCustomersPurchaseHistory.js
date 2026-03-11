@@ -4,6 +4,7 @@ import {Link, Redirect, withRouter} from "react-router-dom"
 import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../../config/global_constants"
 import {AdminPageHeader} from "./AdminPageHeader"
 import {getAdminErrorMessage, getSortIndicator} from "./adminShared"
+import {resolveImageSrc} from "../../utils/resolveImageSrc"
 
 // Normalizes monetary values to EUR format used across admin reports.
 const formatCurrency = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
@@ -349,7 +350,7 @@ const AdminViewCustomersPurchaseHistoryComponent = ({location}) => {
                                 {(Array.isArray(selectedPurchase.items) ? selectedPurchase.items : []).map((item, index) => {
                                     const quantity = Number(item?.quantity) || 1
                                     const lineTotal = (Number(item?.price) || 0) * quantity
-                                    const imageSrc = String(item?.image || "").trim()
+                                    const imageSrc = resolveImageSrc(item?.image)
 
                                     return (
                                         <li key={`${selectedPurchase._id || selectedPurchase.orderID}-${String(item?._id || index)}`}>

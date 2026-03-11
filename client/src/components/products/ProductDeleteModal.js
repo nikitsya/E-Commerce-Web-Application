@@ -1,4 +1,5 @@
 import React, {useEffect} from "react"
+import {resolveImageSrc} from "../../utils/resolveImageSrc"
 
 
 export const ProductDeleteModal = ({product, isDeleting = false, error = "", onConfirm, onClose}) => {
@@ -32,7 +33,7 @@ export const ProductDeleteModal = ({product, isDeleting = false, error = "", onC
     if (!product) return null
 
     const images = Array.isArray(product.images) ? product.images : []
-    const previewImage = images.length > 0 ? images[0] : ""
+    const previewImage = images.length > 0 ? resolveImageSrc(images[0]) : ""
 
     const handleOverlayClick = () => {
         if (isDeleting) return

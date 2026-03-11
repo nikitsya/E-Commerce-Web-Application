@@ -2,6 +2,7 @@ import React, {useRef, useState} from "react"
 import {Link} from "react-router-dom"
 import {BuyProduct} from "./BuyProduct"
 import {getStoredAccessLevel, hasValidToken} from "../auth/authShared"
+import {resolveImageSrc} from "../../utils/resolveImageSrc"
 
 
 const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
@@ -96,7 +97,8 @@ export const ShoppingCart = ({cartItems, onUpdateQuantity, onRemoveItem, onClear
                         <article className="cart-item" key={item._id}>
                             <div className="cart-item-image-wrap">
                                 {item.image
-                                    ? <img className="product-thumb cart-item-image" src={item.image} alt={item.name}/>
+                                    ? <img className="product-thumb cart-item-image" src={resolveImageSrc(item.image)}
+                                           alt={item.name}/>
                                     : <div className="cart-item-no-image">No image</div>
                                 }
                             </div>

@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {Redirect} from "react-router-dom"
 import axios from "axios"
 import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../../config/global_constants"
-import {buildProductPayload, useProductForm, validateProductForm} from "../../hooks/useProductForm"
+import {buildProductFormData, useProductForm, validateProductForm} from "../../hooks/useProductForm"
 import {ProductFormFields} from "./ProductFormFields"
 
 
@@ -14,6 +14,7 @@ export const AddProduct = () => {
     const [errors, setErrors] = useState({})
     const [serverError, setServerError] = useState("")
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [selectedImageFiles, setSelectedImageFiles] = useState([])
 
     // Maps backend/network failures to user-friendly messages for create flow.
     const getAddProductErrorMessage = (error) => {
@@ -41,6 +42,14 @@ export const AddProduct = () => {
         setServerError("")
     }
 
+    // Handles selection of one or multiple product image files.
+    const handleImageFilesChange = (event) => {
+        const nextFiles = Array.from(event.target.files || [])
+        setSelectedImageFiles(nextFiles)
+        setErrors((previousErrors) => ({...previousErrors, images: ""}))
+        setServerError("")
+    }
+
     const handleSubmit = e => {
         e.preventDefault()
         if (isSubmitting) return
@@ -48,19 +57,22 @@ export const AddProduct = () => {
         setServerError("")
 
         // Block submit until local validation passes.
-        const nextErrors = validateProductForm(formValues)
+        const nextErrors = validateProductForm(formValues, {selectedImageFiles})
         if (Object.keys(nextErrors).length > 0) {
             setErrors(nextErrors)
             return
         }
         setErrors({})
 
-        // Build normalized API payload from UI form values.
-        const productObject = buildProductPayload(formValues)
+        // Build multipart payload with text fields and selected product images.
+        const formData = buildProductFormData(formValues, selectedImageFiles)
         setIsSubmitting(true)
 
-        //axios.defaults.withCredentials = true // needed for sessions to work
-        axios.post(`${SERVER_HOST}/products`, productObject, {headers: {"authorization": localStorage.token}})
+        axios.post(`${SERVER_HOST}/products`, formData, {
+            headers: {
+                "authorization": localStorage.token
+            }
+        })
             .then(() => setRedirectToDisplayAllProducts(true))
             .catch(err => setServerError(getAddProductErrorMessage(err)))
             .finally(() => setIsSubmitting(false))
@@ -71,6 +83,8 @@ export const AddProduct = () => {
             <ProductFormFields
                 formValues={formValues}
                 onFieldChange={handleFieldChange}
+                onImageFilesChange={handleImageFilesChange}
+                selectedImageFiles={selectedImageFiles}
                 submitLabel={isSubmitting ? "Adding..." : "Add"}
                 onSubmit={handleSubmit}
                 errors={errors}

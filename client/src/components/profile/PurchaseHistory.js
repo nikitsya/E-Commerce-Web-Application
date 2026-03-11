@@ -3,6 +3,7 @@ import axios from "axios"
 import {Link} from "react-router-dom"
 import {SERVER_HOST} from "../../config/global_constants"
 import {getAdminErrorMessage, getSortIndicator} from "../admin/adminShared"
+import {resolveImageSrc} from "../../utils/resolveImageSrc"
 
 const formatDateTime = (value) => {
     const date = new Date(value)
@@ -336,7 +337,7 @@ export const PurchaseHistory = () => {
                                         {items.length > 0 ? (
                                             <ul className="admin-purchase-items-list purchase-history-items-list">
                                                 {items.map((item, itemIndex) => {
-                                                    const imageSrc = String(item?.image || "").trim()
+                                                    const imageSrc = resolveImageSrc(item?.image)
                                                     const quantity = Number(item.quantity) || 1
                                                     const lineTotal = (Number(item.price) || 0) * quantity
                                                     const itemKey = `${purchase._id}:${String(item?._id || "")}`
@@ -427,7 +428,7 @@ export const PurchaseHistory = () => {
                                 {(Array.isArray(selectedPurchase.items) ? selectedPurchase.items : []).map((item, index) => {
                                     const quantity = Number(item?.quantity) || 1
                                     const lineTotal = (Number(item?.price) || 0) * quantity
-                                    const imageSrc = String(item?.image || "").trim()
+                                    const imageSrc = resolveImageSrc(item?.image)
 
                                     return (
                                         <li key={`${selectedPurchase._id || selectedPurchase.orderID}-${String(item?._id || index)}`}>
