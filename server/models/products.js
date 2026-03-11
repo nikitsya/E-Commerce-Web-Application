@@ -15,7 +15,13 @@ let productsSchema = new mongoose.Schema({
     material: buildTextField({fieldLabel: `Material`, maxLength: 80}),
     color: buildTextField({fieldLabel: `Color`, maxLength: 50}),
     stockQty: buildIntegerField({fieldLabel: `Stock quantity`, required: true, min: 0, max: 100000, defaultValue: 0}),
-    lowStockThreshold: buildIntegerField({fieldLabel: `Low stock threshold`, required: true, min: 0, max: 100000, defaultValue: 5})
+    lowStockThreshold: buildIntegerField({
+        fieldLabel: `Low stock threshold`,
+        required: true,
+        min: 0,
+        max: 100000,
+        defaultValue: 5
+    })
 }, {
     collection: `products`
 })

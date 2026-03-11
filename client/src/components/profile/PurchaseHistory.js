@@ -435,7 +435,8 @@ export const PurchaseHistory = () => {
                                                 {imageSrc
                                                     ? <img className="purchase-history-item-image" src={imageSrc}
                                                            alt={item?.name || "Item"}/>
-                                                    : <span className="purchase-history-item-image-placeholder">-</span>}
+                                                    :
+                                                    <span className="purchase-history-item-image-placeholder">-</span>}
                                                 <span>{String(item?.name || "Unnamed item")} x {quantity}</span>
                                             </span>
                                             <span className="admin-detail-item-right">

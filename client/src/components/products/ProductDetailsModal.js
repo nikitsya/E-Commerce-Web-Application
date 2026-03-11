@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { ACCESS_LEVEL_ADMIN } from "../../config/global_constants"
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
+import {ACCESS_LEVEL_ADMIN} from "../../config/global_constants"
 
 
 const formatPrice = (value) => `€ ${(Number(value) || 0).toFixed(2)}`
 
 export const ProductDetailsModal = ({
-    product,
-    onClose,
-    onAddToCart,
-    onRequestDelete,
-    isInCart = false,
-    cartQuantity = 0
-}) => {
+                                        product,
+                                        onClose,
+                                        onAddToCart,
+                                        onRequestDelete,
+                                        isInCart = false,
+                                        cartQuantity = 0
+                                    }) => {
 
     const [selectedImageIndex, setSelectedImageIndex] = useState(0)
 
@@ -70,10 +70,10 @@ export const ProductDetailsModal = ({
         <div className="modal-overlay" onClick={onClose}>
             {/* Stop click bubbling so interactions inside modal do not close it */}
             <div className="modal-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true"
-                aria-label={product.name}>
+                 aria-label={product.name}>
                 <div className="modal-hero">
                     {selectedImage
-                        ? (<img className="modal-hero-image" src={selectedImage} alt={product.name} />)
+                        ? (<img className="modal-hero-image" src={selectedImage} alt={product.name}/>)
                         : (<div className="modal-hero-empty">No image available</div>)
                     }
                 </div>
@@ -104,7 +104,7 @@ export const ProductDetailsModal = ({
                                     onClick={() => setSelectedImageIndex(i)}
                                     aria-label={`Show image ${i + 1}`}
                                 >
-                                    <img className="modal-thumb" src={src} alt={`${product.name}-image-${i + 1}`} />
+                                    <img className="modal-thumb" src={src} alt={`${product.name}-image-${i + 1}`}/>
                                 </button>
                             ))}
                         </div>

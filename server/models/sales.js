@@ -17,7 +17,13 @@ let salesSchema = new mongoose.Schema({
         total: buildNumberField({fieldLabel: `Total`, required: true, min: 0, max: 1000000}),
         items: [{
             _id: buildObjectIdStringField({fieldLabel: `Product ID`}),
-            name: buildTextField({fieldLabel: `Item name`, required: true, minLength: 2, maxLength: 140, allowEmpty: false}),
+            name: buildTextField({
+                fieldLabel: `Item name`,
+                required: true,
+                minLength: 2,
+                maxLength: 140,
+                allowEmpty: false
+            }),
             image: buildImagePathField({fieldLabel: `Item image`}),
             price: buildNumberField({fieldLabel: `Item price`, required: true, min: 0, max: 1000000}),
             quantity: buildIntegerField({fieldLabel: `Item quantity`, required: true, min: 1, max: 10000}),
@@ -38,7 +44,13 @@ let salesSchema = new mongoose.Schema({
 
         }],
         isGuest: {type: Boolean, required: true, default: false},
-        customerName: buildTextField({fieldLabel: `Customer name`, required: true, minLength: 2, maxLength: 80, allowEmpty: false}),
+        customerName: buildTextField({
+            fieldLabel: `Customer name`,
+            required: true,
+            minLength: 2,
+            maxLength: 80,
+            allowEmpty: false
+        }),
         customerEmail: buildEmailField({fieldLabel: `Customer email`}),
         customerAddress: buildTextField({fieldLabel: `Customer address`, maxLength: 180}),
         customerPhone: buildPhoneField({fieldLabel: `Customer phone`})

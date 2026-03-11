@@ -8,12 +8,14 @@ Full-stack e-commerce web application for reusable bottles and eco-friendly prod
 - Payments: PayPal (sandbox)
 
 Authors:
+
 - Hanna Bokariuk
 - Nikita Smiichyk
 
 ## Features
 
 ### Customer-facing
+
 - Product catalog with search, filtering, and sorting.
 - Product details modal with image gallery.
 - Cart with quantity controls and stock-aware behavior.
@@ -25,6 +27,7 @@ Authors:
 - Per-item return action in purchase history.
 
 ### Admin-facing
+
 - Add, edit, and delete products.
 - Adjust product stock levels.
 - View customers.
@@ -34,12 +37,14 @@ Authors:
 ## Tech Stack
 
 ### Client
+
 - `react` 16.9
 - `react-router-dom` 5.0
 - `axios`
 - `@paypal/react-paypal-js`
 
 ### Server
+
 - `express` 5
 - `mongoose` 8
 - `jsonwebtoken`
@@ -173,21 +178,22 @@ npm start
 ```
 
 5. Open:
+
 - `http://localhost:3000`
 
 ## Development Notes
 
 - Client API base URL is defined in:
-  - `client/src/config/global_constants.js` (`SERVER_HOST`)
+    - `client/src/config/global_constants.js` (`SERVER_HOST`)
 - PayPal sandbox client ID is currently stored in:
-  - `client/src/config/global_constants.js`
+    - `client/src/config/global_constants.js`
 - Profile images uploaded from the app are stored in:
-  - `server/uploads`
+    - `server/uploads`
 - A testing-only reset UI exists at:
-  - `/ResetDatabase`
-  - It resets the user collection and recreates the default admin account:
-    - Email: `admin@admin.com`
-    - Password: `123-qwe_QWE`
+    - `/ResetDatabase`
+    - It resets the user collection and recreates the default admin account:
+        - Email: `admin@admin.com`
+        - Password: `123-qwe_QWE`
 
 ## Seed Data
 
@@ -204,14 +210,14 @@ These files can be used for local database initialization/import workflows.
 Main route groups:
 
 - `/products`
-  - Public catalog read
-  - Admin create/update/delete
+    - Public catalog read
+    - Admin create/update/delete
 - `/users`
-  - Register/login
-  - Profile read/update
-  - Admin customer management
+    - Register/login
+    - Profile read/update
+    - Admin customer management
 - `/sales`
-  - Guest and authenticated checkout
-  - Customer purchase history
-  - Item return route
-  - Admin purchase history
+    - Guest and authenticated checkout
+    - Customer purchase history
+    - Item return route
+    - Admin purchase history

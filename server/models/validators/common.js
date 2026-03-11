@@ -35,21 +35,33 @@ const getTextValidationError = (value, {
 }
 
 const buildTextField = ({
-    fieldLabel = `Field`,
-    required = false,
-    minLength = 1,
-    maxLength = 255,
-    defaultValue = ``,
-    allowEmpty = true
-} = {}) => {
+                            fieldLabel = `Field`,
+                            required = false,
+                            minLength = 1,
+                            maxLength = 255,
+                            defaultValue = ``,
+                            allowEmpty = true
+                        } = {}) => {
     const config = {
         type: String,
         trim: true,
         set: normalizeText,
         maxlength: [maxLength, `${fieldLabel} must be at most ${maxLength} characters`],
         validate: {
-            validator: (value) => !getTextValidationError(value, {fieldLabel, required, minLength, maxLength, allowEmpty}),
-            message: (props) => getTextValidationError(props.value, {fieldLabel, required, minLength, maxLength, allowEmpty}) || `${fieldLabel} format is invalid`
+            validator: (value) => !getTextValidationError(value, {
+                fieldLabel,
+                required,
+                minLength,
+                maxLength,
+                allowEmpty
+            }),
+            message: (props) => getTextValidationError(props.value, {
+                fieldLabel,
+                required,
+                minLength,
+                maxLength,
+                allowEmpty
+            }) || `${fieldLabel} format is invalid`
         }
     }
 
@@ -90,12 +102,12 @@ const buildPhoneField = ({fieldLabel = `Phone`, required = false} = {}) => ({
 })
 
 const buildIntegerField = ({
-    fieldLabel = `Value`,
-    required = true,
-    min = 0,
-    max = Number.MAX_SAFE_INTEGER,
-    defaultValue
-} = {}) => {
+                               fieldLabel = `Value`,
+                               required = true,
+                               min = 0,
+                               max = Number.MAX_SAFE_INTEGER,
+                               defaultValue
+                           } = {}) => {
     const config = {
         type: Number,
         min: [min, `${fieldLabel} must be at least ${min}`],
@@ -121,12 +133,12 @@ const buildIntegerField = ({
 }
 
 const buildNumberField = ({
-    fieldLabel = `Value`,
-    required = true,
-    min = 0,
-    max = Number.MAX_SAFE_INTEGER,
-    defaultValue
-} = {}) => {
+                              fieldLabel = `Value`,
+                              required = true,
+                              min = 0,
+                              max = Number.MAX_SAFE_INTEGER,
+                              defaultValue
+                          } = {}) => {
     const config = {
         type: Number,
         min: [min, `${fieldLabel} must be at least ${min}`],
