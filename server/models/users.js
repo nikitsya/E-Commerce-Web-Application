@@ -1,8 +1,9 @@
 const mongoose = require(`mongoose`)
+const {buildEmailField} = require(`./validators/email`)
 
 let usersSchema = new mongoose.Schema({
     name: {type: String, required: true, trim: true},
-    email: {type: String, required: true, trim: true},
+    email: buildEmailField({fieldLabel: `Email`, unique: true}),
     password: {type: String, required: true, trim: true},
     profilePhotoFilename: {type: String, default: ``},
     phone: {type: String, trim: true, default: ``},

@@ -1,4 +1,5 @@
 const mongoose = require(`mongoose`)
+const {buildEmailField} = require(`./validators/email`)
 
 let salesSchema = new mongoose.Schema({
         orderID: {type: String, required: true, trim: true},
@@ -15,7 +16,7 @@ let salesSchema = new mongoose.Schema({
         }],
         isGuest: {type: Boolean, required: true, default: false},
         customerName: {type: String, required: true, trim: true},
-        customerEmail: {type: String, required: true, trim: true},
+        customerEmail: buildEmailField({fieldLabel: `Customer email`}),
         customerAddress: {type: String, trim: true, default: ``},
         customerPhone: {type: String, trim: true, default: ``}
     },
