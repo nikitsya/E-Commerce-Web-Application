@@ -125,6 +125,14 @@ Authors:
 
 </details>
 
+## Demo Video
+
+<video src="./docs/screencast.mp4" controls preload="metadata" width="100%">
+  Your browser does not support embedded video.
+</video>
+
+Direct link: [Watch screencast](./docs/screencast.mp4)
+
 ## Prerequisites
 
 - Node.js 18+ (recommended)
