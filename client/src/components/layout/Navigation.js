@@ -55,7 +55,15 @@ export const Navigation = ({cartItemsCount = 0}) => {
     return (
         <>
             <header className="top-nav-shell">
-                <div className="market-topbar">Based in Ireland | EU-wide shipping | Prices in EUR (€)</div>
+                <span className="top-nav-orb top-nav-orb-left" aria-hidden="true"></span>
+                <span className="top-nav-orb top-nav-orb-right" aria-hidden="true"></span>
+                <div className="market-topbar">
+                    <span>Based in Ireland</span>
+                    <span className="market-topbar-sep" aria-hidden="true">•</span>
+                    <span>EU-wide shipping</span>
+                    <span className="market-topbar-sep" aria-hidden="true">•</span>
+                    <span>Prices in EUR (€)</span>
+                </div>
                 <nav className="top-nav">
                     <button
                         className="hamburger-btn"
