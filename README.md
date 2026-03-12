@@ -197,11 +197,6 @@ npm start
     - `client/src/config/global_constants.js`
 - Profile images uploaded from the app are stored in:
     - `server/uploads`
-- A testing-only reset UI exists at:
-    - `/ResetDatabase`
-    - It resets the user collection and recreates the default admin account:
-        - Email: `admin@admin.com`
-        - Password: `123-qwe_QWE`
 
 ## Seed Data
 

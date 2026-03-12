@@ -46,8 +46,6 @@ const getUploadedFilePath = (filename) => {
     return path.join(uploadedFilesRootFolderPath, safeFileName)
 }
 
-const emptyFolder = require('empty-folder')
-
 // Validates phone format used by profile endpoints (7-15 digits).
 const isPhoneValid = (phone) => /^\d{7,15}$/.test(String(phone || ``).trim())
 
@@ -84,35 +82,6 @@ const sendProfileResponse = (user, res) => {
         .catch(() => res.json({...basePayload, profilePhoto: null}))
 }
 
-
-// Development-only endpoint: clears users and recreates a known admin account.
-router.post(`/users/reset_user_collection`, (req, res, next) => {
-    // Remove all users first to guarantee deterministic reset behavior.
-    usersModel.deleteMany({})
-        .then(() => {
-            const adminPassword = `123-qwe_QWE`
-
-            // Hash admin password before storing it in DB.
-            bcrypt.hash(adminPassword, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS), (error, hash) => {
-                if (error) {
-                    return next(error)
-                }
-                // Recreate baseline administrator account with admin access level.
-                usersModel.create({
-                    name: "Administrator",
-                    email: "admin@admin.com",
-                    password: hash,
-                    accessLevel: parseInt(process.env.ACCESS_LEVEL_ADMIN)
-                })
-                    .then(createData => {
-                        // Reset only user avatars folder and keep product uploads intact.
-                        emptyFolder(uploadedUserPhotosFolderPath, false, () => res.json(createData))
-                    })
-                    .catch(() => next(createError(500, `Failed to create Admin user for testing purposes`)))
-            })
-        })
-        .catch(err => next(err))
-})
 
 // Registers a customer account if email is not already present.
 router.post(`/users/register/:name/:email/:password`, upload.single("profilePhoto"), (req, res, next) => {
