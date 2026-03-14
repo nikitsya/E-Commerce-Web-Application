@@ -214,26 +214,6 @@ Direct link: [Watch screencast](./docs/screencast.mp4)
 - npm
 - Local MongoDB on default host/port (`mongodb://localhost`)
 
-## Environment Configuration (Server)
-
-The backend loads environment variables from:
-
-- `server/config/.env`
-
-Required keys:
-
-```env
-DB_NAME=SustainableHomeStore
-ACCESS_LEVEL_GUEST=0
-ACCESS_LEVEL_CUSTOMER=1
-ACCESS_LEVEL_ADMIN=2
-JWT_PRIVATE_KEY_FILENAME=./config/jwt_private_key.pem
-JWT_EXPIRY=7d
-PASSWORD_HASH_SALT_ROUNDS=3
-UPLOADED_FILES_FOLDER=./uploads
-SERVER_PORT=4000
-LOCAL_HOST=http://localhost:3000
-```
 
 ## Local Setup
 
@@ -262,19 +242,6 @@ npm start
 
 5. Open `http://localhost:3000`
 
-## Development Notes
-
-- Client API base URL is defined in `client/src/config/global_constants.js` (`SERVER_HOST`)
-- PayPal sandbox client ID is currently stored in `client/src/config/global_constants.js`
-- Profile images uploaded from the app are stored in `server/uploads`
-
-## Seed Data
-
-Default datasets for local initialization:
-
-- `server/seeds/default/products.json`
-- `server/seeds/default/users.json`
-- `server/seeds/default/sales.json`
 
 ## API Overview
 
